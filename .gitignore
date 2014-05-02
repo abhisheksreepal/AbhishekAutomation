@@ -4,8 +4,8 @@
 .classpath
 .project
 
-#Ignore log folder,target and test-output folder
+#Ignore log folder,bin folder,target and test-output folder
 log
 target
 test-output
-
+bin
