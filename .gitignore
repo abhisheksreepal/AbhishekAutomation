@@ -1,0 +1,11 @@
+#Ignore following file starting with "." like .classpath etc
+.metadata
+.settings
+.classpath
+.project
+
+#Ignore log folder,target and test-output folder
+log
+target
+test-output
+

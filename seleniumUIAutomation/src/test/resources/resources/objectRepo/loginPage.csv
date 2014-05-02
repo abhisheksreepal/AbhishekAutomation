@@ -1,0 +1,4 @@
+ObjectName,ObjectType,ObjectValue
+userName,ID,Email
+passWord,ID,Passwd
+loginButton,ID,signIn
