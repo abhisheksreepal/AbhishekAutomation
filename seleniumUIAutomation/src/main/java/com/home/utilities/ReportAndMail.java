@@ -31,7 +31,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 
-import com.home.pages.BaseWebPage;
+import com.home.application.pages.BaseWebPage;
 
 public class ReportAndMail {
 	
