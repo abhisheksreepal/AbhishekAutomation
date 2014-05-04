@@ -4,8 +4,9 @@
 .classpath
 .project
 
-#Ignore log folder,bin folder,target and test-output folder
+#Ignore log folder,bin folder,target and test-output folder and log4j.xml
 log
 target
 test-output
 bin
+log4j.xml
