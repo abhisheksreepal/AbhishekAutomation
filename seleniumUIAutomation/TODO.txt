@@ -1,3 +1,7 @@
+1. @Data provider implementation
+
+
+--------------------- OLD TODOS---------------------------
 1. public and private key for git -- i mean when u push - you will be prompted for password instead u can use keys
 
 2. mvn svn plugin in pom 

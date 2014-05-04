@@ -1,11 +1,10 @@
 package com.home.application.adactin.tests;
 
-import java.lang.reflect.Method;
-
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
 import com.home.application.tests.BaseWebPageTest;
+import com.home.utilities.DataProviderFromMapUtility;
 import com.home.utilities.LoggerUtility;
 
 public class LoginPageTest extends BaseWebPageTest
@@ -13,24 +12,36 @@ public class LoginPageTest extends BaseWebPageTest
 
     private static Logger log = Logger.getLogger(LoginPageTest.class);
 
-    public LoginPageTest()
+    @Test(dataProvider = "getDataFromFile", dataProviderClass = DataProviderFromMapUtility.class)
+    public void testLogin(String userName, String password, String isValid)
     {
+        loginPage.loginToApp(userName, password);
 
-    }
-
-    @Test
-    public void testLoginWithInvalidUserName(Method methodName)
-    {
-        loginPage.launchApplicationToDefaultUrl();
-        loginPage.loginToApp("invalidUSer", "a");
-        if (!loginPage.isLoggedOut())
+        if (isValid.equalsIgnoreCase("Y"))
         {
-            LoggerUtility.logErrorMessage(log, "Invalid user able to log in");
+            if (homePage.isLoggedIn())
+            {
+                LoggerUtility.logVerifyPass(log, "Home Page logged in for -"
+                        + userName);
+            }
+            else
+            {
+                LoggerUtility.logVerifyFailure(log,
+                        "Home Page NOT logged in for -" + userName);
+            }
         }
         else
         {
-            LoggerUtility.logTraceMessage(log,
-                    "Invalid user is NOT able to log in");
+            if (homePage.isLoggedIn())
+            {
+                LoggerUtility.logVerifyFailure(log, "Home Page logged in for -"
+                        + userName);
+            }
+            else
+            {
+                LoggerUtility.logVerifyPass(log,
+                        "Home Page NOT logged in for -" + userName);
+            }
         }
     }
 

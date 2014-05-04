@@ -1,4 +1,4 @@
 ObjectName,ObjectType,ObjectValue
-userName,ID,Email
-passWord,ID,Passwd
-loginButton,ID,signIn
+userName,ID,username
+passWord,ID,password
+loginButton,ID,login

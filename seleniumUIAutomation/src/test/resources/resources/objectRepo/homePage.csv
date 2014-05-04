@@ -1,2 +1,2 @@
 ObjectName,ObjectType,ObjectValue
-Logout,LINKTEXT,Sign out
+Logout,XPATH,"//td[contains(@class,'welcome_menu')]/a[contains(@href,'Logout')]"

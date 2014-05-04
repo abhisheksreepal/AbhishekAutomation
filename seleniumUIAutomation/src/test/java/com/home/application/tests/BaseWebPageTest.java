@@ -15,7 +15,9 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import com.home.application.adactin.pages.HomePage;
 import com.home.application.adactin.pages.LoginPage;
+import com.home.application.pages.BaseWebPage;
 import com.home.utilities.LoggerUtility;
 import com.home.utilities.ObjectRepoUtility;
 import com.home.utilities.ReportAndMail;
@@ -37,6 +39,7 @@ public class BaseWebPageTest extends TestBase
     public static PropertiesConfiguration envProperties;
     public static WebDriver driver;
     public LoginPage loginPage;
+    public HomePage homePage;
 
     // Disable selenium logs, Making level as "warn"
     static
@@ -76,17 +79,19 @@ public class BaseWebPageTest extends TestBase
 
         }
 
-        ObjectRepoUtility.loadObjectRepoForAllPages();
-        // This is required for class SuccessFailureLogTestListener
-        TestDataUtilty.loadTestDataForAllPagesAndAssignToTestCase();
-
-        
+        String defaultEnvironment = envProperties.getString("default");
+        String application = envProperties.getString("application");
+        String url = envProperties.getString(defaultEnvironment + ".url");
         String browser = envProperties.getString("BROWSER_NAME");
 
-        driver = selectBrowser(browser);
-        String url = envProperties.getString(envProperties.getString("default")
-                + ".url");
-        driver.get(url);
+        ObjectRepoUtility.loadObjectRepoForAllPages();
+        // This is required for class SuccessFailureLogTestListener
+        TestDataUtilty.loadTestDataToMemory(
+                defaultEnvironment, application);
+
+        selectBrowser(browser);
+
+        new BaseWebPage(driver).navigateTo(url);
     }
 
     /**
@@ -96,11 +101,20 @@ public class BaseWebPageTest extends TestBase
     @AfterSuite(alwaysRun = true)
     public void close() throws Exception
     {
-        driver.quit();
+        new BaseWebPage(driver).closeBrowser();
         endTime = System.currentTimeMillis();
         timeTaken = endTime - startTime;
-        ReportAndMail.createSummaryResultLog();
+        ReportAndMail.createSummaryResultLog(envProperties
+                .getString("BROWSER_NAME"));
         ReportAndMail.updateHTML(timeTaken);
+        ReportAndMail.sendMail(timeTaken,
+                envProperties.getString("emailUserName"),
+                envProperties.getString("emailPassword"),
+                envProperties.getString("ReportmailServer"),
+                envProperties.getString("Reportrecipients"),
+                envProperties.getString("ReportaddressFrom"),
+                envProperties.getString("default"),
+                envProperties.getString("BROWSER_NAME"));
     }
 
     /**
@@ -156,16 +170,17 @@ public class BaseWebPageTest extends TestBase
 
     public void restartBrowserToDefaultUrl()
     {
-        driver.quit();
-        driver = selectBrowser(envProperties.getString("BROWSER_NAME"));
-        driver.get(envProperties.getString(envProperties.getString("default")
-                + ".url"));
+        new BaseWebPage(driver).closeBrowser();
+        selectBrowser(envProperties.getString("BROWSER_NAME"));
+        String defaultEnvironment = envProperties.getString("default");
+        String url = envProperties.getString(defaultEnvironment + ".url");
+        new BaseWebPage(driver).navigateTo(url);
         if (driver instanceof InternetExplorerDriver)
         {
             driver.get("javascript:document.getElementById('overridelink').click();");
         }
         loginPage = new LoginPage(driver);
-
+        homePage = new HomePage(driver);
     }
 
 }
