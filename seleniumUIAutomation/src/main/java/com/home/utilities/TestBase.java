@@ -169,11 +169,11 @@ public class TestBase {
 	
 	
 	
-    public static void failTestNgOnVerificationFailures(Logger logHandle,String cErrorMessage) 
+    public static void failTestNgOnVerificationFailures(Logger logHandle,String cErrorMessage,String cErrorScreenShotFileName) 
     {
-    	String cScreenShotPath = "log/screenShots/";
+    	/*String cScreenShotPath = "log/screenShots/";
         String cErrorScreenShotFileName = cScreenShotPath + "VERIFICATION_FAILURE_"+LoggerUtility.testCaseName
-                + LoggerUtility.logDate + ".png";  
+                + LoggerUtility.logDate + ".png";  */
         if(LoggerUtility.verificationErrorScreenShotFileNamePath!=null){
         	LoggerUtility.verificationErrorScreenShotFileNamePath = LoggerUtility.verificationErrorScreenShotFileNamePath  +"|"+ cErrorScreenShotFileName;
         }else{

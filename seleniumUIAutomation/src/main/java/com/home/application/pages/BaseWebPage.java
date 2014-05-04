@@ -895,7 +895,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + "],"
                                     + "Object Name -[" + objectName
-                                    + "] is successfully SET text"
+                                    + "] is successfully SET text ["+ value+"]"
                                     + " And Object Xpath ["
                                     + getObjectValue(objectRepo, objectName)
                                     + "]," + timeDiff + "msecs");
@@ -939,7 +939,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "],"
                                     + "Object Name -["
                                     + objectName
-                                    + "] is successfully SET text"
+                                    + "] is successfully SET text["+ value+"]"
                                     + " And Object Xpath ["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
@@ -990,7 +990,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     logTraceMessage(log, "[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
-                            + "] is successfully SET text" + " And Object Id ["
+                            + "] is successfully SET text["+ value+"]" + " And Object Id ["
                             + getObjectValue(objectRepo, objectName) + "],"
                             + timeDiff + "msecs");
                 }
@@ -1032,7 +1032,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "],"
                                     + "Object Name -["
                                     + objectName
-                                    + "] is successfully SET text"
+                                    + "] is successfully SET text["+ value+"]"
                                     + " And Object Id ["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
@@ -1118,7 +1118,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + "],"
                                     + "Object Name -[" + objectName
-                                    + "] is successfully Appeneded text"
+                                    + "] is successfully Appeneded text["+ value+"]"
                                     + " And Object Xpath ["
                                     + getObjectValue(objectRepo, objectName)
                                     + "]," + timeDiff + "msecs");
@@ -1162,7 +1162,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "],"
                                     + "Object Name -["
                                     + objectName
-                                    + "] is successfully Appeneded text"
+                                    + "] is successfully Appeneded text["+ value+"]"
                                     + " And Object Xpath ["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
@@ -1216,7 +1216,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + "],"
                                     + "Object Name -[" + objectName
-                                    + "] is successfully Appended text"
+                                    + "] is successfully Appended text["+ value+"]"
                                     + " And Object Id ["
                                     + getObjectValue(objectRepo, objectName)
                                     + "]," + timeDiff + "msecs");
@@ -1259,7 +1259,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "],"
                                     + "Object Name -["
                                     + objectName
-                                    + "] is successfully Appended text"
+                                    + "] is successfully Appended text["+ value+"]"
                                     + " And Object Id ["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,

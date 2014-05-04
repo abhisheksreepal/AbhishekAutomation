@@ -4,7 +4,7 @@
 	
 	<test name="LoginPageTest">
 	<classes>
-	<class name="com.home.tests.LoginPageTest"></class>	
+	<class name="com.home.application.adactin.tests.LoginPageTest"></class>	
 	</classes>
 	</test>
 	

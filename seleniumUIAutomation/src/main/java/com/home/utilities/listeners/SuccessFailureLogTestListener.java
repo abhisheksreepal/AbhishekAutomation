@@ -7,7 +7,6 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestNG;
 
-import com.home.utilities.DataProviderFromMapUtility;
 import com.home.utilities.LoggerUtility;
 
 public class SuccessFailureLogTestListener extends TestNG.ExitCodeListener
@@ -23,7 +22,7 @@ public class SuccessFailureLogTestListener extends TestNG.ExitCodeListener
         String[] cClassNameArr = result.getTestClass().getName().split("\\.");
         int size = result.getTestClass().getName().split("\\.").length;
         LoggerUtility.cClassName = cClassNameArr[size - 1];
-        DataProviderFromMapUtility.initializeDataProvider(LoggerUtility.testCaseName, LoggerUtility.cClassName);
+        
         super.onTestStart(result);
     }
 

@@ -12,7 +12,11 @@ public class LoginPageTest extends BaseWebPageTest
 
     private static Logger log = Logger.getLogger(LoginPageTest.class);
 
-    @Test(dataProvider = "getDataFromFile", dataProviderClass = DataProviderFromMapUtility.class)
+  
+    
+    
+   @Test(dataProvider = "initializeDataProvider",dataProviderClass=DataProviderFromMapUtility.class)
+   
     public void testLogin(String userName, String password, String isValid)
     {
         loginPage.loginToApp(userName, password);

@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -15,15 +16,15 @@ public class TestDataUtilty
 
     private static Logger log = Logger.getLogger(TestDataUtilty.class);
 
-    public static HashMap<String, HashMap<String, HashMap<String, HashMap<String, String>>>> inputTestData;
+    public static LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>> inputTestData;
 
-    private static HashMap<String, HashMap<String, HashMap<String, HashMap<String, String>>>> loadTestDataFromFile(
+    private static LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>> loadTestDataFromFile(
             String dataFileName, String environment, String applicationName)
             throws IOException
     {
-        HashMap<String, HashMap<String, HashMap<String, HashMap<String, String>>>> testData = new HashMap<String, HashMap<String, HashMap<String, HashMap<String, String>>>>();
-        HashMap<String, HashMap<String, HashMap<String, String>>> primaryKeyMap = new HashMap<String, HashMap<String, HashMap<String, String>>>();
-        HashMap<String, HashMap<String, String>> testCaseMap = new HashMap<String, HashMap<String, String>>();
+        LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>> testData = new  LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>>();
+        LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>> primaryKeyMap = new LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>();
+        LinkedHashMap<String, LinkedHashMap<String, String>> testCaseMap = new LinkedHashMap<String, LinkedHashMap<String, String>>();
 
         String filePath = "src/test/resources/resources/data/"
                 + applicationName + "/" + environment + "/" + dataFileName
@@ -44,19 +45,19 @@ public class TestDataUtilty
                 {
                     colNames[i] = string[i].trim();
                 }
-                testCaseMap = new HashMap<String, HashMap<String, String>>();
-                primaryKeyMap = new HashMap<String, HashMap<String, HashMap<String, String>>>();
+                testCaseMap = new LinkedHashMap<String, LinkedHashMap<String, String>>();
+                primaryKeyMap = new LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>();
                 testData.put(
                         string[0],
-                        new HashMap<String, HashMap<String, HashMap<String, String>>>());
+                        new LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>());
 
             }
             else if (!string[1].trim().equalsIgnoreCase("")
                     && !string[1].trim().equalsIgnoreCase("PrimaryKey")
                     && string[0].trim().equalsIgnoreCase(""))
             {
-                HashMap<String, String> data = new HashMap<String, String>();
-                testCaseMap = new HashMap<String, HashMap<String, String>>();
+                LinkedHashMap<String, String> data = new LinkedHashMap<String, String>();
+                testCaseMap = new LinkedHashMap<String, LinkedHashMap<String, String>>();
                 for (int i = 2; i < string.length; i++)
                 {
                     data.put(colNames[i], string[i]);
@@ -70,8 +71,8 @@ public class TestDataUtilty
         return testData;
     }
 
-    public static void loadTestDataToMemory(
-            String environment, String application) throws Exception
+    public static void loadTestDataToMemory(String environment,
+            String application) throws Exception
     {
         inputTestData = TestDataUtilty.loadTestDataFromFile("inputfileData",
                 environment, application);
@@ -109,11 +110,12 @@ public class TestDataUtilty
     }
 
     public static List<String> getListOfPrimaryKeysForDuplicateTestCase(
-            HashMap<String, HashMap<String, HashMap<String, HashMap<String, String>>>> testDatas,
-            String testCaseName,String moduleName)
+            LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>> testDatas,
+            String testCaseName, String moduleName)
     {
-        
-        HashMap<String, HashMap<String, HashMap<String, String>>> testData = testDatas.get(moduleName);
+
+        LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>> testData = testDatas
+                .get(moduleName);
         List<String> listOfPrimaryKeys = new ArrayList<String>();
         for (String primaryKeys : testData.keySet())
         {
@@ -126,11 +128,12 @@ public class TestDataUtilty
         return listOfPrimaryKeys;
     }
 
-    public static HashMap<String, HashMap<String, String>> getTestDataByPassingPrimaryKey(
-            HashMap<String, HashMap<String, HashMap<String, HashMap<String, String>>>> testDatas,
-            String primaryKey,String moduleName)
+    public static LinkedHashMap<String, LinkedHashMap<String, String>> getTestDataByPassingPrimaryKey(
+            LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>> testDatas,
+            String primaryKey, String moduleName)
     {
-        HashMap<String, HashMap<String, HashMap<String, String>>> testData = testDatas.get(moduleName);
+        LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>> testData = testDatas
+                .get(moduleName);
         if (!testData.containsKey(primaryKey))
         {
             log.error("Test Data-" + testData
@@ -145,4 +148,20 @@ public class TestDataUtilty
         }
     }
 
+    public static String getClassNameByPassingTestMethod(String testCaseName)
+    {
+        String className = null;
+        for (String cName : TestDataUtilty.inputTestData
+                .keySet())
+        {
+            className = cName;
+            for (String  pKeys : inputTestData.get(cName).keySet())
+            {
+                if(inputTestData.get(cName).get(pKeys).containsKey(testCaseName)){
+                    return className;
+                }
+            }
+        }
+        return className;
+    }
 }

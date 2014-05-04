@@ -61,6 +61,7 @@ public class BaseWebPageTest extends TestBase
     public void start() throws Exception
     {
         LoggerUtility.createFolders();
+        LoggerUtility.updateLog4JXmlFile("BaseLog");
         startTime = System.currentTimeMillis();
         try
         {

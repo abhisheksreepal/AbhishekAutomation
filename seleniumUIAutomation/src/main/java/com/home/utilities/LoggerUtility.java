@@ -78,6 +78,14 @@ public class LoggerUtility
             File file2 = new File("log/logs/" + DATEFOLDER + "/"
                     + "screenShots");
             file2.mkdir();
+
+            File infoFilePath = new File("log/logs/" + DATEFOLDER + "/"
+                    + "infoLogs");
+            infoFilePath.mkdir();
+
+            File detailedFilePath = new File("log/logs/" + DATEFOLDER + "/"
+                    + "detailedLogs");
+            detailedFilePath.mkdir();
         }
         else
         {
@@ -181,8 +189,8 @@ public class LoggerUtility
     {
         String logXMLPath = envProperties.getString("log4jXmlLocation");
         String testngXMLSuiteName = getTestSuiteName();
-        String infoLogPath = envProperties.getString("logPath");
-        String detailedLogPath = envProperties.getString("logPath");
+        String logPath = envProperties.getString("logPath");
+
         logDate = (new Date()).toString().replace(":", "_").replace(" ", "_");
 
         Builder builder = new Builder();
@@ -226,16 +234,16 @@ public class LoggerUtility
                             if (grandChild.get(j).getAttributeValue("name")
                                     .equalsIgnoreCase("File"))
                             {
-                                Attribute attr = new Attribute("value",
-                                        infoLogPath + "/" + DATEFOLDER + "/"
-                                                + className + "_"
-                                                + testngXMLSuiteName + "_"
-                                                + logDate + ".csv");
-                                grandChild.get(j).addAttribute(attr);
-                                log.debug("Updated infoLogPath to value - "
-                                        + infoLogPath + "/" + DATEFOLDER + "/"
+                                Attribute attr = new Attribute("value", logPath
+                                        + "/" + DATEFOLDER + "/" + "infoLogs/"
                                         + className + "_" + testngXMLSuiteName
                                         + "_" + logDate + ".csv");
+                                grandChild.get(j).addAttribute(attr);
+                                log.debug("Updated infoLogPath to value - "
+                                        + logPath + "/" + DATEFOLDER + "/"
+                                        + "infoLogs/" + className + "_"
+                                        + testngXMLSuiteName + "_" + logDate
+                                        + ".csv");
                             }
                         }
                     }
@@ -251,15 +259,15 @@ public class LoggerUtility
                             if (grandChild.get(j).getAttributeValue("name")
                                     .equalsIgnoreCase("File"))
                             {
-                                Attribute attr = new Attribute("value",
-                                        detailedLogPath + "/" + DATEFOLDER
-                                                + "/" + className + "_"
-                                                + testngXMLSuiteName + "_"
-                                                + logDate + ".csv");
+                                Attribute attr = new Attribute("value", logPath
+                                        + "/" + DATEFOLDER + "/"
+                                        + "detailedLogs/" + className + "_"
+                                        + testngXMLSuiteName + "_" + logDate
+                                        + ".csv");
                                 grandChild.get(j).addAttribute(attr);
                                 log.debug("Updated infoLogPath to value - "
-                                        + detailedLogPath + "/" + DATEFOLDER
-                                        + "/" + className + "_"
+                                        + logPath + "/" + DATEFOLDER + "/"
+                                        + "detailedLogs/" + className + "_"
                                         + testngXMLSuiteName + "_" + logDate
                                         + ".csv");
                             }
@@ -301,11 +309,10 @@ public class LoggerUtility
         logHandle.info(cTraceMessage);
 
     }
-    
-    
+
     public static void logVerifyPass(Logger logHandle, String cTraceMessage)
     {
-        logHandle.info("[VERIFICATION PASS ]"+cTraceMessage);
+        logHandle.info("[VERIFICATION PASS ]" + cTraceMessage);
 
     }
 
@@ -326,7 +333,11 @@ public class LoggerUtility
     // Verifies , capture screenshot and does not throw runtime exception
     public static void logVerifyFailure(Logger logHandle, String cErrorMessage)
     {
-        TestBase.failTestNgOnVerificationFailures(logHandle, cErrorMessage);
+        String cScreenShotPath = envProperties.getString("logPath") + "/"
+                + DATEFOLDER + "/screenShots/";
+        String cErrorScreenShotFileName = cScreenShotPath + "/"
+                + "ERROR_FAILURE_" + testCaseName + logDate + ".png";
+        TestBase.failTestNgOnVerificationFailures(logHandle, cErrorMessage,cErrorScreenShotFileName);
     }
 
 }
