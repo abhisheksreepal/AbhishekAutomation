@@ -73,7 +73,7 @@ public class SuccessFailureLogTestListener extends TestNG.ExitCodeListener
 
         if (testStatus != null)
         {
-            if (!testStatus.equals("Fail") || !testStatus.equals("Skipped"))
+            if (!testStatus.equals("Fail") && !testStatus.equals("Skipped"))
             {
                 LoggerUtility.tcDetails = new HashMap<String, String>();
                 LoggerUtility.tcDetails.put("Status", "Pass");

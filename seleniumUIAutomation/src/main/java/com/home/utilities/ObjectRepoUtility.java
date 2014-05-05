@@ -69,7 +69,7 @@ public class ObjectRepoUtility extends LoggerUtility
     private static HashMap<String, HashMap<String, String>> fetchObjectFromFile(
             String fileName)
     {
-        String environment = envProperties.getString("default");
+
         String applicationName = envProperties.getString("application");
 
         HashMap<String, HashMap<String, String>> objRepo = new HashMap<String, HashMap<String, String>>();
@@ -80,8 +80,7 @@ public class ObjectRepoUtility extends LoggerUtility
             {
                 reader = new CSVReader(new FileReader(
                         envProperties.getString("objRepoLocation") + "/"
-                                + applicationName + "/" + environment + "/"
-                                + fileName + ".csv"));
+                                + applicationName + "/" + fileName + ".csv"));
                 String[] nextLine;
                 try
                 {
@@ -146,10 +145,8 @@ public class ObjectRepoUtility extends LoggerUtility
                     log.error("IO exception - Object File in the followig path = "
                             + envProperties.getString("objRepoLocation")
                             + "/"
-                            + applicationName
-                            + "/"
-                            + environment
-                            + "/"
+                            + applicationName + "/"
+
                             + fileName + ".csv");
                     log.error(e.toString());
                 }
@@ -158,16 +155,14 @@ public class ObjectRepoUtility extends LoggerUtility
             {
                 log.error("Object File Not found in the followig path = "
                         + envProperties.getString("objRepoLocation") + "/"
-                        + applicationName + "/" + environment + "/" + fileName
-                        + ".csv");
+                        + applicationName + "/" + fileName + ".csv");
                 log.error(e.toString());
             }
 
             // Add last key value pair -> FileDetails: (FileName:FilePath)
             HashMap<String, String> objMeta = new HashMap<String, String>();
             objMeta.put(fileName, envProperties.getString("objRepoLocation")
-                    + "/" + applicationName + "/" + environment + "/"
-                    + fileName + ".csv");
+                    + "/" + applicationName + "/" + fileName + ".csv");
             objRepo.put("fileDetails", objMeta);
 
             return objRepo;
@@ -176,7 +171,7 @@ public class ObjectRepoUtility extends LoggerUtility
         {
             log.error("INVALID File Name passed as argument "
                     + envProperties.getString("objRepoLocation") + "/"
-                    + fileName + ".csv");
+                    + applicationName + "/" + fileName + ".csv");
             return objRepo;
         }
     }
