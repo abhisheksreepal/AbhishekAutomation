@@ -19,7 +19,8 @@ public class LoginPageTest extends BaseWebPageTest
    
     public void testLogin(String userName, String password, String isValid)
     {
-        loginPage.loginToApp(userName, password);
+       loginPage.loginToApp(userName, password); 
+     
 
         if (isValid.equalsIgnoreCase("Y"))
         {

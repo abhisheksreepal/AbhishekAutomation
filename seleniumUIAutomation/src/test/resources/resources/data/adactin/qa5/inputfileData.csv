@@ -2,11 +2,6 @@ LoginPageTest,PrimaryKey,TestCaseName,TestCaseID,UserName,Password,isValid
 ,1,testLogin,1,zorbanzorban,zorbanzorban,Y
 ,2,testLogin,1,testzorban,password2,N
 ,3,testLogin,1,zorbanzorban,zorbanzorban,Y
-,4,testLogin,1,testzorban,zorbanzorban,Y
-,5,testLogin,1,ajajaja,password5,N
-,6,testLogin,1,ajajakakalakaj,password6,N
-,7,testLogin,1,aj2,s,N
-,8,testLogin,1,a,password8,N
 HomePageTest,PrimaryKey,TestCaseName,TestCaseID,UserName,Password,expectedWelcomeMessage
 ,9,testWelcomeMessage,1,zorbanzorban,zorbanzorban,Hello zorbanzorban!
 ,10,testWelcomeMessage,1,testzorban,zorbanzorban,Hello testzorban!

@@ -21,7 +21,7 @@ public class LoginPage extends BaseWebPage
         super(driver);
     }
 
-    public HomePage loginToApp(String username, String password)
+    public void loginToApp(String username, String password)
     {
         setTextAfterClearingElement(loginObjRepo, "userName", username, false,
                 0, "", "UserName field in Login Page not visible");
@@ -29,7 +29,7 @@ public class LoginPage extends BaseWebPage
                 0, "", "Password field in  Login Page not visible");
         clickElement(loginObjRepo, "loginButton", false, 0, "",
                 "Login field in Login Page not visible");
-        return new HomePage(driver);
+        return;
     }
 
     public boolean isInLoginPage()

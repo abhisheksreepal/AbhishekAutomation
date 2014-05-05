@@ -34,7 +34,10 @@ public class BaseWebPageTest extends TestBase
     private long startTime = 0L;
     private long endTime = 0L;
     public static long timeTaken = 0L;
-
+    public LoginPage loginPage;
+    public HomePage homePage;
+    
+    
     public BaseWebPageTest()
     {
 
@@ -42,8 +45,6 @@ public class BaseWebPageTest extends TestBase
 
     public static PropertiesConfiguration envProperties;
     public static WebDriver driver;
-    public LoginPage loginPage;
-    public HomePage homePage;
 
     // Disable selenium logs, Making level as "warn"
     static

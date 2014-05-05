@@ -21,11 +21,9 @@ public class HomePage extends BaseWebPage
         super(driver);
     }
 
-    public LoginPage logOffFromApp()
+    public void logOffFromApp()
     {
-        clickElement(homePageObjRepo, "Logout", false, 0, "",
-                "Logout field in Home Page not visible");
-        return new LoginPage(driver);
+        clickHyperlinks("Logout");
 
     }
 
@@ -56,6 +54,13 @@ public class HomePage extends BaseWebPage
         return getAttributeValue(homePageObjRepo, "welcomeMessageString",
                 "value", false, 0, "",
                 "welcome Message String in Home Page is NOT present");
+    }
+
+    public void clickHyperlinks(String hyperLinks)
+    {
+        clickElement(homePageObjRepo, "hyperLinks", true, 1, hyperLinks,
+                "hyperLinks -" + hyperLinks.toString() + " NOT clicked");
+
     }
 
 }
