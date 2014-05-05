@@ -1,2 +1,3 @@
 ObjectName,ObjectType,ObjectValue
 Logout,XPATH,"//td[contains(@class,'welcome_menu')]/a[contains(@href,'Logout')]"
+welcomeMessageString,XPATH,"//*[@id='username_show']"

@@ -1,13 +1,13 @@
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" > 
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="HOME SUITE" >
-	
+<suite name="HOME SUITE">
+
 	<test name="LoginPageTest">
-	<classes>
-	<class name="com.home.application.adactin.tests.LoginPageTest"></class>	
-	</classes>
+		<classes>
+			<class name="com.home.application.adactin.tests.HomePageTest"></class>
+		</classes>
 	</test>
-	
+
 </suite>
  
 

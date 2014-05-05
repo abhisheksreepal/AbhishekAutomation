@@ -1,16 +1,19 @@
 package com.home.application.tests;
 
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.firefox.internal.ProfilesIni;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -27,6 +30,7 @@ import com.home.utilities.TestDataUtilty;
 public class BaseWebPageTest extends TestBase
 {
 
+    private static Logger log = Logger.getLogger(BaseWebPageTest.class);
     private long startTime = 0L;
     private long endTime = 0L;
     public static long timeTaken = 0L;
@@ -87,8 +91,7 @@ public class BaseWebPageTest extends TestBase
 
         ObjectRepoUtility.loadObjectRepoForAllPages();
         // This is required for class SuccessFailureLogTestListener
-        TestDataUtilty.loadTestDataToMemory(
-                defaultEnvironment, application);
+        TestDataUtilty.loadTestDataToMemory(defaultEnvironment, application);
 
         selectBrowser(browser);
 
@@ -118,13 +121,9 @@ public class BaseWebPageTest extends TestBase
                 envProperties.getString("BROWSER_NAME"));
     }
 
-    /**
-     * 
-     * @param browserName
-     * @return
-     */
     public WebDriver selectBrowser(String browserName)
     {
+        DesiredCapabilities capabilities = null;
         if (browserName.equalsIgnoreCase("firefox"))
         {
             ProfilesIni ffProfiles = new ProfilesIni();
@@ -139,23 +138,69 @@ public class BaseWebPageTest extends TestBase
                 e.printStackTrace();
                 firefoxprofile = ffProfiles.getProfile("default");
             }
+            capabilities = DesiredCapabilities.firefox();
+            capabilities.setBrowserName(browserName);
 
-            driver = new FirefoxDriver(firefoxprofile);
+            capabilities.setCapability(FirefoxDriver.PROFILE, firefoxprofile);
+            try
+            {
+                driver = new RemoteWebDriver(new URL(
+                        envProperties.getString("hub")), capabilities);
+            }
+            catch (MalformedURLException e)
+            {
+                LoggerUtility.logErrorMessage(log,
+                        "browser not able to open due to malform URL");
+            }
 
         }
         else if (browserName.equalsIgnoreCase("iexplorer"))
         {
-            driver = new InternetExplorerDriver();
+            capabilities = DesiredCapabilities.internetExplorer();
+            capabilities.setBrowserName(browserName);
+
+            try
+            {
+                driver = new RemoteWebDriver(new URL(
+                        envProperties.getString("hub")), capabilities);
+            }
+            catch (MalformedURLException e)
+            {
+                LoggerUtility.logErrorMessage(log,
+                        "browser not able to open due to malform URL");
+            }
         }
         else if (browserName.equalsIgnoreCase("chrome"))
         {
-            driver = new ChromeDriver();
+            capabilities = DesiredCapabilities.chrome();
+            capabilities.setBrowserName(browserName);
+
+            try
+            {
+                driver = new RemoteWebDriver(new URL(
+                        envProperties.getString("hub")), capabilities);
+            }
+            catch (MalformedURLException e)
+            {
+                LoggerUtility.logErrorMessage(log,
+                        "browser not able to open due to malform URL");
+            }
         }
         else if (browserName.equalsIgnoreCase("htmlunitenabled"))
         {
-            HtmlUnitDriver htmlUnitDriver = new HtmlUnitDriver();
-            htmlUnitDriver.setJavascriptEnabled(true);
-            driver = htmlUnitDriver;
+            capabilities = DesiredCapabilities.htmlUnit();
+            capabilities.setBrowserName(browserName);
+
+            try
+            {
+                driver = new RemoteWebDriver(new URL(
+                        envProperties.getString("hub")), capabilities);
+            }
+            catch (MalformedURLException e)
+            {
+                LoggerUtility.logErrorMessage(log,
+                        "browser not able to open due to malform URL");
+            }
         }
         return driver;
     }

@@ -22,7 +22,7 @@ public class SuccessFailureLogTestListener extends TestNG.ExitCodeListener
         String[] cClassNameArr = result.getTestClass().getName().split("\\.");
         int size = result.getTestClass().getName().split("\\.").length;
         LoggerUtility.cClassName = cClassNameArr[size - 1];
-        
+
         super.onTestStart(result);
     }
 
@@ -61,14 +61,44 @@ public class SuccessFailureLogTestListener extends TestNG.ExitCodeListener
     @Override
     public void onTestSuccess(ITestResult result)
     {
-        LoggerUtility.tcDetails = new HashMap<String, String>();
-        LoggerUtility.tcDetails.put("Status", "Pass");
+        String testStatus = null;
+        for (String testCasekeys : LoggerUtility.tcMethodDetails.keySet())
+        {
+            if (testCasekeys.equals(result.getMethod().getMethodName()))
+            {
+                testStatus = LoggerUtility.tcMethodDetails.get(testCasekeys)
+                        .get("Status");
+            }
+        }
 
-        LoggerUtility.tcDetails.put("ErrorScreenshotName", null);
-        LoggerUtility.tcDetails.put("VerificationErrorScreenshotName", null);
+        if (testStatus != null)
+        {
+            if (!testStatus.equals("Fail") || !testStatus.equals("Skipped"))
+            {
+                LoggerUtility.tcDetails = new HashMap<String, String>();
+                LoggerUtility.tcDetails.put("Status", "Pass");
 
-        LoggerUtility.tcMethodDetails.put(LoggerUtility.testCaseName,
-                LoggerUtility.tcDetails);
+                LoggerUtility.tcDetails.put("ErrorScreenshotName", null);
+                LoggerUtility.tcDetails.put("VerificationErrorScreenshotName",
+                        null);
+
+                LoggerUtility.tcMethodDetails.put(LoggerUtility.testCaseName,
+                        LoggerUtility.tcDetails);
+            }
+
+        }
+        else
+        {
+            LoggerUtility.tcDetails = new HashMap<String, String>();
+            LoggerUtility.tcDetails.put("Status", "Pass");
+
+            LoggerUtility.tcDetails.put("ErrorScreenshotName", null);
+            LoggerUtility.tcDetails
+                    .put("VerificationErrorScreenshotName", null);
+
+            LoggerUtility.tcMethodDetails.put(LoggerUtility.testCaseName,
+                    LoggerUtility.tcDetails);
+        }
         super.onTestSuccess(result);
     }
 

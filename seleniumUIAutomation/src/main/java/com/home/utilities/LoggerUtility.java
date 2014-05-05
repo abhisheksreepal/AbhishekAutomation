@@ -24,9 +24,13 @@ import nu.xom.ValidityException;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.Augmenter;
 
 public class LoggerUtility
 {
@@ -100,7 +104,7 @@ public class LoggerUtility
         this.driver = driver;
     }
 
-    public static void captureScreenShot(String cFileName)
+    public static void captureScreenShotOLDImplementation(String cFileName)
     {
         Robot robot;
         BufferedImage bufferedImage = null;
@@ -126,6 +130,21 @@ public class LoggerUtility
             log.error(e.getStackTrace());
         }
 
+    }
+    
+    
+    public static void captureScreenShot(String fileName){
+        WebDriver augmentedDriver = new Augmenter().augment(driver);
+        File scrFile = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
+        try
+        {
+            FileUtils.copyFile(scrFile, new File(fileName));
+        }
+        catch (IOException e)
+        {
+            log.error("Error writing screencapture to a file -" + fileName);
+            log.error(e.getStackTrace());
+        }
     }
 
     private static String getTestSuiteName()
