@@ -16,6 +16,17 @@ public class HomePageTest extends BaseWebPageTest
     public void testWelcomeMessage(String userName, String password,
             String expectedWelcomeMessage)
     {
+        try
+        {
+            LoggerUtility.logTraceMessage(log,
+                    Long.toString(Thread.currentThread().getId()));
+            Thread.sleep(60000);
+        }
+        catch (InterruptedException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         loginPage.loginToApp(userName, password);
         String message = homePage.getWelcomeMessage();
         if (expectedWelcomeMessage.equals(message))
@@ -30,6 +41,36 @@ public class HomePageTest extends BaseWebPageTest
                     "Application is showing incorrect Welcome Message -["
                             + message + "] and Expected message -["
                             + expectedWelcomeMessage + "]");
+        }
+
+    }
+
+    @Test(dataProvider = "initializeDataProvider", dataProviderClass = DataProviderFromMapUtility.class)
+    public void testLogout(String userName, String password,
+            String expectedWelcomeMessage)
+    {
+        try
+        {
+            LoggerUtility.logTraceMessage(log,
+                    Long.toString(Thread.currentThread().getId()));
+
+            Thread.sleep(60000);
+        }
+        catch (InterruptedException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        loginPage.loginToApp(userName, password);
+        homePage.clickHyperlinks("Logout");
+        if (logoutPage.isInLogOutPage())
+        {
+            LoggerUtility.logVerifyPass(log, "Application is Logged out");
+        }
+        else
+        {
+            LoggerUtility
+                    .logVerifyFailure(log, "Application is Not Logged out");
         }
 
     }

@@ -1,7 +1,8 @@
 LoginPageTest,PrimaryKey,TestCaseName,TestCaseID,UserName,Password,isValid
 ,1,testLogin,1,zorbanzorban,zorbanzorban,Y
-,2,testLogin,1,testzorban,password2,N
-,3,testLogin,1,zorbanzorban,zorbanzorban,Y
+,2,testLogin,2,testzorban,password2,N
+,3,testLogin,3,zorbanzorban,zorbanzorban,Y
 HomePageTest,PrimaryKey,TestCaseName,TestCaseID,UserName,Password,expectedWelcomeMessage
-,9,testWelcomeMessage,1,zorbanzorban,zorbanzorban,Hello zorbanzorban!
-,10,testWelcomeMessage,1,testzorban,zorbanzorban,Hello testzorban!
+,4,testWelcomeMessage,4,zorbanzorban,zorbanzorban,Hello zorbanzorban!
+,5,testWelcomeMessage,5,testzorban,zorbanzorban,Hello testzorban!
+,6,testLogout,6,zorbanzorban,zorbanzorban,

@@ -1,8 +1,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="HOME SUITE">
+<suite name="Adactin Test Suite">
 
-	<test name="LoginPageTest">
+	<test name="HomePageTest" parallel="methods" thread-count="3">
 		<classes>
 			<class name="com.home.application.adactin.tests.HomePageTest"></class>
 		</classes>

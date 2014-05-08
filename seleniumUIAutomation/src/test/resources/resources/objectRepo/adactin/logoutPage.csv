@@ -1,0 +1,2 @@
+ObjectName,ObjectType,ObjectValue
+loginLink,XPATH,"//a[contains(text(),'Click here to login again')]"

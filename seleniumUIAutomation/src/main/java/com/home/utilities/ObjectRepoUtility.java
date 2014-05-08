@@ -18,11 +18,13 @@ public class ObjectRepoUtility extends LoggerUtility
 
     public static HashMap<String, HashMap<String, String>> loginObjRepo;
     public static HashMap<String, HashMap<String, String>> homePageObjRepo;
+    public static HashMap<String, HashMap<String, String>> logoutPageObjRepo;
 
     public static void loadObjectRepoForAllPages()
     {
         loginObjRepo = ObjectRepoUtility.fetchObjectFromFile("loginPage");
         homePageObjRepo = ObjectRepoUtility.fetchObjectFromFile("homePage");
+        logoutPageObjRepo = ObjectRepoUtility.fetchObjectFromFile("logoutPage");
     }
 
     public ObjectRepoUtility(WebDriver driver)
