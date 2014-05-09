@@ -22,7 +22,7 @@ public class TestDataUtilty
             String dataFileName, String environment, String applicationName)
             throws IOException
     {
-        LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>> testData = new  LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>>();
+        LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>> testData = new LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>>();
         LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>> primaryKeyMap = new LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>();
         LinkedHashMap<String, LinkedHashMap<String, String>> testCaseMap = new LinkedHashMap<String, LinkedHashMap<String, String>>();
 
@@ -34,22 +34,27 @@ public class TestDataUtilty
         String line = null;
         String[] colNames = null;
 
+        String className = null;
         while ((line = bufRdr.readLine()) != null)
         {
             String[] string = line.split(",", -1);
 
-            if (string[1].trim().equalsIgnoreCase("PrimaryKey"))
+            if (string[1].trim().equalsIgnoreCase("PrimaryKey")
+                    && !string[0].trim().equalsIgnoreCase(""))
             {
-                colNames = new String[string.length];
-                for (int i = 0; i < string.length; i++)
+                String[] string2 = line.split(",");
+                colNames = new String[string2.length];
+                for (int i = 0; i < string2.length; i++)
                 {
-                    colNames[i] = string[i].trim();
+                    colNames[i] = string2[i].trim();
+
                 }
                 testCaseMap = new LinkedHashMap<String, LinkedHashMap<String, String>>();
                 primaryKeyMap = new LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>();
                 testData.put(
-                        string[0],
+                        string2[0],
                         new LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>());
+                className = colNames[0];
 
             }
             else if (!string[1].trim().equalsIgnoreCase("")
@@ -58,13 +63,28 @@ public class TestDataUtilty
             {
                 LinkedHashMap<String, String> data = new LinkedHashMap<String, String>();
                 testCaseMap = new LinkedHashMap<String, LinkedHashMap<String, String>>();
-                for (int i = 2; i < string.length; i++)
+                for (int i = 2; i < colNames.length; i++)
                 {
                     data.put(colNames[i], string[i]);
                 }
                 testCaseMap.put(string[2], data);
                 primaryKeyMap.put(string[1], testCaseMap);
                 testData.put(colNames[0], primaryKeyMap);
+            }
+            else if (string[1].trim().equalsIgnoreCase("PrimaryKey")
+                    && string[0].trim().equalsIgnoreCase(""))
+            {
+                String[] string2 = line.split(",");
+                colNames = new String[string2.length];
+                for (int i = 0; i < string2.length; i++)
+                {
+                    if (i != 0)
+                    {
+                        colNames[i] = string2[i].trim();
+                    }
+                }
+
+                colNames[0] = className;
             }
 
         }
@@ -151,13 +171,14 @@ public class TestDataUtilty
     public static String getClassNameByPassingTestMethod(String testCaseName)
     {
         String className = null;
-        for (String cName : TestDataUtilty.inputTestData
-                .keySet())
+        for (String cName : TestDataUtilty.inputTestData.keySet())
         {
             className = cName;
-            for (String  pKeys : inputTestData.get(cName).keySet())
+            for (String pKeys : inputTestData.get(cName).keySet())
             {
-                if(inputTestData.get(cName).get(pKeys).containsKey(testCaseName)){
+                if (inputTestData.get(cName).get(pKeys)
+                        .containsKey(testCaseName))
+                {
                     return className;
                 }
             }

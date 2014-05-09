@@ -40,8 +40,7 @@ public class HomePageTest extends BaseWebPageTest
     }
 
     @Test(dataProvider = "initializeDataProvider", dataProviderClass = DataProviderFromMapUtility.class)
-    public void testLogout(String userName, String password,
-            String expectedWelcomeMessage)
+    public void testLogout(String userName, String password)
     {
 
         new LoginPage().loginToApp(userName, password);
@@ -57,22 +56,60 @@ public class HomePageTest extends BaseWebPageTest
         }
 
     }
-    
-    
+
     @Test(dataProvider = "initializeDataProvider", dataProviderClass = DataProviderFromMapUtility.class)
     public void testIsHyperLinksPresent(String userName, String password,
             String hyperLinks)
     {
 
         new LoginPage().loginToApp(userName, password);
-        
+
         if (new HomePage().isHyperLinkPresent(hyperLinks))
         {
-            LoggerUtility.logVerifyPass(log, "HyperLink - "+hyperLinks+" present");
+            LoggerUtility.logVerifyPass(log, "HyperLink - " + hyperLinks
+                    + " present");
         }
         else
         {
-            LoggerUtility.logVerifyFailure(log, "HyperLink - "+hyperLinks+" NOT present",new HomePage().driver);
+            LoggerUtility.logVerifyFailure(log, "HyperLink - " + hyperLinks
+                    + " NOT present", new HomePage().driver);
+        }
+
+    }
+
+    @Test(dataProvider = "initializeDataProvider", dataProviderClass = DataProviderFromMapUtility.class)
+    public void testWelcomeMessageIndifferentPages(String userName,
+            String password, String hyperLinks, String expectedWelcomeMessage)
+    {
+
+        new LoginPage().loginToApp(userName, password);
+
+        if (new HomePage().isHyperLinkPresent(hyperLinks))
+        {
+            LoggerUtility.logVerifyPass(log, "HyperLink - " + hyperLinks
+                    + " present");
+        }
+        else
+        {
+            LoggerUtility.logVerifyFailure(log, "HyperLink - " + hyperLinks
+                    + " NOT present", new HomePage().driver);
+        }
+
+        new HomePage().clickHyperlinks(hyperLinks);
+        String message = new HomePage().getWelcomeMessage();
+        if (expectedWelcomeMessage.equals(message))
+        {
+            LoggerUtility.logVerifyPass(log,
+                    "Application is showing correct Welcome Message -"
+                            + message);
+        }
+        else
+        {
+            LoggerUtility.logVerifyFailure(log,
+                    "Application is showing incorrect Welcome Message -["
+                            + message + "] in ["+hyperLinks+"] page and Expected message -["
+                            + expectedWelcomeMessage + "]",
+                    new LoginPage().driver);
         }
 
     }

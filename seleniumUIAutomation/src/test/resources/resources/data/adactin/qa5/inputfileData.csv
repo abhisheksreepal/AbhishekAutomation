@@ -1,11 +1,15 @@
-LoginPageTest,PrimaryKey,TestCaseName,TestCaseID,UserName,Password,isValid
-,1,testLogin,1,zorbanzorban,zorbanzorban,Y
-,2,testLogin,2,testzorban,password2,N
-,3,testLogin,3,zorbanzorban,zorbanzorban,Y
-HomePageTest,PrimaryKey,TestCaseName,TestCaseID,UserName,Password,expectedWelcomeMessage
-,4,testWelcomeMessage,4,zorbanzorban,zorbanzorban,Hello zorbanzorban!
-,5,testWelcomeMessage,5,testzorban,zorbanzorban,Hello testzorban!
-,6,testLogout,6,zorbanzorban,zorbanzorban,
-,7,testIsHyperLinksPresent,7,zorbanzorban,zorbanzorban,Booked Itinerary
-,8,testIsHyperLinksPresent,8,zorbanzorban,zorbanzorban,HYPERLINK
-,9,testIsHyperLinksPresent,9,zorbanzorban,zorbanzorban,Search Hotel
+LoginPageTest,PrimaryKey,TestCaseName,TestCaseID,UserName,Password,isValid,
+,1,testLogin,1,zorbanzorban,zorbanzorban,Y,
+,2,testLogin,2,testzorban,password2,N,
+,3,testLogin,3,zorbanzorban,zorbanzorban,Y,
+HomePageTest,PrimaryKey,TestCaseName,TestCaseID,UserName,Password,expectedWelcomeMessage,
+,4,testWelcomeMessage,4,zorbanzorban,zorbanzorban,Hello zorbanzorban!,
+,5,testWelcomeMessage,5,testzorban,zorbanzorban,Hello testzorban!,
+,PrimaryKey,TestCaseName,TestCaseID,UserName,Password,,
+,6,testLogout,6,zorbanzorban,zorbanzorban,,
+,PrimaryKey,TestCaseName,TestCaseID,UserName,Password,hyperLinks,
+,7,testIsHyperLinksPresent,7,zorbanzorban,zorbanzorban,Booked Itinerary,
+,8,testIsHyperLinksPresent,8,zorbanzorban,zorbanzorban,Search Hotel,
+,PrimaryKey,TestCaseName,TestCaseID,UserName,Password,hyperLinks,expectedWelcomeMessage
+,9,testWelcomeMessageIndifferentPages,9,zorbanzorban,zorbanzorban,Change Password,Hello zobanzorban!
+,10,testWelcomeMessageIndifferentPages,10,zorbanzorban,zorbanzorban,Booked Itinerary,Hello zorbanzorban!
