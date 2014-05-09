@@ -14,9 +14,12 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -24,6 +27,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import org.apache.log4j.Logger;
 
@@ -232,7 +236,6 @@ public class ReportAndMail
                     + browser.toUpperCase() + " as on " + dateNow);
 
             StringBuilder sb = updateHTML(timeTaken);
-            message.setContent(sb.toString(), "text/html");
 
             MimeBodyPart attachment = new MimeBodyPart();
             FileDataSource file = new FileDataSource(new File(
@@ -244,6 +247,21 @@ public class ReportAndMail
                     return "application/octet-stream";
                 }
             };
+
+            attachment.setDataHandler(new DataHandler(file));
+            attachment.setFileName("Test Summary.csv");
+
+            // Create the message part
+            BodyPart messageBodyPart = new MimeBodyPart();
+
+            // Fill the message
+            messageBodyPart.setContent(sb.toString(), "text/html");
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(attachment);
+
+            ((MimeMessage) message).setContent(multipart);
 
             Transport.send(message);
         }
