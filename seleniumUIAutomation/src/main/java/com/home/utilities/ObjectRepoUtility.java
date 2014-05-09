@@ -26,8 +26,6 @@ public class ObjectRepoUtility extends LoggerUtility
         logoutPageObjRepo = ObjectRepoUtility.fetchObjectFromFile("logoutPage");
     }
 
-
-
     public enum ObjectType
     {
 
@@ -68,6 +66,7 @@ public class ObjectRepoUtility extends LoggerUtility
     {
 
         String applicationName = envProperties.getString("application");
+        String objRepoLocation = envProperties.getString("objRepoLocation");
 
         HashMap<String, HashMap<String, String>> objRepo = new HashMap<String, HashMap<String, String>>();
         if (fileName != null)
@@ -75,9 +74,8 @@ public class ObjectRepoUtility extends LoggerUtility
             CSVReader reader;
             try
             {
-                reader = new CSVReader(new FileReader(
-                        envProperties.getString("objRepoLocation") + "/"
-                                + applicationName + "/" + fileName + ".csv"));
+                reader = new CSVReader(new FileReader(objRepoLocation + "/"
+                        + applicationName + "/" + fileName + ".csv"));
                 String[] nextLine;
                 try
                 {
@@ -140,9 +138,7 @@ public class ObjectRepoUtility extends LoggerUtility
                 catch (IOException e)
                 {
                     log.error("IO exception - Object File in the followig path = "
-                            + envProperties.getString("objRepoLocation")
-                            + "/"
-                            + applicationName + "/"
+                            + objRepoLocation + "/" + applicationName + "/"
 
                             + fileName + ".csv");
                     log.error(e.toString());
@@ -151,24 +147,23 @@ public class ObjectRepoUtility extends LoggerUtility
             catch (FileNotFoundException e)
             {
                 log.error("Object File Not found in the followig path = "
-                        + envProperties.getString("objRepoLocation") + "/"
-                        + applicationName + "/" + fileName + ".csv");
+                        + objRepoLocation + "/" + applicationName + "/"
+                        + fileName + ".csv");
                 log.error(e.toString());
             }
 
             // Add last key value pair -> FileDetails: (FileName:FilePath)
             HashMap<String, String> objMeta = new HashMap<String, String>();
-            objMeta.put(fileName, envProperties.getString("objRepoLocation")
-                    + "/" + applicationName + "/" + fileName + ".csv");
+            objMeta.put("fileName", objRepoLocation + "/" + applicationName + "/"
+                    + fileName + ".csv");
             objRepo.put("fileDetails", objMeta);
 
             return objRepo;
         }
         else
         {
-            log.error("INVALID File Name passed as argument "
-                    + envProperties.getString("objRepoLocation") + "/"
-                    + applicationName + "/" + fileName + ".csv");
+            log.error("INVALID File Name passed as argument " + objRepoLocation
+                    + "/" + applicationName + "/" + fileName + ".csv");
             return objRepo;
         }
     }

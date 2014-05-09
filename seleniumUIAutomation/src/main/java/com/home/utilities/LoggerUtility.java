@@ -1,18 +1,11 @@
 package com.home.utilities;
 
-import java.awt.AWTException;
-import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
-
-import javax.imageio.ImageIO;
 
 import nu.xom.Attribute;
 import nu.xom.Builder;
@@ -49,8 +42,6 @@ public class LoggerUtility
     public static HashMap<String, HashMap<String, HashMap<String, String>>> classDetails = new HashMap<String, HashMap<String, HashMap<String, String>>>();
 
     private static Logger log = Logger.getLogger(LoggerUtility.class);
-
-
 
     private static final String DATEFOLDER = (new Date()).toString()
             .replace(":", "_").replace(" ", "_");
@@ -96,36 +87,6 @@ public class LoggerUtility
             log.error("Not able to create Log folders");
 
         }
-    }
-
-
-
-    public static void captureScreenShotOLDImplementation(String cFileName)
-    {
-        Robot robot;
-        BufferedImage bufferedImage = null;
-        try
-        {
-            robot = new Robot();
-            bufferedImage = robot.createScreenCapture(new Rectangle(
-                    new Dimension(1366, 768)));
-        }
-        catch (AWTException e)
-        {
-            log.error("Error creating screencapture");
-            log.error(e.getStackTrace());
-        }
-        File imageFile = new File(cFileName);
-        try
-        {
-            ImageIO.write(bufferedImage, "jpeg", imageFile);
-        }
-        catch (IOException e)
-        {
-            log.error("Error writing screencapture to a file -" + cFileName);
-            log.error(e.getStackTrace());
-        }
-
     }
 
     public static void captureScreenShot(String fileName, WebDriver driver)
@@ -328,7 +289,7 @@ public class LoggerUtility
 
     public static void logVerifyPass(Logger logHandle, String cTraceMessage)
     {
-        logHandle.info("[VERIFICATION PASS ]" + cTraceMessage);
+        logHandle.info("[VERIFICATION PASS]" + cTraceMessage);
 
     }
 
