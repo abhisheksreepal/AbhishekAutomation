@@ -3,6 +3,8 @@ package com.home.application.adactin.tests;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
+import com.home.application.adactin.pages.HomePage;
+import com.home.application.adactin.pages.LoginPage;
 import com.home.application.tests.BaseWebPageTest;
 import com.home.utilities.DataProviderFromMapUtility;
 import com.home.utilities.LoggerUtility;
@@ -19,12 +21,14 @@ public class LoginPageTest extends BaseWebPageTest
    
     public void testLogin(String userName, String password, String isValid)
     {
-       loginPage.loginToApp(userName, password); 
+       
+       
+       new LoginPage().loginToApp(userName, password); 
      
 
         if (isValid.equalsIgnoreCase("Y"))
         {
-            if (homePage.isLoggedIn())
+            if (new HomePage().isLoggedIn())
             {
                 LoggerUtility.logVerifyPass(log, "Home Page logged in for -"
                         + userName);
@@ -32,15 +36,15 @@ public class LoginPageTest extends BaseWebPageTest
             else
             {
                 LoggerUtility.logVerifyFailure(log,
-                        "Home Page NOT logged in for -" + userName);
+                        "Home Page NOT logged in for -" + userName,new HomePage().driver);
             }
         }
         else
         {
-            if (homePage.isLoggedIn())
+            if (new HomePage().isLoggedIn())
             {
                 LoggerUtility.logVerifyFailure(log, "Home Page logged in for -"
-                        + userName);
+                        + userName,new HomePage().driver);
             }
             else
             {

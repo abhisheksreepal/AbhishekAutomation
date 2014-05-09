@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -169,7 +170,7 @@ public class TestBase {
 	
 	
 	
-    public static void failTestNgOnVerificationFailures(Logger logHandle,String cErrorMessage,String cErrorScreenShotFileName) 
+    public static void failTestNgOnVerificationFailures(Logger logHandle,String cErrorMessage,String cErrorScreenShotFileName,WebDriver driver) 
     {
     	/*String cScreenShotPath = "log/screenShots/";
         String cErrorScreenShotFileName = cScreenShotPath + "VERIFICATION_FAILURE_"+LoggerUtility.testCaseName
@@ -180,7 +181,7 @@ public class TestBase {
         	LoggerUtility.verificationErrorScreenShotFileNamePath = cErrorScreenShotFileName;
         }       
      
-        LoggerUtility.captureScreenShot(cErrorScreenShotFileName);
+        LoggerUtility.captureScreenShot(cErrorScreenShotFileName,driver);
     	logHandle.error("[VERIFICATION FAILURE],"+ cErrorMessage);
     	addVerificationFailure(new SeleniumException("[VERIFICATION FAILURE],"+ cErrorMessage));    
     }

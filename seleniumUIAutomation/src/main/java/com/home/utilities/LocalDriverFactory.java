@@ -50,7 +50,7 @@ public class LocalDriverFactory
             catch (MalformedURLException e)
             {
                 LoggerUtility.logErrorMessage(log,
-                        "browser not able to open due to malform URL");
+                        "browser not able to open due to malform URL",driver);
             }
 
         }
@@ -66,7 +66,7 @@ public class LocalDriverFactory
             catch (MalformedURLException e)
             {
                 LoggerUtility.logErrorMessage(log,
-                        "browser not able to open due to malform URL");
+                        "browser not able to open due to malform URL",driver);
             }
         }
         else if (browserName.equalsIgnoreCase("chrome"))
@@ -81,7 +81,7 @@ public class LocalDriverFactory
             catch (MalformedURLException e)
             {
                 LoggerUtility.logErrorMessage(log,
-                        "browser not able to open due to malform URL");
+                        "browser not able to open due to malform URL",driver);
             }
         }
         else if (browserName.equalsIgnoreCase("htmlunitenabled"))
@@ -96,7 +96,7 @@ public class LocalDriverFactory
             catch (MalformedURLException e)
             {
                 LoggerUtility.logErrorMessage(log,
-                        "browser not able to open due to malform URL");
+                        "browser not able to open due to malform URL",driver);
             }
         }
         return driver;

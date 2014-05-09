@@ -1,7 +1,6 @@
 package com.home.application.adactin.pages;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 
 import com.home.application.pages.BaseWebPage;
 import com.home.utilities.SeleniumException;
@@ -16,9 +15,9 @@ public class HomePage extends BaseWebPage
     @SuppressWarnings("unused")
     private static Logger log = Logger.getLogger(HomePage.class);
 
-    public HomePage(WebDriver driver)
+    public HomePage()
     {
-        super(driver);
+        
     }
 
     public void logOffFromApp()
@@ -61,6 +60,26 @@ public class HomePage extends BaseWebPage
         clickElement(homePageObjRepo, "hyperLinks", true, 1, hyperLinks,
                 "hyperLinks -" + hyperLinks.toString() + " NOT clicked");
 
+    }
+    
+    public boolean isHyperLinkPresent(String hyperLink){
+        try
+        {
+            if (isElementDisplayed(homePageObjRepo, "hyperLinks", true, 1, hyperLink))
+            {
+                return true;
+            }
+            else
+            {
+                waitForElementVisible(homePageObjRepo, "hyperLinks", true, 1, hyperLink,
+                        "[IGNORE this ERROR message]Verifying whether hyperLink is present -["+hyperLink+"]");
+                return true;
+            }
+        }
+        catch (SeleniumException e)
+        {
+            return false;
+        }
     }
 
 }

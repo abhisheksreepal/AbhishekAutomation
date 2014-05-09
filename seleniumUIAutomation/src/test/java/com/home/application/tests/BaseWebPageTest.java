@@ -11,9 +11,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import com.home.application.adactin.pages.HomePage;
-import com.home.application.adactin.pages.LoginPage;
-import com.home.application.adactin.pages.LogoutPage;
+import com.home.application.pages.BaseWebPage;
 import com.home.utilities.LocalDriverFactory;
 import com.home.utilities.LocalDriverManager;
 import com.home.utilities.LoggerUtility;
@@ -29,9 +27,7 @@ public class BaseWebPageTest extends TestBase
     private long startTime = 0L;
     private long endTime = 0L;
     public static long timeTaken = 0L;
-    public static LoginPage loginPage;
-    public static HomePage homePage;
-    public static LogoutPage logoutPage;
+
 
     public BaseWebPageTest()
     {
@@ -39,7 +35,6 @@ public class BaseWebPageTest extends TestBase
     }
 
     public static PropertiesConfiguration envProperties;
-    public static WebDriver driver;
 
     // Disable selenium logs, Making level as "warn"
     static
@@ -113,7 +108,7 @@ public class BaseWebPageTest extends TestBase
     }
 
     @BeforeMethod(alwaysRun = true)
-    public static void setUpForTestCase(Method method)
+    public void setUpForTestCase(Method method)
     {
 
         String defaultEnvironment = envProperties.getString("default");
@@ -122,22 +117,21 @@ public class BaseWebPageTest extends TestBase
         String browser = envProperties.getString("BROWSER_NAME");
         String hub = envProperties.getString("hub");
 
-        LocalDriverManager.setWebDriver(LocalDriverFactory.createInstance(
-                browser, hub));
+        WebDriver driver = LocalDriverFactory.createInstance(browser, hub);
+        LocalDriverManager.setWebDriver(driver);
 
-        driver = LocalDriverManager.getDriver();
-        loginPage = new LoginPage(driver);
-        homePage = new HomePage(driver);
-        logoutPage = new LogoutPage(driver);
+        new BaseWebPage(driver).navigateTo(url);
 
-        loginPage.navigateTo(url);
-
+        LoggerUtility.logTraceMessage(log, "[OPENING  Driver HASHCODE]"
+                + driver.hashCode());
     }
 
     @AfterMethod(alwaysRun = true)
     public void cleanUpForTestCase(Method method)
     {
-        driver = LocalDriverManager.getDriver();
+        WebDriver driver = LocalDriverManager.getDriver();
+        LoggerUtility.logTraceMessage(log,
+                "[CLOSING Driver HASHCODE]" + driver.hashCode());
         if (driver != null)
         {
             driver.quit();

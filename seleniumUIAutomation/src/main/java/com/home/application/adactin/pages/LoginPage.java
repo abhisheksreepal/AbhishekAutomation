@@ -1,7 +1,6 @@
 package com.home.application.adactin.pages;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 
 import com.home.application.pages.BaseWebPage;
 import com.home.utilities.SeleniumException;
@@ -16,9 +15,8 @@ public class LoginPage extends BaseWebPage
     @SuppressWarnings("unused")
     private static Logger log = Logger.getLogger(LoginPage.class);
 
-    public LoginPage(WebDriver driver)
+    public LoginPage()
     {
-        super(driver);
     }
 
     public void loginToApp(String username, String password)

@@ -6,3 +6,6 @@ HomePageTest,PrimaryKey,TestCaseName,TestCaseID,UserName,Password,expectedWelcom
 ,4,testWelcomeMessage,4,zorbanzorban,zorbanzorban,Hello zorbanzorban!
 ,5,testWelcomeMessage,5,testzorban,zorbanzorban,Hello testzorban!
 ,6,testLogout,6,zorbanzorban,zorbanzorban,
+,7,testIsHyperLinksPresent,7,zorbanzorban,zorbanzorban,Booked Itinerary
+,8,testIsHyperLinksPresent,8,zorbanzorban,zorbanzorban,HYPERLINK
+,9,testIsHyperLinksPresent,9,zorbanzorban,zorbanzorban,Search Hotel

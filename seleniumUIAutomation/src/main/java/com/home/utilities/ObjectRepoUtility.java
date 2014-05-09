@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -27,11 +26,7 @@ public class ObjectRepoUtility extends LoggerUtility
         logoutPageObjRepo = ObjectRepoUtility.fetchObjectFromFile("logoutPage");
     }
 
-    public ObjectRepoUtility(WebDriver driver)
-    {
-        super(driver);
 
-    }
 
     public enum ObjectType
     {

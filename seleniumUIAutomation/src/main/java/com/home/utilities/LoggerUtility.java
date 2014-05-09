@@ -50,7 +50,7 @@ public class LoggerUtility
 
     private static Logger log = Logger.getLogger(LoggerUtility.class);
 
-    public static WebDriver driver;
+
 
     private static final String DATEFOLDER = (new Date()).toString()
             .replace(":", "_").replace(" ", "_");
@@ -93,16 +93,12 @@ public class LoggerUtility
         }
         else
         {
-            LoggerUtility
-                    .logErrorMessage(log, "Not able to create Log folders");
+            log.error("Not able to create Log folders");
+
         }
     }
 
-    public LoggerUtility(WebDriver driver)
-    {
 
-        this.driver = driver;
-    }
 
     public static void captureScreenShotOLDImplementation(String cFileName)
     {
@@ -131,11 +127,12 @@ public class LoggerUtility
         }
 
     }
-    
-    
-    public static void captureScreenShot(String fileName){
+
+    public static void captureScreenShot(String fileName, WebDriver driver)
+    {
         WebDriver augmentedDriver = new Augmenter().augment(driver);
-        File scrFile = ((TakesScreenshot) augmentedDriver).getScreenshotAs(OutputType.FILE);
+        File scrFile = ((TakesScreenshot) augmentedDriver)
+                .getScreenshotAs(OutputType.FILE);
         try
         {
             FileUtils.copyFile(scrFile, new File(fileName));
@@ -335,7 +332,8 @@ public class LoggerUtility
 
     }
 
-    public static void logErrorMessage(Logger logHandle, String cErrorMessage)
+    public static void logErrorMessage(Logger logHandle, String cErrorMessage,
+            WebDriver driver)
     {
 
         String cScreenShotPath = envProperties.getString("logPath") + "/"
@@ -343,20 +341,22 @@ public class LoggerUtility
         String cErrorScreenShotFileName = cScreenShotPath + "/"
                 + "ERROR_FAILURE_" + testCaseName + logDate + ".png";
         errorScreenShotFileNamePath = cErrorScreenShotFileName;
-        captureScreenShot(cErrorScreenShotFileName);
+        captureScreenShot(cErrorScreenShotFileName, driver);
         logHandle.error(cErrorMessage);
 
         throw new SeleniumException(cErrorMessage);
     }
 
     // Verifies , capture screenshot and does not throw runtime exception
-    public static void logVerifyFailure(Logger logHandle, String cErrorMessage)
+    public static void logVerifyFailure(Logger logHandle, String cErrorMessage,
+            WebDriver driver)
     {
         String cScreenShotPath = envProperties.getString("logPath") + "/"
                 + DATEFOLDER + "/screenShots/";
         String cErrorScreenShotFileName = cScreenShotPath + "/"
                 + "ERROR_FAILURE_" + testCaseName + logDate + ".png";
-        TestBase.failTestNgOnVerificationFailures(logHandle, cErrorMessage,cErrorScreenShotFileName);
+        TestBase.failTestNgOnVerificationFailures(logHandle, cErrorMessage,
+                cErrorScreenShotFileName, driver);
     }
 
 }

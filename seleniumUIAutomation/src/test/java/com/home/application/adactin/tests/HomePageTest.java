@@ -3,6 +3,9 @@ package com.home.application.adactin.tests;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
+import com.home.application.adactin.pages.HomePage;
+import com.home.application.adactin.pages.LoginPage;
+import com.home.application.adactin.pages.LogoutPage;
 import com.home.application.tests.BaseWebPageTest;
 import com.home.utilities.DataProviderFromMapUtility;
 import com.home.utilities.LoggerUtility;
@@ -16,19 +19,9 @@ public class HomePageTest extends BaseWebPageTest
     public void testWelcomeMessage(String userName, String password,
             String expectedWelcomeMessage)
     {
-        try
-        {
-            LoggerUtility.logTraceMessage(log,
-                    Long.toString(Thread.currentThread().getId()));
-            Thread.sleep(60000);
-        }
-        catch (InterruptedException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        loginPage.loginToApp(userName, password);
-        String message = homePage.getWelcomeMessage();
+
+        new LoginPage().loginToApp(userName, password);
+        String message = new HomePage().getWelcomeMessage();
         if (expectedWelcomeMessage.equals(message))
         {
             LoggerUtility.logVerifyPass(log,
@@ -40,7 +33,8 @@ public class HomePageTest extends BaseWebPageTest
             LoggerUtility.logVerifyFailure(log,
                     "Application is showing incorrect Welcome Message -["
                             + message + "] and Expected message -["
-                            + expectedWelcomeMessage + "]");
+                            + expectedWelcomeMessage + "]",
+                    new LoginPage().driver);
         }
 
     }
@@ -49,28 +43,36 @@ public class HomePageTest extends BaseWebPageTest
     public void testLogout(String userName, String password,
             String expectedWelcomeMessage)
     {
-        try
-        {
-            LoggerUtility.logTraceMessage(log,
-                    Long.toString(Thread.currentThread().getId()));
 
-            Thread.sleep(60000);
-        }
-        catch (InterruptedException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        loginPage.loginToApp(userName, password);
-        homePage.clickHyperlinks("Logout");
-        if (logoutPage.isInLogOutPage())
+        new LoginPage().loginToApp(userName, password);
+        new HomePage().clickHyperlinks("Logout");
+        if (new LogoutPage().isInLogOutPage())
         {
             LoggerUtility.logVerifyPass(log, "Application is Logged out");
         }
         else
         {
-            LoggerUtility
-                    .logVerifyFailure(log, "Application is Not Logged out");
+            LoggerUtility.logVerifyFailure(log,
+                    "Application is Not Logged out", new LogoutPage().driver);
+        }
+
+    }
+    
+    
+    @Test(dataProvider = "initializeDataProvider", dataProviderClass = DataProviderFromMapUtility.class)
+    public void testIsHyperLinksPresent(String userName, String password,
+            String hyperLinks)
+    {
+
+        new LoginPage().loginToApp(userName, password);
+        
+        if (new HomePage().isHyperLinkPresent(hyperLinks))
+        {
+            LoggerUtility.logVerifyPass(log, "HyperLink - "+hyperLinks+" present");
+        }
+        else
+        {
+            LoggerUtility.logVerifyFailure(log, "HyperLink - "+hyperLinks+" NOT present",new HomePage().driver);
         }
 
     }

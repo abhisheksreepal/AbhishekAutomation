@@ -23,11 +23,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.home.utilities.LocalDriverManager;
 import com.home.utilities.LoggerUtility;
 import com.home.utilities.SeleniumException;
 
 public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 {
+
+    public WebDriver driver;
 
     private static Logger log = Logger.getLogger(BaseWebPage.class);
 
@@ -103,8 +106,13 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
     public BaseWebPage(WebDriver driver)
     {
-        super(driver);
+        this.driver = driver;
 
+    }
+
+    public BaseWebPage()
+    {
+        this.driver = LocalDriverManager.getDriver();
     }
 
     /**
@@ -113,7 +121,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * 
      * @return
      */
-    private static WebDriverBackedSelenium getSeleniumHandle()
+    private WebDriverBackedSelenium getSeleniumHandle()
     {
         return new WebDriverBackedSelenium(driver, driver.getCurrentUrl());
 
@@ -124,11 +132,10 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * 
      * @return
      */
-    public static String getPageTitle()
+    public String getPageTitle()
     {
         String title = driver.getTitle();
-        LoggerUtility.logTraceMessage(log, "Returning PageTitle -"
-                + title);
+        LoggerUtility.logTraceMessage(log, "Returning PageTitle -" + title);
         return title;
     }
 
@@ -137,7 +144,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * 
      * @return
      */
-    public static void goBack()
+    public void goBack()
     {
         getSeleniumHandle().goBack();
         getSeleniumHandle().waitForPageToLoad(getStandardWaitTime());
@@ -146,29 +153,44 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
     /**
      * 
      */
-    public static void closeBrowser()
+    public void closeBrowser()
     {
         driver.quit();
-        if(driver instanceof FirefoxDriver){
-            LoggerUtility.logTraceMessage(log, "Successfully CLOSED Firefox Browser");
-        }else if(driver instanceof InternetExplorerDriver){
-            LoggerUtility.logTraceMessage(log, "Successfully CLOSED Internet Explorer Browser");
-        }else{
+        if (driver instanceof FirefoxDriver)
+        {
+            LoggerUtility.logTraceMessage(log,
+                    "Successfully CLOSED Firefox Browser");
+        }
+        else if (driver instanceof InternetExplorerDriver)
+        {
+            LoggerUtility.logTraceMessage(log,
+                    "Successfully CLOSED Internet Explorer Browser");
+        }
+        else
+        {
             LoggerUtility.logTraceMessage(log, "Successfully CLOSED Browser");
         }
-        
-        
+
     }
 
-    public static void navigateTo(String url)
+    public void navigateTo(String url)
     {
         driver.get(url);
-        if(driver instanceof FirefoxDriver){
-            LoggerUtility.logTraceMessage(log, "Successfully NAVIGATED Firefox Browser to -"+url);
-        }else if(driver instanceof InternetExplorerDriver){
-            LoggerUtility.logTraceMessage(log, "Successfully NAVIGATED Internet Explorer Browser to -"+url);
-        }else{
-            LoggerUtility.logTraceMessage(log, "Successfully NAVIGATED Browser to -"+url);
+        if (driver instanceof FirefoxDriver)
+        {
+            LoggerUtility.logTraceMessage(log,
+                    "Successfully NAVIGATED Firefox Browser to -" + url);
+        }
+        else if (driver instanceof InternetExplorerDriver)
+        {
+            LoggerUtility.logTraceMessage(log,
+                    "Successfully NAVIGATED Internet Explorer Browser to -"
+                            + url);
+        }
+        else
+        {
+            LoggerUtility.logTraceMessage(log,
+                    "Successfully NAVIGATED Browser to -" + url);
         }
     }
 
@@ -179,7 +201,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * @param waitForTimeout
      * 
      */
-    public static void clickElement(
+    public void clickElement(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced,
@@ -237,7 +259,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage + "]"
                                     + " And Object Xpath =["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -289,7 +311,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
 
                 }
             }
@@ -328,7 +350,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "] is not found and [MESSAGE]=["
                                     + errorMessage + "]" + " And Object Id ["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -380,7 +402,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -399,7 +421,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * @param waitForTimeout
      * 
      */
-    public static String getTextForElement(
+    public String getTextForElement(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced,
@@ -438,8 +460,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "],"
                                     + "Object Name -["
                                     + objectName
-                                    + "] is successfully present and text is retrieved - ["+actualText+"]"
-                                    + " And Object xpath ["
+                                    + "] is successfully present and text is retrieved - ["
+                                    + actualText + "]" + " And Object xpath ["
                                     + getObjectValue(objectRepo, objectName)
                                     + "]");
                     return actualText;
@@ -461,7 +483,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "] is NOT present and text is NOT retrieved and [MESSAGE]=["
                                     + errorMessage + "]" + " And Object xpath["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -483,7 +505,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "],"
                                     + "Object Name -["
                                     + objectName
-                                    + "] is successfully present and text is retrieved - ["+actualText+"]"
+                                    + "] is successfully present and text is retrieved - ["
+                                    + actualText
+                                    + "]"
                                     + " And Object xpath ["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
@@ -512,7 +536,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -538,8 +562,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "],"
                                     + "Object Name -["
                                     + objectName
-                                    + "] is successfully present and text is retrieved - ["+actualText+"]"
-                                    + " And Object id ["
+                                    + "] is successfully present and text is retrieved - ["
+                                    + actualText + "]" + " And Object id ["
                                     + getObjectValue(objectRepo, objectName)
                                     + "]");
                     return actualText;
@@ -561,7 +585,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "] is NOT present and text is NOT retrieved and [MESSSAGE]=["
                                     + errorMessage + "]" + " And Object id["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
 
                 }
             }
@@ -584,7 +608,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "],"
                                     + "Object Name -["
                                     + objectName
-                                    + "] is successfully present and text is retrieved - ["+actualText+"]"
+                                    + "] is successfully present and text is retrieved - ["
+                                    + actualText
+                                    + "]"
                                     + " Object id ["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
@@ -613,7 +639,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
 
                 }
             }
@@ -634,7 +660,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * @param waitForTimeout
      * 
      */
-    public static void clearElement(
+    public void clearElement(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced,
@@ -692,7 +718,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage + "]"
                                     + " And Object Xpath -["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -744,7 +770,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -782,7 +808,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "] is not found and [MESSAGE]=["
                                     + errorMessage + "]" + " And Object id -["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -834,7 +860,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -854,7 +880,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * @param waitForTimeout
      * 
      */
-    public static void setTextAfterClearingElement(
+    public void setTextAfterClearingElement(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, String value,
             boolean modifyObjectValueInRuntime, int noOfOccurancesToBeReplaced,
@@ -895,8 +921,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + "],"
                                     + "Object Name -[" + objectName
-                                    + "] is successfully SET text ["+ value+"]"
-                                    + " And Object Xpath ["
+                                    + "] is successfully SET text [" + value
+                                    + "]" + " And Object Xpath ["
                                     + getObjectValue(objectRepo, objectName)
                                     + "]," + timeDiff + "msecs");
                 }
@@ -915,7 +941,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage + "]"
                                     + " And Object Xpath -["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -939,7 +965,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "],"
                                     + "Object Name -["
                                     + objectName
-                                    + "] is successfully SET text["+ value+"]"
+                                    + "] is successfully SET text["
+                                    + value
+                                    + "]"
                                     + " And Object Xpath ["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
@@ -967,7 +995,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -987,12 +1015,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             .sendKeys(value);
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
-                            + objectRepo.get("fileDetails").get("fileName")
-                            + "]," + "Object Name -[" + objectName
-                            + "] is successfully SET text["+ value+"]" + " And Object Id ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                    logTraceMessage(
+                            log,
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "Object Name -[" + objectName
+                                    + "] is successfully SET text[" + value
+                                    + "]" + " And Object Id ["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]," + timeDiff + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -1008,7 +1043,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "] is not found and [MESSAGE]="
                                     + errorMessage + "]" + " And Object id -["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -1032,7 +1067,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "],"
                                     + "Object Name -["
                                     + objectName
-                                    + "] is successfully SET text["+ value+"]"
+                                    + "] is successfully SET text["
+                                    + value
+                                    + "]"
                                     + " And Object Id ["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
@@ -1060,7 +1097,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -1080,7 +1117,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * @param waitForTimeout
      * 
      */
-    public static void appendTextElement(
+    public void appendTextElement(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, String value,
             boolean modifyObjectValueInRuntime, int noOfOccurancesToBeReplaced,
@@ -1118,8 +1155,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + "],"
                                     + "Object Name -[" + objectName
-                                    + "] is successfully Appeneded text["+ value+"]"
-                                    + " And Object Xpath ["
+                                    + "] is successfully Appeneded text["
+                                    + value + "]" + " And Object Xpath ["
                                     + getObjectValue(objectRepo, objectName)
                                     + "]," + timeDiff + "msecs");
                 }
@@ -1138,7 +1175,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage + "]"
                                     + " And Object Xpath -["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -1162,7 +1199,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "],"
                                     + "Object Name -["
                                     + objectName
-                                    + "] is successfully Appeneded text["+ value+"]"
+                                    + "] is successfully Appeneded text["
+                                    + value
+                                    + "]"
                                     + " And Object Xpath ["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
@@ -1190,7 +1229,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -1216,8 +1255,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + "],"
                                     + "Object Name -[" + objectName
-                                    + "] is successfully Appended text["+ value+"]"
-                                    + " And Object Id ["
+                                    + "] is successfully Appended text["
+                                    + value + "]" + " And Object Id ["
                                     + getObjectValue(objectRepo, objectName)
                                     + "]," + timeDiff + "msecs");
                 }
@@ -1235,7 +1274,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "] is not found AND [MESSAGE]=["
                                     + errorMessage + "]" + " And Object id -["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -1259,7 +1298,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "],"
                                     + "Object Name -["
                                     + objectName
-                                    + "] is successfully Appended text["+ value+"]"
+                                    + "] is successfully Appended text["
+                                    + value
+                                    + "]"
                                     + " And Object Id ["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
@@ -1287,7 +1328,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -1307,7 +1348,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * @param waitForTimeout
      * 
      */
-    public static void waitForElementVisible(
+    public void waitForElementVisible(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced,
@@ -1352,7 +1393,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object name -[" + objectName
                             + "] is NOT present and timed out and [MESSAGE]=["
                             + errorMessage + "]" + " And object value =["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
                 }
             }
             else
@@ -1401,7 +1443,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -1437,7 +1479,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object name -[" + objectName
                             + "] is NOT present and timed out and [MESSAGE]= ["
                             + errorMessage + "]" + " And object value =["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
                 }
             }
             else
@@ -1486,7 +1529,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -1522,7 +1565,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object name -[" + objectName
                             + "] is NOT present and timed out and [MESSAGE]= ["
                             + errorMessage + "]" + " And object value =["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
                 }
             }
             else
@@ -1571,7 +1615,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -1591,7 +1635,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * @param waitForTimeout
      * 
      */
-    public static void waitForElementNotVisible(
+    public void waitForElementNotVisible(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced,
@@ -1650,7 +1694,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage + "]"
                                     + " And object value =["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -1701,7 +1745,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -1750,7 +1794,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage + "]"
                                     + " And object value =["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -1801,7 +1845,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -1813,7 +1857,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
     }
 
-    public static void waitForTextToBePresentInElementAttribute(
+    public void waitForTextToBePresentInElementAttribute(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, String text, String attributeName,
             boolean modifyObjectValueInRuntime, int noOfOccurancesToBeReplaced,
@@ -1896,7 +1940,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage + "]"
                                     + " And object value =["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
                 catch (SeleniumException e)
                 {
@@ -1916,7 +1960,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage + "]"
                                     + " And object value =["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -1997,7 +2041,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
                 catch (SeleniumException e)
                 {
@@ -2021,7 +2065,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -2094,7 +2138,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage + "]"
                                     + " And object value =["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
 
                 }
                 catch (SeleniumException e)
@@ -2115,7 +2159,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage + "]"
                                     + " And object value =["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
                 }
             }
             else
@@ -2195,7 +2239,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
 
                 }
                 catch (SeleniumException e)
@@ -2220,7 +2264,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -2232,7 +2276,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
     }
 
-    public static void waitForTextPresentInElement(
+    public void waitForTextPresentInElement(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, String text, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced,
@@ -2272,7 +2316,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "] is NOT present and timed out and text - "
                             + text + "is NOT present" + " and [MESSAGE]=["
                             + errorMessage + "]" + " And object value =["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
                 }
             }
             else
@@ -2326,7 +2371,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
 
                 }
             }
@@ -2357,7 +2402,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "] is NOT present and text - " + text
                             + "is NOT present" + " and [MESSAGE]=["
                             + errorMessage + "]" + " And object value =["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
 
                 }
             }
@@ -2412,7 +2458,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -2424,7 +2470,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
     }
 
-    public static void waitForTextNOTToBePresentInElement(
+    public void waitForTextNOTToBePresentInElement(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, String text, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced,
@@ -2487,7 +2533,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "] is Timed out and text -  " + text
                             + " is STILL present" + " and [MESSAGE]=["
                             + errorMessage + "]" + " And object value =["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
 
                 }
                 catch (SeleniumException e)
@@ -2497,7 +2544,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object name -[" + objectName
                             + "]  is NOT present" + " and [MESSAGE]=["
                             + errorMessage + "]" + " And object value =["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
                 }
             }
             else
@@ -2573,7 +2621,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
 
                 }
                 catch (SeleniumException e)
@@ -2597,7 +2645,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -2652,7 +2700,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "] is Timed out and text -  " + text
                             + " is still visible" + " and [MESSAGE]=["
                             + errorMessage + "]" + " And object value =["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
 
                 }
                 catch (SeleniumException e)
@@ -2662,7 +2711,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object name -[" + objectName
                             + "]  is NOT present " + " and [MESSAGE]=["
                             + errorMessage + "]" + " And object value =["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
                 }
             }
             else
@@ -2739,7 +2789,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
 
                 }
                 catch (SeleniumException e)
@@ -2763,7 +2813,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -2782,7 +2832,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * @param waitForTimeout
      * 
      */
-    public static boolean isElementDisplayed(
+    public boolean isElementDisplayed(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced)
@@ -3002,7 +3052,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * @param waitForTimeout
      * 
      */
-    public static boolean isElementSelected(
+    public boolean isElementSelected(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced)
@@ -3158,7 +3208,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * @param waitForTimeout
      * 
      */
-    public static boolean isElementEnabled(
+    public boolean isElementEnabled(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced)
@@ -3315,7 +3365,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * 
      */
     @Deprecated()
-    public static boolean isElementVisible(
+    public boolean isElementVisible(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced)
@@ -3561,7 +3611,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
     }
 
-    public static enum selectOptionValues
+    public enum selectOptionValues
     {
 
         VALUE, INDEX, VISIBLEBYTEXT;
@@ -3574,7 +3624,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * @param waitForTimeout
      * 
      */
-    public static void selectOptionElements(
+    public void selectOptionElements(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, selectOptionValues option,
             String valueOrVisibleByText, int index,
@@ -3646,7 +3696,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + "]"
                                         + " and Object ID ["
                                         + getObjectValue(objectRepo, objectName)
-                                        + "]");
+                                        + "]", driver);
 
                     }
                 }
@@ -3705,7 +3755,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + getModifiedObjectValue(objectRepo,
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "]");
+                                                valuesToBeReplaced) + "]",
+                                driver);
 
                     }
                 }
@@ -3749,7 +3800,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + " ]with Option - Index = [" + index
                                 + "]  is NOT Selected," + " and [MESSAGE]=["
                                 + errorMessage + "]" + " and Object ID ["
-                                + getObjectValue(objectRepo, objectName) + "]");
+                                + getObjectValue(objectRepo, objectName) + "]",
+                                driver);
 
                     }
                 }
@@ -3808,7 +3860,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + getModifiedObjectValue(objectRepo,
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "]");
+                                                valuesToBeReplaced) + "]",
+                                driver);
                     }
                 }
 
@@ -3863,7 +3916,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + "]"
                                         + " and Object ID ["
                                         + getObjectValue(objectRepo, objectName)
-                                        + "]");
+                                        + "]", driver);
 
                     }
                 }
@@ -3922,7 +3975,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + getModifiedObjectValue(objectRepo,
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "]");
+                                                valuesToBeReplaced) + "]",
+                                driver);
 
                     }
                 }
@@ -3986,7 +4040,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + "]"
                                         + " and Object Xpath ["
                                         + getObjectValue(objectRepo, objectName)
-                                        + "]");
+                                        + "]", driver);
 
                     }
                 }
@@ -4045,7 +4099,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + getModifiedObjectValue(objectRepo,
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "]");
+                                                valuesToBeReplaced) + "]",
+                                driver);
 
                     }
                 }
@@ -4089,7 +4144,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + "] with Option - Index = [" + index
                                 + "] is NOT Selected," + " and [MESSAGE]=["
                                 + errorMessage + "]" + " and Object Xpath ["
-                                + getObjectValue(objectRepo, objectName) + "]");
+                                + getObjectValue(objectRepo, objectName) + "]",
+                                driver);
 
                     }
                 }
@@ -4148,7 +4204,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + getModifiedObjectValue(objectRepo,
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "]");
+                                                valuesToBeReplaced) + "]",
+                                driver);
 
                     }
                 }
@@ -4204,7 +4261,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + "]"
                                         + " and Object Xpath ["
                                         + getObjectValue(objectRepo, objectName)
-                                        + "]");
+                                        + "]", driver);
 
                     }
                 }
@@ -4263,7 +4320,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + getModifiedObjectValue(objectRepo,
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "]");
+                                                valuesToBeReplaced) + "]",
+                                driver);
 
                     }
                 }
@@ -4287,7 +4345,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * @param waitForTimeout
      * 
      */
-    public static int getChildCountForElement(
+    public int getChildCountForElement(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced,
@@ -4338,7 +4396,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object Name -[" + objectName
                             + "] has NOT  got count = " + " and [MESSAGE]=["
                             + errorMessage + "]" + " And Object Xpath ["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
 
                 }
             }
@@ -4394,7 +4453,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
 
                 }
             }
@@ -4434,7 +4493,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object Name -[" + objectName
                             + "] has NOT  got count = " + " and [MESSAGE]=["
                             + errorMessage + "]" + " And Object Xpath ["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
 
                 }
             }
@@ -4490,7 +4550,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
 
                 }
             }
@@ -4504,7 +4564,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         return 0;
     }
 
-    public static void uploadFile(HashMap<String, HashMap<String, String>> objectRepo,
+    public void uploadFile(HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, String value,
             boolean modifyObjectValueInRuntime, int noOfOccurancesToBeReplaced,
             String valuesToBeReplaced, String errorMessage)
@@ -4561,7 +4621,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage + "]"
                                     + " And Object Xpath -["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
 
                 }
             }
@@ -4614,7 +4674,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
 
                 }
             }
@@ -4653,7 +4713,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "] is not found and [MESSAGE]=["
                                     + errorMessage + "]" + " And Object id -["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
 
                 }
             }
@@ -4706,7 +4766,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
 
                 }
             }
@@ -4719,7 +4779,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
     }
 
-    public static void mouseOverElement(
+    public void mouseOverElement(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, String value,
             boolean modifyObjectValueInRuntime, int noOfOccurancesToBeReplaced,
@@ -4777,7 +4837,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage + "]"
                                     + " And Object Xpath -["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
 
                 }
             }
@@ -4831,7 +4891,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
 
                 }
             }
@@ -4877,7 +4937,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "] is not found and [MESSAGE]=["
                                     + errorMessage + "]" + " And Object id -["
                                     + getObjectValue(objectRepo, objectName)
-                                    + "]");
+                                    + "]", driver);
 
                 }
             }
@@ -4931,7 +4991,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -4943,7 +5003,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
     }
 
-    public static String getAttributeValue(
+    public String getAttributeValue(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, String attributeName,
             boolean modifyObjectValueInRuntime, int noOfOccurancesToBeReplaced,
@@ -4982,7 +5042,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "Object Name -["
                                     + objectName
                                     + "] is successfully present and attribute "
-                                    + attributeName + " is retrieved"+" with value -["+actualText+"]"
+                                    + attributeName + " is retrieved"
+                                    + " with value -[" + actualText + "]"
                                     + " Object xpath ["
                                     + getObjectValue(objectRepo, objectName)
                                     + "]");
@@ -4997,7 +5058,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "] is NOT present and attribute " + attributeName
                             + " is NOT retrieved" + " and [MESSAGE]=["
                             + errorMessage + "]" + " And Object xpath["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
 
                 }
             }
@@ -5023,7 +5085,10 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectName
                                     + "] is successfully present and attribute "
                                     + attributeName
-                                    + " is retrieved"+" with value -["+actualText+"]"
+                                    + " is retrieved"
+                                    + " with value -["
+                                    + actualText
+                                    + "]"
                                     + " And Object xpath ["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
@@ -5053,7 +5118,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
 
                 }
             }
@@ -5081,7 +5146,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + "Object Name -["
                                     + objectName
                                     + "] is successfully present and attribute "
-                                    + attributeName + " is retrieved"+" with value -["+actualText+"]"
+                                    + attributeName + " is retrieved"
+                                    + " with value -[" + actualText + "]"
                                     + " And Object id ["
                                     + getObjectValue(objectRepo, objectName)
                                     + "]");
@@ -5096,7 +5162,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "] is NOT present and attribute " + attributeName
                             + " is NOT retrieved" + " and [MESSAGE]=["
                             + errorMessage + "]" + " And Object id["
-                            + getObjectValue(objectRepo, objectName) + "]");
+                            + getObjectValue(objectRepo, objectName) + "]",
+                            driver);
                 }
             }
             else
@@ -5121,7 +5188,10 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectName
                                     + "] is successfully present and attribute "
                                     + attributeName
-                                    + " is retrieved"+" with value -["+actualText+"]"
+                                    + " is retrieved"
+                                    + " with value -["
+                                    + actualText
+                                    + "]"
                                     + " And Object id ["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
@@ -5151,7 +5221,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+                                            valuesToBeReplaced) + "]", driver);
                 }
             }
 
@@ -5165,7 +5235,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
     }
 
-    public static void switchToFrame(
+    public void switchToFrame(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced,
@@ -5227,7 +5297,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + "Object Name -"
                                         + objectName
                                         + " is not found with Xpath -"
-                                        + getObjectValue(objectRepo, objectName));
+                                        + getObjectValue(objectRepo, objectName),
+                                driver);
                         // throw new
                         // NoSuchElementException("Page
                         // -"+objectRepo.get("fileDetails").get("fileName")+"
@@ -5286,7 +5357,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + getModifiedObjectValue(objectRepo,
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced));
+                                                valuesToBeReplaced), driver);
                         // throw new
                         // NoSuchElementException("Page
                         // -"+objectRepo.get("fileDetails").get("fileName")+"
@@ -5341,7 +5412,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + "Object Name -"
                                         + objectName
                                         + " is not found with id -"
-                                        + getObjectValue(objectRepo, objectName));
+                                        + getObjectValue(objectRepo, objectName),
+                                driver);
                         // throw new
                         // NoSuchElementException("Page
                         // -"+objectRepo.get("fileDetails").get("fileName")+"
@@ -5399,7 +5471,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + getModifiedObjectValue(objectRepo,
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced));
+                                                valuesToBeReplaced), driver);
                         // throw new
                         // NoSuchElementException("Page
                         // -"+objectRepo.get("fileDetails").get("fileName")+"
@@ -5454,7 +5526,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + "Object Name -"
                                         + objectName
                                         + " is not found with Name -"
-                                        + getObjectValue(objectRepo, objectName));
+                                        + getObjectValue(objectRepo, objectName),
+                                driver);
                         // throw new
                         // NoSuchElementException("Page
                         // -"+objectRepo.get("fileDetails").get("fileName")+"
@@ -5512,7 +5585,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + getModifiedObjectValue(objectRepo,
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced));
+                                                valuesToBeReplaced), driver);
                         // throw new
                         // NoSuchElementException("Page
                         // -"+objectRepo.get("fileDetails").get("fileName")+"
@@ -5527,7 +5600,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             }
             else
             {
-                logErrorMessage(log, "Invalid Object Type -" + objectType);
+                logErrorMessage(log, "Invalid Object Type -" + objectType,
+                        driver);
 
             }
         }
@@ -5537,15 +5611,16 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
 
     }
-    
-    public static String getFirstSelectedOption(
+
+    public String getFirstSelectedOption(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
-            int noOfOccurancesToBeReplaced, String valuesToBeReplaced,String errorMessage)
+            int noOfOccurancesToBeReplaced, String valuesToBeReplaced,
+            String errorMessage)
     {
         waitForElementVisible(objectRepo, objectName,
                 modifyObjectValueInRuntime, noOfOccurancesToBeReplaced,
-                valuesToBeReplaced,errorMessage);
+                valuesToBeReplaced, errorMessage);
         String objectType = getObjectType(objectRepo, objectName);
         String firstSelected = null;
 
@@ -5569,7 +5644,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(log, "Select list Value " + firstSelected
-                            + " is NOT retrieved,");
+                            + " is NOT retrieved,", driver);
                 }
             }
             else
@@ -5591,7 +5666,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(log, "Select list Value " + firstSelected
-                            + " is NOT retrieved,");
+                            + " is NOT retrieved,", driver);
 
                 }
             }
@@ -5617,7 +5692,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(log, "Select list Value " + firstSelected
-                            + " is NOT retrieved,");
+                            + " is NOT retrieved,", driver);
                 }
             }
             else
@@ -5639,7 +5714,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(log, "Select list Value " + firstSelected
-                            + " is NOT retrieved,");
+                            + " is NOT retrieved,", driver);
 
                 }
             }
@@ -5664,7 +5739,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(log, "Select list Value " + firstSelected
-                            + " is NOT retrieved,");
+                            + " is NOT retrieved,", driver);
                 }
             }
             else
@@ -5686,7 +5761,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(log, "Select list Value " + firstSelected
-                            + " is NOT retrieved,");
+                            + " is NOT retrieved,", driver);
 
                 }
             }
@@ -5694,15 +5769,13 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else
         {
-            logErrorMessage(log, "Invalid Object Type -" + objectType);
+            logErrorMessage(log, "Invalid Object Type -" + objectType, driver);
 
         }
         return firstSelected;
     }
-    
-    
 
-    public static void uploadFile(HashMap<String, HashMap<String, String>> objectRepo,
+    public void uploadFile(HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, String value,
             boolean modifyObjectValueInRuntime, int noOfOccurancesToBeReplaced,
             String valuesToBeReplaced)
@@ -5738,7 +5811,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + " " + "Object Name -"
                                     + objectName + " is not found with Xpath -"
-                                    + getObjectValue(objectRepo, objectName));
+                                    + getObjectValue(objectRepo, objectName),
+                            driver);
                     // throw new
                     // NoSuchElementException("Page
                     // -"+objectRepo.get("fileDetails").get("fileName")+"
@@ -5788,7 +5862,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced));
+                                            valuesToBeReplaced), driver);
                     // throw new
                     // NoSuchElementException("Page
                     // -"+objectRepo.get("fileDetails").get("fileName")+"
@@ -5831,7 +5905,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + " " + "Object Name -"
                                     + objectName + " is not found with id -"
-                                    + getObjectValue(objectRepo, objectName));
+                                    + getObjectValue(objectRepo, objectName),
+                            driver);
                     // throw new
                     // NoSuchElementException("Page
                     // -"+objectRepo.get("fileDetails").get("fileName")+"
@@ -5881,7 +5956,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced));
+                                            valuesToBeReplaced), driver);
                     // throw new
                     // NoSuchElementException("Page
                     // -"+objectRepo.get("fileDetails").get("fileName")+"
@@ -5896,12 +5971,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else
         {
-            logErrorMessage(log, "Invalid Object Type -" + objectType);
+            logErrorMessage(log, "Invalid Object Type -" + objectType, driver);
 
         }
     }
 
-    public static void mouseOverElement(
+    public void mouseOverElement(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
             int noOfOccurancesToBeReplaced, String valuesToBeReplaced)
@@ -5937,7 +6012,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + " " + "Object Name -"
                                     + objectName + " is not found with Xpath -"
-                                    + getObjectValue(objectRepo, objectName));
+                                    + getObjectValue(objectRepo, objectName),
+                            driver);
                     // throw new RuntimeException("mouse over an element is not
                     // successful");
                 }
@@ -5983,7 +6059,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced));
+                                            valuesToBeReplaced), driver);
                     // throw new RuntimeException("mouse over an element is not
                     // successful");
                 }
@@ -6019,7 +6095,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + " " + "Object Name -"
                                     + objectName + " is not found with id -"
-                                    + getObjectValue(objectRepo, objectName));
+                                    + getObjectValue(objectRepo, objectName),
+                            driver);
                     // throw new RuntimeException("mouse over an element is not
                     // successful");
                 }
@@ -6065,7 +6142,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced));
+                                            valuesToBeReplaced), driver);
                     // throw new RuntimeException("mouse over an element is not
                     // successful");
                 }
@@ -6074,21 +6151,20 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else
         {
-            logErrorMessage(log, "Invalid Object Type -" + objectType);
+            logErrorMessage(log, "Invalid Object Type -" + objectType, driver);
 
         }
     }
 
-    
-
-    public static void mouseRightClick(
+    public void mouseRightClick(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, boolean modifyObjectValueInRuntime,
-            int noOfOccurancesToBeReplaced, String valuesToBeReplaced,String errorMessage)
+            int noOfOccurancesToBeReplaced, String valuesToBeReplaced,
+            String errorMessage)
     {
         waitForElementVisible(objectRepo, objectName,
                 modifyObjectValueInRuntime, noOfOccurancesToBeReplaced,
-                valuesToBeReplaced,errorMessage);
+                valuesToBeReplaced, errorMessage);
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
@@ -6119,7 +6195,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + " " + "Object Name -"
                                     + objectName + " is not found with Xpath -"
-                                    + getObjectValue(objectRepo, objectName));
+                                    + getObjectValue(objectRepo, objectName),
+                            driver);
                     // throw new RuntimeException("mouse over an element is not
                     // successful");
                 }
@@ -6166,7 +6243,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced));
+                                            valuesToBeReplaced), driver);
                     // throw new RuntimeException("mouse over an element is not
                     // successful");
                 }
@@ -6202,7 +6279,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + " " + "Object Name -"
                                     + objectName + " is not found with id -"
-                                    + getObjectValue(objectRepo, objectName));
+                                    + getObjectValue(objectRepo, objectName),
+                            driver);
                     // throw new RuntimeException("mouse over an element is not
                     // successful");
                 }
@@ -6248,7 +6326,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced));
+                                            valuesToBeReplaced), driver);
                     // throw new RuntimeException("mouse over an element is not
                     // successful");
                 }
@@ -6257,7 +6335,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else
         {
-            logErrorMessage(log, "Invalid Object Type -" + objectType);
+            logErrorMessage(log, "Invalid Object Type -" + objectType, driver);
 
         }
     }
