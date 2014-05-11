@@ -205,7 +205,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-            long startTime = getCurrentTime();
+           
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -213,8 +213,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .click();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -222,8 +221,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object Name -[" + objectName
                             + "] is successfully clicked"
                             + " And Object Xpath = ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -251,8 +249,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).click();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage(
 
                     "["
@@ -267,8 +264,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Xpath =["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -298,7 +294,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-            long startTime = getCurrentTime();
+           
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -306,14 +302,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .click();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "]  is successfully clicked" + " And Object Id ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -340,8 +334,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).click();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                 
                     logTraceMessage(
 
                     "["
@@ -356,8 +349,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Id ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -646,7 +638,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-            long startTime = getCurrentTime();
+           
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -654,8 +646,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .clear();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                    
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -663,8 +654,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object Name -[" + objectName
                             + "] is successfully cleared"
                             + " And Object Xpath ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -692,8 +682,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).clear();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage(
 
                     "["
@@ -708,8 +697,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " Object Xpath ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]" + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -738,7 +726,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-            long startTime = getCurrentTime();
+            
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -746,14 +734,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .clear();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is successfully cleared" + " And Object Id ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -780,8 +766,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).clear();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage(
 
                     "["
@@ -796,8 +781,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Id ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -860,7 +844,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             clearElement(objectRepo, objectName, modifyObjectValueInRuntime,
                     noOfOccurancesToBeReplaced, valuesToBeReplaced,
                     errorMessage);
-            long startTime = getCurrentTime();
+           
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -868,8 +852,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                 
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -877,8 +860,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object Name -[" + objectName
                             + "] is successfully SET text [" + value + "]"
                             + " And Object Xpath ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -906,8 +888,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage(
 
                     "["
@@ -924,8 +905,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Xpath ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -957,7 +937,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             clearElement(objectRepo, objectName, modifyObjectValueInRuntime,
                     noOfOccurancesToBeReplaced, valuesToBeReplaced,
                     errorMessage);
-            long startTime = getCurrentTime();
+           
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -965,8 +945,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -974,8 +953,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object Name -[" + objectName
                             + "] is successfully SET text[" + value + "]"
                             + " And Object Id ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -1002,8 +980,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage(
 
                     "["
@@ -1020,8 +997,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Id ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -1081,7 +1057,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-            long startTime = getCurrentTime();
+            
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -1089,8 +1065,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                    
+                    
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -1098,8 +1074,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object Name -[" + objectName
                             + "] is successfully Appeneded text[" + value + "]"
                             + " And Object Xpath ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]"
+                            );
                 }
                 catch (NoSuchElementException e)
                 {
@@ -1127,8 +1103,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage(
 
                     "["
@@ -1145,8 +1120,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Xpath ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -1175,7 +1149,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-            long startTime = getCurrentTime();
+            
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -1183,8 +1157,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -1192,8 +1165,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object Name -[" + objectName
                             + "] is successfully Appended text[" + value + "]"
                             + " And Object Id ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -1220,8 +1192,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                    
                     logTraceMessage(
 
                     "["
@@ -1238,8 +1209,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Id ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -2715,7 +2685,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-            long startTime = getCurrentTime();
+           
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -2723,14 +2693,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .isDisplayed();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                    
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "]  is present" + " And Object Xpath ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return true;
                 }
                 catch (NoSuchElementException e)
@@ -2746,8 +2714,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isDisplayed();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage(
 
                     "["
@@ -2762,8 +2729,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Xpath ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]" + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                     return true;
                 }
                 catch (NoSuchElementException e)
@@ -2776,7 +2742,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-            long startTime = getCurrentTime();
+           
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -2784,14 +2750,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .isDisplayed();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                    
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is present" + "  And Object Id ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return true;
                 }
                 catch (NoSuchElementException e)
@@ -2808,8 +2772,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isDisplayed();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage(
 
                     "["
@@ -2824,8 +2787,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Id ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                     return true;
                 }
                 catch (NoSuchElementException e)
@@ -2838,7 +2800,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("LINKTEXT"))
         {
-            long startTime = getCurrentTime();
+         
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -2846,14 +2808,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.linkText(getObjectValue(objectRepo, objectName)))
                             .isDisplayed();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                 
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is present" + " And Object linktext ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return true;
                 }
                 catch (NoSuchElementException e)
@@ -2869,8 +2829,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.linkText(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isDisplayed();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                    
                     logTraceMessage(
 
                     "["
@@ -2885,8 +2844,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object linktext ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                     return true;
                 }
                 catch (NoSuchElementException e)
@@ -2929,7 +2887,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-            long startTime = getCurrentTime();
+          
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -2937,14 +2895,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     isSelected = driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .isSelected();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is Selected" + " And Object Xpath ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return isSelected;
                 }
                 catch (NoSuchElementException e)
@@ -2961,8 +2917,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isSelected();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                    
                     logTraceMessage(
 
                     "["
@@ -2977,8 +2932,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Xpath ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                     return isSelected;
                 }
                 catch (NoSuchElementException e)
@@ -2991,7 +2945,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-            long startTime = getCurrentTime();
+           
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -2999,14 +2953,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     isSelected = driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .isSelected();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                    
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is Selected" + " And Object id ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return isSelected;
                 }
                 catch (NoSuchElementException e)
@@ -3023,8 +2975,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isSelected();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage(
 
                     "["
@@ -3039,8 +2990,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object id ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                     return isSelected;
                 }
                 catch (NoSuchElementException e)
@@ -3080,7 +3030,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-            long startTime = getCurrentTime();
+            
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -3088,14 +3038,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     isEnabled = driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .isEnabled();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is Enabled" + " And Object Xpath ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return isEnabled;
                 }
                 catch (NoSuchElementException e)
@@ -3112,8 +3060,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isEnabled();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage(
 
                     "["
@@ -3128,8 +3075,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "  And Object Xpath ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                     return isEnabled;
                 }
                 catch (NoSuchElementException e)
@@ -3142,7 +3088,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-            long startTime = getCurrentTime();
+           
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -3150,14 +3096,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     isEnabled = driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .isEnabled();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is Enabled" + " And Object id ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return isEnabled;
                 }
                 catch (NoSuchElementException e)
@@ -3174,8 +3118,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isEnabled();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage(
 
                     "["
@@ -3190,8 +3133,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object id ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                     return isEnabled;
                 }
                 catch (NoSuchElementException e)
@@ -3488,7 +3430,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             switch (option)
             {
             case VALUE:
-                long startTime = getCurrentTime();
+               
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -3496,8 +3438,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         Select select = new Select(driver.findElement(By
                                 .id(getObjectValue(objectRepo, objectName))));
                         select.selectByValue(valueOrVisibleByText);
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime;
+                       
                         logTraceMessage(
 
                         "[" + methodName + "]," + "Page -["
@@ -3507,8 +3448,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + valueOrVisibleByText
                                 + "] and is successfully Selected"
                                 + " And Object ID ["
-                                + getObjectValue(objectRepo, objectName) + "],"
-                                + timeDiff + "msecs");
+                                + getObjectValue(objectRepo, objectName) + "]");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -3544,8 +3484,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced))));
                         select.selectByValue(valueOrVisibleByText);
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime;
+                        
                         logTraceMessage(
 
                         "["
@@ -3562,8 +3501,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + " and Object ID ["
                                 + getModifiedObjectValue(objectRepo,
                                         objectName, noOfOccurancesToBeReplaced,
-                                        valuesToBeReplaced) + "]," + timeDiff
-                                + "msecs");
+                                        valuesToBeReplaced) + "]");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -3596,7 +3534,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
                 break;
             case INDEX:
-                long startTime2 = getCurrentTime();
+                
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -3604,8 +3542,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         Select select = new Select(driver.findElement(By
                                 .id(getObjectValue(objectRepo, objectName))));
                         select.selectByIndex(index);
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime2;
+                       
                         logTraceMessage(
 
                         "[" + methodName + "]," + "Page -["
@@ -3614,8 +3551,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + "] with Option - Index = [" + index
                                 + "] is successfully Selected"
                                 + "  and Object ID ["
-                                + getObjectValue(objectRepo, objectName) + "],"
-                                + timeDiff + "msecs");
+                                + getObjectValue(objectRepo, objectName) + "]");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -3639,8 +3575,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced))));
                         select.selectByIndex(index);
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime2;
+                       
                         logTraceMessage(
 
                         "["
@@ -3657,8 +3592,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + " and Object ID ["
                                 + getModifiedObjectValue(objectRepo,
                                         objectName, noOfOccurancesToBeReplaced,
-                                        valuesToBeReplaced) + "]," + timeDiff
-                                + "msecs");
+                                        valuesToBeReplaced) + "]");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -3690,7 +3624,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
                 break;
             case VISIBLEBYTEXT:
-                long startTime3 = getCurrentTime();
+             
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -3698,8 +3632,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         Select select = new Select(driver.findElement(By
                                 .id(getObjectValue(objectRepo, objectName))));
                         select.selectByVisibleText(valueOrVisibleByText);
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime3;
+                      
                         logTraceMessage(
 
                         "[" + methodName + "]," + "Page -["
@@ -3709,8 +3642,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + valueOrVisibleByText
                                 + "] is successfully Selected"
                                 + " and Object ID ["
-                                + getObjectValue(objectRepo, objectName) + "],"
-                                + timeDiff + "msecs");
+                                + getObjectValue(objectRepo, objectName) + "]");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -3746,8 +3678,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced))));
                         select.selectByVisibleText(valueOrVisibleByText);
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime3;
+                       
                         logTraceMessage(
 
                         "["
@@ -3764,8 +3695,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + " and Object ID[ "
                                 + getModifiedObjectValue(objectRepo,
                                         objectName, noOfOccurancesToBeReplaced,
-                                        valuesToBeReplaced) + "]," + timeDiff
-                                + "msecs");
+                                        valuesToBeReplaced) + "]");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -3806,7 +3736,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             switch (option)
             {
             case VALUE:
-                long startTime = getCurrentTime();
+               
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -3814,8 +3744,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         Select select = new Select(driver.findElement(By
                                 .xpath(getObjectValue(objectRepo, objectName))));
                         select.selectByValue(valueOrVisibleByText);
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime;
+                       
                         logTraceMessage(
 
                         "[" + methodName + "]," + "Page -["
@@ -3825,8 +3754,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + valueOrVisibleByText
                                 + "] is successfully Selected"
                                 + "  and Object Xpath ["
-                                + getObjectValue(objectRepo, objectName) + "],"
-                                + timeDiff + "msecs");
+                                + getObjectValue(objectRepo, objectName) + "]");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -3862,8 +3790,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced))));
                         select.selectByValue(valueOrVisibleByText);
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime;
+                      
                         logTraceMessage(
 
                         "["
@@ -3880,8 +3807,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + " and Object Xpath ["
                                 + getModifiedObjectValue(objectRepo,
                                         objectName, noOfOccurancesToBeReplaced,
-                                        valuesToBeReplaced) + "]," + timeDiff
-                                + "msecs");
+                                        valuesToBeReplaced) + "]");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -3914,7 +3840,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
                 break;
             case INDEX:
-                long startTime2 = getCurrentTime();
+                
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -3922,8 +3848,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         Select select = new Select(driver.findElement(By
                                 .xpath(getObjectValue(objectRepo, objectName))));
                         select.selectByIndex(index);
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime2;
+                       
                         logTraceMessage(
 
                         "[" + methodName + "]," + "Page -["
@@ -3932,8 +3857,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + "] with Option - Index = [" + index
                                 + "] is successfully Selected"
                                 + " and Object Xpath ["
-                                + getObjectValue(objectRepo, objectName) + "],"
-                                + timeDiff + "msecs");
+                                + getObjectValue(objectRepo, objectName) + "]");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -3957,8 +3881,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced))));
                         select.selectByIndex(index);
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime2;
+                        
                         logTraceMessage(
 
                         "["
@@ -3975,8 +3898,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + " and Object Xpath ["
                                 + getModifiedObjectValue(objectRepo,
                                         objectName, noOfOccurancesToBeReplaced,
-                                        valuesToBeReplaced) + "]," + timeDiff
-                                + "msecs");
+                                        valuesToBeReplaced) + "]");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -4009,7 +3931,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
                 break;
             case VISIBLEBYTEXT:
-                long startTime3 = getCurrentTime();
+               
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -4017,8 +3939,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         Select select = new Select(driver.findElement(By
                                 .xpath(getObjectValue(objectRepo, objectName))));
                         select.selectByVisibleText(valueOrVisibleByText);
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime3;
+                     
                         logTraceMessage(
 
                         "[" + methodName + "]," + "Page -["
@@ -4028,8 +3949,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + valueOrVisibleByText
                                 + "] is successfully Selected"
                                 + " and Object Xpath ["
-                                + getObjectValue(objectRepo, objectName) + "],"
-                                + timeDiff + "msecs");
+                                + getObjectValue(objectRepo, objectName) + "]");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -4065,8 +3985,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced))));
                         select.selectByVisibleText(valueOrVisibleByText);
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime3;
+                      
                         logTraceMessage(
 
                         "["
@@ -4083,8 +4002,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + " and Object Xpath ["
                                 + getModifiedObjectValue(objectRepo,
                                         objectName, noOfOccurancesToBeReplaced,
-                                        valuesToBeReplaced) + "]" + timeDiff
-                                + "msecs");
+                                        valuesToBeReplaced) + "]");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -4152,7 +4070,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-            long startTime = getCurrentTime();
+           
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -4160,8 +4078,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     int count = driver.findElements(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .size();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                 
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -4169,8 +4086,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object Name -[" + objectName
                             + "] has got count = " + count
                             + " And Object Xpath ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return count;
                 }
                 catch (NoSuchElementException e)
@@ -4193,8 +4109,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).size();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage(
 
                     "["
@@ -4210,8 +4125,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Xpath ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                     return count;
                 }
                 catch (NoSuchElementException e)
@@ -4243,7 +4157,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-            long startTime = getCurrentTime();
+          
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -4251,8 +4165,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     int count = driver.findElements(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .size();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -4260,8 +4173,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object Name -[" + objectName
                             + "] has got count = " + count
                             + " And Object Xpath ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return count;
                 }
                 catch (NoSuchElementException e)
@@ -4284,8 +4196,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).size();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                 
                     logTraceMessage(
 
                     "["
@@ -4301,8 +4212,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Xpath ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                     return count;
                 }
                 catch (NoSuchElementException e)
@@ -4357,7 +4267,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-            long startTime = getCurrentTime();
+           
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -4365,8 +4275,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -4374,8 +4283,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object Name -[" + objectName
                             + "] is successfully uploaded"
                             + " AND Object Xpath ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -4404,8 +4312,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                 
                     logTraceMessage(
 
                     "["
@@ -4420,8 +4327,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Xpath ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -4451,7 +4357,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-            long startTime = getCurrentTime();
+           
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -4459,14 +4365,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is successfully uploaded" + " And Object Id ["
-                            + getObjectValue(objectRepo, objectName) + "],"
-                            + timeDiff + "msecs");
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -4494,8 +4398,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage(
 
                     "["
@@ -4510,8 +4413,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + " And Object Id ["
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced) + "]," + timeDiff
-                            + "msecs");
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -4989,7 +4891,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
             if (objectType.equalsIgnoreCase("XPATH"))
             {
-                long startTime = getCurrentTime();
+                
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -4997,8 +4899,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         driver.switchTo().frame(
                                 driver.findElement(By.xpath(getObjectValue(
                                         objectRepo, objectName))));
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime;
+                        
                         logTraceMessage(
 
                         "Page -"
@@ -5007,8 +4908,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + "Object Name -" + objectName
                                 + " whose Xpath "
                                 + getObjectValue(objectRepo, objectName)
-                                + " is successfully switched," + timeDiff
-                                + "msecs");
+                                + " is successfully switched");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -5021,13 +4921,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + " is not found with Xpath -"
                                 + getObjectValue(objectRepo, objectName),
                                 driver);
-                        // throw new
-                        // NoSuchElementException("Page
-                        // -"+objectRepo.get("fileDetails").get("fileName")+"
-                        // "+"Object Name -"
-                        // +
-                        // objectName+ " is not found with Xpath
-                        // -"+getObjectValue(objectRepo, objectName));
+                     
                     }
                 }
                 else
@@ -5041,8 +4935,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                                 noOfOccurancesToBeReplaced,
                                                 valuesToBeReplaced))));
 
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime;
+                       
                         logTraceMessage(
 
                         "Page -"
@@ -5057,8 +4950,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + getModifiedObjectValue(objectRepo,
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced)
-                                + " is successfully switched," + timeDiff
-                                + "msecs");
+                                + " is successfully switched");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -5078,21 +4970,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
                                                 valuesToBeReplaced), driver);
-                        // throw new
-                        // NoSuchElementException("Page
-                        // -"+objectRepo.get("fileDetails").get("fileName")+"
-                        // "+"Object Name -"
-                        // +
-                        // objectName+ " is not found with Xpath
-                        // -"+getModifiedObjectValue(objectRepo,
-                        // objectName,noOfOccurancesToBeReplaced,valuesToBeReplaced));
+                      
                     }
                 }
 
             }
             else if (objectType.equalsIgnoreCase("ID"))
             {
-                long startTime = getCurrentTime();
+               
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -5100,8 +4985,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         driver.switchTo().frame(
                                 driver.findElement(By.id(getObjectValue(
                                         objectRepo, objectName))));
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime;
+                       
                         logTraceMessage(
 
                         "Page -"
@@ -5109,8 +4993,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + " " + "[" + methodName + "],"
                                 + "Object Name -" + objectName + " whose Id "
                                 + getObjectValue(objectRepo, objectName)
-                                + " is successfully switched," + timeDiff
-                                + "msecs");
+                                + " is successfully switched");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -5128,13 +5011,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + " is not found with id -"
                                         + getObjectValue(objectRepo, objectName),
                                 driver);
-                        // throw new
-                        // NoSuchElementException("Page
-                        // -"+objectRepo.get("fileDetails").get("fileName")+"
-                        // "+"Object Name -"
-                        // +
-                        // objectName+ " is not found with id
-                        // -"+getObjectValue(objectRepo, objectName));
+                      
                     }
                 }
                 else
@@ -5147,8 +5024,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
                                                 valuesToBeReplaced))));
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime;
+                      
                         logTraceMessage(
 
                         "Page -"
@@ -5163,8 +5039,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + getModifiedObjectValue(objectRepo,
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced)
-                                + " is successfully clicked," + timeDiff
-                                + "msecs");
+                                + " is successfully clicked");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -5184,21 +5059,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
                                                 valuesToBeReplaced), driver);
-                        // throw new
-                        // NoSuchElementException("Page
-                        // -"+objectRepo.get("fileDetails").get("fileName")+"
-                        // "+"Object Name -"
-                        // +
-                        // objectName+ " is not found with id
-                        // -"+getModifiedObjectValue(objectRepo,
-                        // objectName,noOfOccurancesToBeReplaced,valuesToBeReplaced));
+                 
                     }
                 }
 
             }
             else if (objectType.equalsIgnoreCase("NAME"))
             {
-                long startTime = getCurrentTime();
+               
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -5206,8 +5074,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         driver.switchTo().frame(
                                 driver.findElement(By.name(getObjectValue(
                                         objectRepo, objectName))));
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime;
+                        
                         logTraceMessage(
 
                         "Page -"
@@ -5215,8 +5082,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + " " + "[" + methodName + "],"
                                 + "Object Name -" + objectName + " whose Name "
                                 + getObjectValue(objectRepo, objectName)
-                                + " is successfully switched," + timeDiff
-                                + "msecs");
+                                + " is successfully switched");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -5234,13 +5100,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + " is not found with Name -"
                                         + getObjectValue(objectRepo, objectName),
                                 driver);
-                        // throw new
-                        // NoSuchElementException("Page
-                        // -"+objectRepo.get("fileDetails").get("fileName")+"
-                        // "+"Object Name -"
-                        // +
-                        // objectName+ " is not found with id
-                        // -"+getObjectValue(objectRepo, objectName));
+                     
                     }
                 }
                 else
@@ -5253,8 +5113,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                                 objectRepo, objectName,
                                                 noOfOccurancesToBeReplaced,
                                                 valuesToBeReplaced))));
-                        long endTime = getCurrentTime();
-                        long timeDiff = endTime - startTime;
+                      
                         logTraceMessage(
 
                         "Page -"
@@ -5269,8 +5128,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + getModifiedObjectValue(objectRepo,
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced)
-                                + " is successfully clicked," + timeDiff
-                                + "msecs");
+                                + " is successfully clicked");
                     }
                     catch (NoSuchElementException e)
                     {
@@ -5290,14 +5148,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
                                                 valuesToBeReplaced), driver);
-                        // throw new
-                        // NoSuchElementException("Page
-                        // -"+objectRepo.get("fileDetails").get("fileName")+"
-                        // "+"Object Name -"
-                        // +
-                        // objectName+ " is not found with id
-                        // -"+getModifiedObjectValue(objectRepo,
-                        // objectName,noOfOccurancesToBeReplaced,valuesToBeReplaced));
+                      
                     }
                 }
 
@@ -5329,7 +5180,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
         if (objectType.equalsIgnoreCase("ID"))
         {
-            long startTime = getCurrentTime();
+            
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -5337,11 +5188,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Select select = new Select(driver.findElement(By
                             .id(getObjectValue(objectRepo, objectName))));
                     firstSelected = select.getFirstSelectedOption().getText();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage("Select list Value " + firstSelected
-                            + " is successfully retrieved," + timeDiff
-                            + "msecs");
+                            + " is successfully retrieved");
                     return firstSelected;
                 }
                 catch (NoSuchElementException e)
@@ -5359,11 +5208,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))));
                     firstSelected = select.getFirstSelectedOption().getText();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                    
                     logTraceMessage("Select list Value " + firstSelected
-                            + " is successfully retrieved," + timeDiff
-                            + "msecs");
+                            + " is successfully retrieved");
                     return firstSelected;
                 }
                 catch (NoSuchElementException e)
@@ -5377,7 +5224,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("XPATH"))
         {
-            long startTime = getCurrentTime();
+            
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -5385,11 +5232,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Select select = new Select(driver.findElement(By
                             .xpath(getObjectValue(objectRepo, objectName))));
                     firstSelected = select.getFirstSelectedOption().getText();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage("Select list Value " + firstSelected
-                            + " is successfully retrieved," + timeDiff
-                            + "msecs");
+                            + " is successfully retrieved");
                     return firstSelected;
                 }
                 catch (NoSuchElementException e)
@@ -5407,11 +5252,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))));
                     firstSelected = select.getFirstSelectedOption().getText();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage("Select list Value " + firstSelected
-                            + " is successfully retrieved," + timeDiff
-                            + "msecs");
+                            + " is successfully retrieved");
                     return firstSelected;
                 }
                 catch (NoSuchElementException e)
@@ -5424,7 +5267,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("NAME"))
         {
-            long startTime = getCurrentTime();
+          
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -5432,11 +5275,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Select select = new Select(driver.findElement(By
                             .name(getObjectValue(objectRepo, objectName))));
                     firstSelected = select.getFirstSelectedOption().getText();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage("Select list Value " + firstSelected
-                            + " is successfully retrieved," + timeDiff
-                            + "msecs");
+                            + " is successfully retrieved");
                     return firstSelected;
                 }
                 catch (NoSuchElementException e)
@@ -5454,11 +5295,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))));
                     firstSelected = select.getFirstSelectedOption().getText();
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage("Select list Value " + firstSelected
-                            + " is successfully retrieved," + timeDiff
-                            + "msecs");
+                            + " is successfully retrieved");
                     return firstSelected;
                 }
                 catch (NoSuchElementException e)
@@ -5486,7 +5325,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-            long startTime = getCurrentTime();
+          
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -5494,15 +5333,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage(
 
                     "Page -" + objectRepo.get("fileDetails").get("fileName")
                             + " " + "Object Name -" + objectName
                             + " whose Xpath "
                             + getObjectValue(objectRepo, objectName)
-                            + " is successfully uploaded," + timeDiff + "msecs");
+                            + " is successfully uploaded");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -5514,13 +5352,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectName + " is not found with Xpath -"
                                     + getObjectValue(objectRepo, objectName),
                             driver);
-                    // throw new
-                    // NoSuchElementException("Page
-                    // -"+objectRepo.get("fileDetails").get("fileName")+"
-                    // "+"Object Name -"
-                    // +
-                    // objectName+ " is not found with Xpath
-                    // -"+getObjectValue(objectRepo, objectName));
+                   
                 }
             }
             else
@@ -5531,8 +5363,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                  
                     logTraceMessage(
 
                     "Page -"
@@ -5544,7 +5375,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced)
-                            + " is successfully uploaded," + timeDiff + "msecs");
+                            + " is successfully uploaded");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -5561,21 +5392,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                             objectName,
                                             noOfOccurancesToBeReplaced,
                                             valuesToBeReplaced), driver);
-                    // throw new
-                    // NoSuchElementException("Page
-                    // -"+objectRepo.get("fileDetails").get("fileName")+"
-                    // "+"Object Name -"
-                    // +
-                    // objectName+ " is not found with Xpath
-                    // -"+getModifiedObjectValue(objectRepo,
-                    // objectName,noOfOccurancesToBeReplaced,valuesToBeReplaced));
+                 
                 }
             }
 
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-            long startTime = getCurrentTime();
+            
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -5583,14 +5407,13 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                   
                     logTraceMessage(
 
                     "Page -" + objectRepo.get("fileDetails").get("fileName")
                             + " " + "Object Name -" + objectName + " whose Id "
                             + getObjectValue(objectRepo, objectName)
-                            + " is successfully uploaded," + timeDiff + "msecs");
+                            + " is successfully uploaded");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -5602,13 +5425,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectName + " is not found with id -"
                                     + getObjectValue(objectRepo, objectName),
                             driver);
-                    // throw new
-                    // NoSuchElementException("Page
-                    // -"+objectRepo.get("fileDetails").get("fileName")+"
-                    // "+"Object Name -"
-                    // +
-                    // objectName+ " is not found with id
-                    // -"+getObjectValue(objectRepo, objectName));
+                  
                 }
             }
             else
@@ -5619,8 +5436,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                    long endTime = getCurrentTime();
-                    long timeDiff = endTime - startTime;
+                
                     logTraceMessage(
 
                     "Page -"
@@ -5632,7 +5448,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced)
-                            + " is successfully uploaded," + timeDiff + "msecs");
+                            + " is successfully uploaded");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -5649,14 +5465,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                             objectName,
                                             noOfOccurancesToBeReplaced,
                                             valuesToBeReplaced), driver);
-                    // throw new
-                    // NoSuchElementException("Page
-                    // -"+objectRepo.get("fileDetails").get("fileName")+"
-                    // "+"Object Name -"
-                    // +
-                    // objectName+ " is not found with id
-                    // -"+getModifiedObjectValue(objectRepo,
-                    // objectName,noOfOccurancesToBeReplaced,valuesToBeReplaced));
+                 
                 }
             }
 
