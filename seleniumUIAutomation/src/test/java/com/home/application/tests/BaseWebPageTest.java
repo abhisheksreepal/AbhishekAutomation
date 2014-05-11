@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
@@ -95,6 +96,12 @@ public class BaseWebPageTest extends TestBase
                 envProperties.getString("default"),
                 envProperties.getString("BROWSER_NAME"));
     }
+    
+    
+    @BeforeClass(alwaysRun=true)
+    public String getClassName(){
+        return this.getClass().getName();
+    }
 
     @BeforeMethod(alwaysRun = true)
     public void setUpForTestCase(Method method)
@@ -108,26 +115,27 @@ public class BaseWebPageTest extends TestBase
         WebDriver driver = new LocalDriverFactory()
                 .createInstance(browser, hub);
         LocalDriverManager.setWebDriver(driver);
-        LocalDriverManager.setLog(Logger.getLogger(method.getName()
-                + method.getClass().getName()));
+        LocalDriverManager.setLog(Logger.getLogger(getClassName()+" - "+method.getName()));
 
         Logger log = LocalDriverManager.getLog();
         new LoggerUtility(log);
         new BaseWebPage(driver).navigateTo(url);
 
-        logTraceMessage("[OPENING  Driver HASHCODE]" + driver.hashCode());
+        logTraceMessage("[Launching TestCase - ]"+getClassName()+" - "+method.getName());
     }
 
     @AfterMethod(alwaysRun = true)
     public void cleanUpForTestCase(Method method)
     {
         WebDriver driver = LocalDriverManager.getDriver();
-        logTraceMessage("[CLOSING Driver HASHCODE]" + driver.hashCode());
+        
         if (driver != null)
         {
             driver.quit();
+            logTraceMessage("[CLOSING Driver]");
         }
 
+        logTraceMessage("[Terminating TestCase - ]"+getClassName()+" - "+method.getName());
     }
 
 }
