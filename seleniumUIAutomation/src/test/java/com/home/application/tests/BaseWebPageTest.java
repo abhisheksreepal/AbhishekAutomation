@@ -23,11 +23,9 @@ import com.home.utilities.TestDataUtilty;
 public class BaseWebPageTest extends TestBase
 {
 
-    private static Logger log = Logger.getLogger(BaseWebPageTest.class);
     private long startTime = 0L;
     private long endTime = 0L;
     public static long timeTaken = 0L;
-
 
     public BaseWebPageTest()
     {
@@ -35,16 +33,6 @@ public class BaseWebPageTest extends TestBase
     }
 
     public static PropertiesConfiguration envProperties;
-
-    // Disable selenium logs, Making level as "warn"
-    static
-    {
-        System.setProperty("org.apache.commons.logging.Log",
-                "org.apache.commons.logging.impl.SimpleLog");
-        System.setProperty(
-                "org.apache.commons.logging.simplelog.log.org.apache.http",
-                "warn");
-    }
 
     /**
      * MethodName:start Description:It does initialises my Properties
@@ -55,8 +43,9 @@ public class BaseWebPageTest extends TestBase
     @BeforeSuite(alwaysRun = true)
     public void start() throws Exception
     {
-        LoggerUtility.createFolders();
-        LoggerUtility.updateLog4JXmlFile("LogFile");
+
+        createFolders();
+        updateLog4JXmlFile("LogFile");
         startTime = System.currentTimeMillis();
         try
         {
@@ -77,8 +66,7 @@ public class BaseWebPageTest extends TestBase
 
         String defaultEnvironment = envProperties.getString("default");
         String application = envProperties.getString("application");
-
-        ObjectRepoUtility.loadObjectRepoForAllPages();
+        new ObjectRepoUtility().loadObjectRepoForAllPages();
         // This is required for class SuccessFailureLogTestListener
         TestDataUtilty.loadTestDataToMemory(defaultEnvironment, application);
 
@@ -94,10 +82,11 @@ public class BaseWebPageTest extends TestBase
 
         endTime = System.currentTimeMillis();
         timeTaken = endTime - startTime;
-        ReportAndMail.createSummaryResultLog(envProperties
+        new ReportAndMail().createSummaryResultLog(envProperties
                 .getString("BROWSER_NAME"));
-        ReportAndMail.updateHTML(timeTaken);
-        ReportAndMail.sendMail(timeTaken,
+
+        new ReportAndMail().updateHTML(timeTaken);
+        new ReportAndMail().sendMail(timeTaken,
                 envProperties.getString("emailUserName"),
                 envProperties.getString("emailPassword"),
                 envProperties.getString("ReportmailServer"),
@@ -112,26 +101,28 @@ public class BaseWebPageTest extends TestBase
     {
 
         String defaultEnvironment = envProperties.getString("default");
-        String application = envProperties.getString("application");
         String url = envProperties.getString(defaultEnvironment + ".url");
         String browser = envProperties.getString("BROWSER_NAME");
         String hub = envProperties.getString("hub");
 
-        WebDriver driver = LocalDriverFactory.createInstance(browser, hub);
+        WebDriver driver = new LocalDriverFactory()
+                .createInstance(browser, hub);
         LocalDriverManager.setWebDriver(driver);
+        LocalDriverManager.setLog(Logger.getLogger(method.getName()
+                + method.getClass().getName()));
 
+        Logger log = LocalDriverManager.getLog();
+        new LoggerUtility(log);
         new BaseWebPage(driver).navigateTo(url);
 
-        LoggerUtility.logTraceMessage(log, "[OPENING  Driver HASHCODE]"
-                + driver.hashCode());
+        logTraceMessage("[OPENING  Driver HASHCODE]" + driver.hashCode());
     }
 
     @AfterMethod(alwaysRun = true)
     public void cleanUpForTestCase(Method method)
     {
         WebDriver driver = LocalDriverManager.getDriver();
-        LoggerUtility.logTraceMessage(log,
-                "[CLOSING Driver HASHCODE]" + driver.hashCode());
+        logTraceMessage("[CLOSING Driver HASHCODE]" + driver.hashCode());
         if (driver != null)
         {
             driver.quit();

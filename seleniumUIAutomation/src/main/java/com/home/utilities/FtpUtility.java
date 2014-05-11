@@ -2,7 +2,6 @@ package com.home.utilities;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.Logger;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
@@ -11,11 +10,8 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 
-public class FtpUtility
+public class FtpUtility extends LoggerUtility
 {
-
-    @SuppressWarnings("unused")
-    private static Logger log = Logger.getLogger(FtpUtility.class);
 
     private static PropertiesConfiguration envProperties;
     private static Session session;
@@ -32,15 +28,13 @@ public class FtpUtility
         }
         catch (ConfigurationException e)
         {
-            LoggerUtility
-                    .logTraceMessage(
-                            log,
-                            "[ERROR]Configuration exception -src/test/resources/config/environment.properties"
-                                    + e.toString());
+
+            e.printStackTrace();
+
         }
     }
 
-    private static boolean connectToRemoteMachine()
+    private boolean connectToRemoteMachine()
     {
         boolean isSuccessfullyConnected = false;
         session = null;
@@ -64,9 +58,8 @@ public class FtpUtility
         catch (JSchException e1)
         {
 
-            LoggerUtility
-                    .logTraceMessage(
-                            log,
+            logTraceMessage(
+                            
                             "[ERROR]JSchException exception - Not able to connect to remote Machine and exception -"
                                     + e1.toString());
             return isSuccessfullyConnected;
@@ -101,7 +94,7 @@ public class FtpUtility
      * @return true if file is successfully added, otherwise false
      * 
      */
-    public static boolean overWriteRemoteFile(String inputFilePathString,
+    public boolean overWriteRemoteFile(String inputFilePathString,
             String destinationSourceFolder)
     {
 
@@ -132,7 +125,7 @@ public class FtpUtility
         }
     }
 
-    public static boolean deleteRemoteFile(String destinationFilePathString)
+    public boolean deleteRemoteFile(String destinationFilePathString)
     {
 
         boolean isdeleted = false;
@@ -154,7 +147,7 @@ public class FtpUtility
                 }
                 else
                 {
-                    LoggerUtility.logTraceMessage(log,
+                    logTraceMessage(
                             "[ERROR]Not able to delete file -"
                                     + destinationFilePathString
                                     + " and exception -" + e.toString());

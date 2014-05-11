@@ -5,13 +5,24 @@ import org.openqa.selenium.WebDriver;
 
 
 
-public class LocalDriverManager 
+public class LocalDriverManager extends LoggerUtility
 {
 
-    private static Logger log = Logger.getLogger(LocalDriverManager.class);
 
     private static ThreadLocal<WebDriver> webDriver = new ThreadLocal<WebDriver>();
     
+    private static ThreadLocal<Logger> log = new ThreadLocal<Logger>();
+    
+    public static Logger getLog()
+    {
+        return log.get();
+    }
+
+    public static void setLog(Logger log)
+    {
+        LocalDriverManager.log.set(log);
+    }
+
     public static WebDriver getDriver() {
         return webDriver.get();
     }

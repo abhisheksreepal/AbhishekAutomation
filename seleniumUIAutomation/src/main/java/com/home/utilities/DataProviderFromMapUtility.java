@@ -5,14 +5,11 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.testng.annotations.DataProvider;
 
-public class DataProviderFromMapUtility
+public class DataProviderFromMapUtility extends LoggerUtility
 {
 
-    private static Logger log = Logger
-            .getLogger(DataProviderFromMapUtility.class);
 
     @DataProvider(name = "initializeDataProvider")
     public static Object[][] initializeDataProvider(Method testMethod)
@@ -31,7 +28,7 @@ public class DataProviderFromMapUtility
 
         for (String string : listOfPrimaryKeys)
         {
-            LinkedHashMap<String, LinkedHashMap<String, String>> testdata = TestDataUtilty
+            LinkedHashMap<String, LinkedHashMap<String, String>> testdata =new TestDataUtilty()
                     .getTestDataByPassingPrimaryKey(inputTestData, string,
                             className);
 

@@ -1,7 +1,5 @@
 package com.home.application.adactin.pages;
 
-import org.apache.log4j.Logger;
-
 import com.home.application.pages.BaseWebPage;
 import com.home.utilities.SeleniumException;
 
@@ -12,8 +10,7 @@ import com.home.utilities.SeleniumException;
 public class HomePage extends BaseWebPage
 {
 
-    @SuppressWarnings("unused")
-    private static Logger log = Logger.getLogger(HomePage.class);
+
 
     public HomePage()
     {
@@ -81,5 +78,9 @@ public class HomePage extends BaseWebPage
             return false;
         }
     }
+    
+    
+    
+       
 
 }

@@ -11,10 +11,20 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-public class TestDataUtilty
+public class TestDataUtilty extends LoggerUtility
 {
 
-    private static Logger log = Logger.getLogger(TestDataUtilty.class);
+    public TestDataUtilty(Logger log)
+    {
+        super(log);
+
+    }
+    
+    public TestDataUtilty()
+    {
+        super();
+
+    }
 
     public static LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>> inputTestData;
 
@@ -88,6 +98,7 @@ public class TestDataUtilty
             }
 
         }
+        bufRdr.close();
         return testData;
     }
 
@@ -99,13 +110,13 @@ public class TestDataUtilty
 
     }
 
-    public static String getTestDataValueForGivenTestCaseForGiven(
+    public String getTestDataValueForGivenTestCaseForGiven(
             HashMap<String, HashMap<String, String>> testData, String tcName,
             String colName)
     {
         if (!testData.containsKey(tcName))
         {
-            log.error("Test Data-" + testData
+            new LoggerUtility().log.error("Test Data-" + testData
                     + " does not contain Test case with Name - " + tcName);
             throw new RuntimeException("Test Data-" + testData
                     + " does not contain Test case with Name - " + tcName);
@@ -114,7 +125,7 @@ public class TestDataUtilty
         {
             if (!testData.get(tcName).containsKey(colName))
             {
-                log.error("Test Data-" + testData
+                new LoggerUtility().log.error("Test Data-" + testData
                         + " contains Test case with Name - " + tcName
                         + " but NOT contains following column -" + colName);
                 throw new RuntimeException("Test Data-" + testData
@@ -148,7 +159,7 @@ public class TestDataUtilty
         return listOfPrimaryKeys;
     }
 
-    public static LinkedHashMap<String, LinkedHashMap<String, String>> getTestDataByPassingPrimaryKey(
+    public LinkedHashMap<String, LinkedHashMap<String, String>> getTestDataByPassingPrimaryKey(
             LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, LinkedHashMap<String, String>>>> testDatas,
             String primaryKey, String moduleName)
     {
@@ -156,7 +167,7 @@ public class TestDataUtilty
                 .get(moduleName);
         if (!testData.containsKey(primaryKey))
         {
-            log.error("Test Data-" + testData
+            new LoggerUtility().log.error("Test Data-" + testData
                     + " does not contain Test case with Name - " + primaryKey);
             throw new RuntimeException("Test Data-" + testData
                     + " does not contain Test case with Name - " + primaryKey);

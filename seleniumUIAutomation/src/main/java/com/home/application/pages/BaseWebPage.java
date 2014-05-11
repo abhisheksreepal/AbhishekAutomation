@@ -7,13 +7,11 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.StringTokenizer;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.By.ByXPath;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -24,36 +22,33 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.home.utilities.LocalDriverManager;
-import com.home.utilities.LoggerUtility;
 import com.home.utilities.SeleniumException;
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 {
 
     public WebDriver driver;
 
-    private static Logger log = Logger.getLogger(BaseWebPage.class);
-
-    private static long getCurrentTime()
+    private long getCurrentTime()
     {
         Date now = new Date();
         long nowTime = now.getTime();
-        LoggerUtility
-                .logTraceMessage(log, "Returning Current Time -" + nowTime);
+        logTraceMessage("Returning Current Time -" + nowTime);
         return nowTime;
     }
 
-    public static String getDateTime()
+    public String getDateTime()
     {
         String DATE_FORMAT_NOW = "ddMMyyyyHHmmss";
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
         String dateTime = sdf.format(cal.getTime());
-        LoggerUtility.logTraceMessage(log, "Returning Date Time -" + dateTime);
+        logTraceMessage("Returning Date Time -" + dateTime);
         return dateTime;
     }
 
-    public static String randomAlphaNumericCharacters(int length)
+    public String randomAlphaNumericCharacters(int length)
     {
         if (length <= 0)
         {
@@ -68,13 +63,11 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             sb.append(c);
         }
         String output = sb.toString();
-        LoggerUtility.logTraceMessage(log,
-                "Returning randomAlphaNumericCharacters -" + output);
+        logTraceMessage("Returning randomAlphaNumericCharacters -" + output);
         return output;
     }
 
-    public static String[] getStringTokenized(String stringToTokenize,
-            String delimiter)
+    public String[] getStringTokenized(String stringToTokenize, String delimiter)
     {
 
         StringTokenizer st = new StringTokenizer(stringToTokenize, delimiter);
@@ -95,12 +88,11 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
      * 
      * @return
      */
-    public static String getStandardWaitTime()
+    public String getStandardWaitTime()
     {
         String waitTime = envProperties
                 .getString("STANDARD_PAGE_LOAD_WAIT_TIME");
-        LoggerUtility.logTraceMessage(log, "Returning standardWaitTime -"
-                + waitTime);
+        logTraceMessage("Returning standardWaitTime -" + waitTime);
         return waitTime;
     }
 
@@ -135,7 +127,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
     public String getPageTitle()
     {
         String title = driver.getTitle();
-        LoggerUtility.logTraceMessage(log, "Returning PageTitle -" + title);
+        logTraceMessage("Returning PageTitle -" + title);
         return title;
     }
 
@@ -158,17 +150,15 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         driver.quit();
         if (driver instanceof FirefoxDriver)
         {
-            LoggerUtility.logTraceMessage(log,
-                    "Successfully CLOSED Firefox Browser");
+            logTraceMessage("Successfully CLOSED Firefox Browser");
         }
         else if (driver instanceof InternetExplorerDriver)
         {
-            LoggerUtility.logTraceMessage(log,
-                    "Successfully CLOSED Internet Explorer Browser");
+            logTraceMessage("Successfully CLOSED Internet Explorer Browser");
         }
         else
         {
-            LoggerUtility.logTraceMessage(log, "Successfully CLOSED Browser");
+            logTraceMessage("Successfully CLOSED Browser");
         }
 
     }
@@ -178,19 +168,16 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         driver.get(url);
         if (driver instanceof FirefoxDriver)
         {
-            LoggerUtility.logTraceMessage(log,
-                    "Successfully NAVIGATED Firefox Browser to -" + url);
+            logTraceMessage("Successfully NAVIGATED Firefox Browser to -" + url);
         }
         else if (driver instanceof InternetExplorerDriver)
         {
-            LoggerUtility.logTraceMessage(log,
-                    "Successfully NAVIGATED Internet Explorer Browser to -"
-                            + url);
+            logTraceMessage("Successfully NAVIGATED Internet Explorer Browser to -"
+                    + url);
         }
         else
         {
-            LoggerUtility.logTraceMessage(log,
-                    "Successfully NAVIGATED Browser to -" + url);
+            logTraceMessage("Successfully NAVIGATED Browser to -" + url);
         }
     }
 
@@ -210,9 +197,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         waitForElementVisible(objectRepo, objectName,
                 modifyObjectValueInRuntime, noOfOccurancesToBeReplaced,
@@ -231,23 +216,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object Name -[" + objectName
-                                    + "] is successfully clicked"
-                                    + " And Object Xpath = ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]," + timeDiff + "msecs");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully clicked"
+                            + " And Object Xpath = ["
+                            + getObjectValue(objectRepo, objectName) + "],"
+                            + timeDiff + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -273,28 +254,26 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully clicked "
-                                    + " And Object Xpath =["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully clicked "
+                            + " And Object Xpath =["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -329,7 +308,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             .click();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "]  is successfully clicked" + " And Object Id ["
@@ -339,7 +318,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -364,28 +343,26 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully clicked"
-                                    + " And Object Id ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully clicked"
+                            + " And Object Id ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -430,9 +407,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         waitForElementVisible(objectRepo, objectName,
                 modifyObjectValueInRuntime, noOfOccurancesToBeReplaced,
@@ -450,27 +426,25 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     ByXPath.xpath(getObjectValue(objectRepo,
                                             objectName))).getText();
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully present and text is retrieved - ["
-                                    + actualText + "]" + " And Object xpath ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText + "]" + " And Object xpath ["
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return actualText;
 
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -495,31 +469,29 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).getText();
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully present and text is retrieved - ["
-                                    + actualText
-                                    + "]"
-                                    + " And Object xpath ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText
+                            + "]"
+                            + " And Object xpath ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                     return actualText;
 
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -552,27 +524,25 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             ByXPath.id(getObjectValue(objectRepo, objectName)))
                             .getText();
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully present and text is retrieved - ["
-                                    + actualText + "]" + " And Object id ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText + "]" + " And Object id ["
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return actualText;
 
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -598,31 +568,29 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).getText();
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully present and text is retrieved - ["
-                                    + actualText
-                                    + "]"
-                                    + " Object id ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText
+                            + "]"
+                            + " Object id ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                     return actualText;
 
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -669,9 +637,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         waitForElementVisible(objectRepo, objectName,
                 modifyObjectValueInRuntime, noOfOccurancesToBeReplaced,
@@ -690,23 +657,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object Name -[" + objectName
-                                    + "] is successfully cleared"
-                                    + " And Object Xpath ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]," + timeDiff + "msecs");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully cleared"
+                            + " And Object Xpath ["
+                            + getObjectValue(objectRepo, objectName) + "],"
+                            + timeDiff + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -732,28 +695,26 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully cleared"
-                                    + " Object Xpath ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully cleared"
+                            + " Object Xpath ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]" + timeDiff
+                            + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -787,7 +748,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             .clear();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is successfully cleared" + " And Object Id ["
@@ -797,7 +758,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -822,28 +783,26 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully cleared"
-                                    + " And Object Id ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully cleared"
+                            + " And Object Id ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -889,9 +848,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         waitForElementVisible(objectRepo, objectName,
                 modifyObjectValueInRuntime, noOfOccurancesToBeReplaced,
@@ -913,23 +871,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object Name -[" + objectName
-                                    + "] is successfully SET text [" + value
-                                    + "]" + " And Object Xpath ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]," + timeDiff + "msecs");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully SET text [" + value + "]"
+                            + " And Object Xpath ["
+                            + getObjectValue(objectRepo, objectName) + "],"
+                            + timeDiff + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -955,30 +909,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully SET text["
-                                    + value
-                                    + "]"
-                                    + " And Object Xpath ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully SET text["
+                            + value
+                            + "]"
+                            + " And Object Xpath ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1016,23 +968,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object Name -[" + objectName
-                                    + "] is successfully SET text[" + value
-                                    + "]" + " And Object Id ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]," + timeDiff + "msecs");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully SET text[" + value + "]"
+                            + " And Object Id ["
+                            + getObjectValue(objectRepo, objectName) + "],"
+                            + timeDiff + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1057,30 +1005,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully SET text["
-                                    + value
-                                    + "]"
-                                    + " And Object Id ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully SET text["
+                            + value
+                            + "]"
+                            + " And Object Id ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1126,9 +1072,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         waitForElementVisible(objectRepo, objectName,
                 modifyObjectValueInRuntime, noOfOccurancesToBeReplaced,
@@ -1147,23 +1092,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object Name -[" + objectName
-                                    + "] is successfully Appeneded text["
-                                    + value + "]" + " And Object Xpath ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]," + timeDiff + "msecs");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully Appeneded text[" + value + "]"
+                            + " And Object Xpath ["
+                            + getObjectValue(objectRepo, objectName) + "],"
+                            + timeDiff + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1189,30 +1130,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully Appeneded text["
-                                    + value
-                                    + "]"
-                                    + " And Object Xpath ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully Appeneded text["
+                            + value
+                            + "]"
+                            + " And Object Xpath ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1247,23 +1186,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object Name -[" + objectName
-                                    + "] is successfully Appended text["
-                                    + value + "]" + " And Object Id ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]," + timeDiff + "msecs");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully Appended text[" + value + "]"
+                            + " And Object Id ["
+                            + getObjectValue(objectRepo, objectName) + "],"
+                            + timeDiff + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1288,30 +1223,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully Appended text["
-                                    + value
-                                    + "]"
-                                    + " And Object Id ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully Appended text["
+                            + value
+                            + "]"
+                            + " And Object Id ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1357,9 +1290,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
@@ -1373,22 +1305,17 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     wait.until(ExpectedConditions.visibilityOfElementLocated(By
                             .xpath(getObjectValue(objectRepo, objectName))));
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object name -[" + objectName
-                                    + "] is successfully waited and is present"
-                                    + " And object value =["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object name -[" + objectName
+                            + "] is successfully waited and is present"
+                            + " And object value =["
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (TimeoutException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "] is NOT present and timed out and [MESSAGE]=["
@@ -1406,27 +1333,25 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))));
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -["
-                                    + objectName
-                                    + "] is successfully waited and is present"
-                                    + " And object value =["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object name -["
+                            + objectName
+                            + "] is successfully waited and is present"
+                            + " And object value =["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1459,22 +1384,17 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     wait.until(ExpectedConditions.visibilityOfElementLocated(By
                             .id(getObjectValue(objectRepo, objectName))));
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object name -[" + objectName
-                                    + "]is successfully waited and is present"
-                                    + " And object value =["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object name -[" + objectName
+                            + "]is successfully waited and is present"
+                            + " And object value =["
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (TimeoutException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "] is NOT present and timed out and [MESSAGE]= ["
@@ -1492,27 +1412,25 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))));
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -["
-                                    + objectName
-                                    + "] is successfully waited and is present"
-                                    + " And object value =["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object name -["
+                            + objectName
+                            + "] is successfully waited and is present"
+                            + " And object value =["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1545,22 +1463,17 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     wait.until(ExpectedConditions.visibilityOfElementLocated(By
                             .linkText(getObjectValue(objectRepo, objectName))));
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object name -[" + objectName
-                                    + "] is successfully waited and is present"
-                                    + " And object value =["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object name -[" + objectName
+                            + "] is successfully waited and is present"
+                            + " And object value =["
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (TimeoutException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "] is NOT present and timed out and [MESSAGE]= ["
@@ -1578,27 +1491,25 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))));
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -["
-                                    + objectName
-                                    + "] is successfully waited and is present"
-                                    + " And object value =["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object name -["
+                            + objectName
+                            + "] is successfully waited and is present"
+                            + " And object value =["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1644,9 +1555,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
@@ -1662,25 +1572,18 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     .xpath(getObjectValue(objectRepo,
                                             objectName))));
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -["
-                                    + objectName
-                                    + "] is successfully waited and is invisible"
-                                    + " And object value =["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object name -[" + objectName
+                            + "] is successfully waited and is invisible"
+                            + " And object value =["
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1708,27 +1611,25 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                             noOfOccurancesToBeReplaced,
                                             valuesToBeReplaced))));
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -["
-                                    + objectName
-                                    + "] is successfully waited and is invisible"
-                                    + " And object value =["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object name -["
+                            + objectName
+                            + "] is successfully waited and is invisible"
+                            + " And object value =["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1762,25 +1663,18 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             .invisibilityOfElementLocated(By.id(getObjectValue(
                                     objectRepo, objectName))));
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -["
-                                    + objectName
-                                    + "] is successfully waited and is invisible"
-                                    + " And object value =["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object name -[" + objectName
+                            + "] is successfully waited and is invisible"
+                            + " And object value =["
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1808,27 +1702,25 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                             noOfOccurancesToBeReplaced,
                                             valuesToBeReplaced))));
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -["
-                                    + objectName
-                                    + "] is successfully waited and is invisible"
-                                    + " And object value =["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object name -["
+                            + objectName
+                            + "] is successfully waited and is invisible"
+                            + " And object value =["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1866,9 +1758,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
@@ -1909,24 +1800,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         }
                     });
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object name -[" + objectName
-                                    + "] is successfully waited and text -  "
-                                    + text + " is present in attribute "
-                                    + attributeName + " And object value =["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object name -[" + objectName
+                            + "] is successfully waited and text -  " + text
+                            + " is present in attribute " + attributeName
+                            + " And object value =["
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1945,7 +1831,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (SeleniumException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -1997,30 +1883,29 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         }
                     });
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -["
-                                    + objectName
-                                    + "] is successfully waited and text -  "
-                                    + text
-                                    + " is present in attribute "
-                                    + attributeName
-                                    + " And object value =["
-                                    + getModifiedObjectValue(finalObjectRepo,
-                                            finalObjName,
-                                            finalNoOfOccurancesToBeReplaced,
-                                            finalValuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object name -["
+                            + objectName
+                            + "] is successfully waited and text -  "
+                            + text
+                            + " is present in attribute "
+                            + attributeName
+                            + " And object value =["
+                            + getModifiedObjectValue(finalObjectRepo,
+                                    finalObjName,
+                                    finalNoOfOccurancesToBeReplaced,
+                                    finalValuesToBeReplaced) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -2046,7 +1931,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (SeleniumException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -2107,24 +1992,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         }
                     });
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object name -[" + objectName
-                                    + "] is successfully waited and text -  "
-                                    + text + " is present in attribute "
-                                    + attributeName + " And object value =["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object name -[" + objectName
+                            + "] is successfully waited and text -  " + text
+                            + " is present in attribute " + attributeName
+                            + " And object value =["
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -2144,7 +2024,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (SeleniumException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -2195,30 +2075,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         }
                     });
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -"
-                                    + objectName
-                                    + " is successfully waited and text -  "
-                                    + text
-                                    + " is present in attribute "
-                                    + attributeName
-                                    + " And object value ="
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object name -"
+                            + objectName
+                            + " is successfully waited and text -  "
+                            + text
+                            + " is present in attribute "
+                            + attributeName
+                            + " And object value ="
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -2245,7 +2123,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (SeleniumException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -2285,9 +2163,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
@@ -2298,10 +2175,10 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             {
                 try
                 {
-                    wait.until(ExpectedConditions.textToBePresentInElement(
+                    wait.until(ExpectedConditions.textToBePresentInElementLocated(
                             By.xpath(getObjectValue(objectRepo, objectName)),
                             text));
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "] is successfully waited and text - " + text
@@ -2310,7 +2187,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 }
                 catch (TimeoutException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "] is NOT present and timed out and text - "
@@ -2324,34 +2201,32 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             {
                 try
                 {
-                    wait.until(ExpectedConditions.textToBePresentInElement(By
+                    wait.until(ExpectedConditions.textToBePresentInElementLocated(By
                             .xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced)), text));
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -["
-                                    + objectName
-                                    + "] is successfully waited and and text - "
-                                    + text
-                                    + "is present"
-                                    + " And object value =["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object name -["
+                            + objectName
+                            + "] is successfully waited and and text - "
+                            + text
+                            + "is present"
+                            + " And object value =["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -2385,9 +2260,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             {
                 try
                 {
-                    wait.until(ExpectedConditions.textToBePresentInElement(
+                    wait.until(ExpectedConditions.textToBePresentInElementLocated(
                             By.id(getObjectValue(objectRepo, objectName)), text));
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "] is successfully waited and  text - " + text
@@ -2396,7 +2271,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 }
                 catch (TimeoutException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "] is NOT present and text - " + text
@@ -2411,34 +2286,32 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             {
                 try
                 {
-                    wait.until(ExpectedConditions.textToBePresentInElement(By
+                    wait.until(ExpectedConditions.textToBePresentInElementLocated(By
                             .id(getModifiedObjectValue(objectRepo, objectName,
                                     noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced)), text));
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -["
-                                    + objectName
-                                    + "] is successfully waited and text - "
-                                    + text
-                                    + "is present"
-                                    + " And object value =["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object name -["
+                            + objectName
+                            + "] is successfully waited and text - "
+                            + text
+                            + "is present"
+                            + " And object value =["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -2479,9 +2352,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
@@ -2518,7 +2390,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             }
                         }
                     });
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "] is successfully waited and text -  " + text
@@ -2527,7 +2399,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 }
                 catch (TimeoutException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "] is Timed out and text -  " + text
@@ -2539,7 +2411,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 }
                 catch (SeleniumException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "]  is NOT present" + " and [MESSAGE]=["
@@ -2579,29 +2451,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         }
                     });
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -["
-                                    + objectName
-                                    + "] is successfully waited and text -  "
-                                    + text
-                                    + " is invisible"
-                                    + " And object value =["
-                                    + getModifiedObjectValue(finalObjectRepo,
-                                            finalObjName,
-                                            finalNoOfOccurancesToBeReplaced,
-                                            finalValuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object name -["
+                            + objectName
+                            + "] is successfully waited and text -  "
+                            + text
+                            + " is invisible"
+                            + " And object value =["
+                            + getModifiedObjectValue(finalObjectRepo,
+                                    finalObjName,
+                                    finalNoOfOccurancesToBeReplaced,
+                                    finalValuesToBeReplaced) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -2627,7 +2498,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (SeleniumException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -2685,7 +2556,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             }
                         }
                     });
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "] is successfully waited and text -  " + text
@@ -2694,7 +2565,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 }
                 catch (TimeoutException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "] is Timed out and text -  " + text
@@ -2706,7 +2577,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 }
                 catch (SeleniumException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
                             + "]  is NOT present " + " and [MESSAGE]=["
@@ -2747,29 +2618,27 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         }
                     });
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object name -["
-                                    + objectName
-                                    + "] is successfully waited and text -  "
-                                    + text
-                                    + " is invisible"
-                                    + " And object value =["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object name -["
+                            + objectName
+                            + "] is successfully waited and text -  "
+                            + text
+                            + " is invisible"
+                            + " And object value =["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (TimeoutException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -2795,7 +2664,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (SeleniumException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -2840,9 +2709,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
@@ -2857,7 +2725,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             .isDisplayed();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "]  is present" + " And Object Xpath ["
@@ -2881,23 +2749,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is present"
-                                    + " And Object Xpath ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is present"
+                            + " And Object Xpath ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]" + timeDiff
+                            + "msecs");
                     return true;
                 }
                 catch (NoSuchElementException e)
@@ -2920,7 +2786,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             .isDisplayed();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is present" + "  And Object Id ["
@@ -2945,23 +2811,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "]  is present"
-                                    + " And Object Id ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "]  is present"
+                            + " And Object Id ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                     return true;
                 }
                 catch (NoSuchElementException e)
@@ -2984,7 +2848,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             .isDisplayed();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is present" + " And Object linktext ["
@@ -3008,23 +2872,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is present"
-                                    + " And Object linktext ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is present"
+                            + " And Object linktext ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                     return true;
                 }
                 catch (NoSuchElementException e)
@@ -3060,9 +2922,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         boolean isSelected = false;
         String objectType = getObjectType(objectRepo, objectName);
@@ -3078,7 +2939,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             .isSelected();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is Selected" + " And Object Xpath ["
@@ -3103,23 +2964,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is Selected"
-                                    + " And Object Xpath ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is Selected"
+                            + " And Object Xpath ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                     return isSelected;
                 }
                 catch (NoSuchElementException e)
@@ -3142,7 +3001,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             .isSelected();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is Selected" + " And Object id ["
@@ -3167,23 +3026,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is Selected"
-                                    + " And Object id ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is Selected"
+                            + " And Object id ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                     return isSelected;
                 }
                 catch (NoSuchElementException e)
@@ -3216,9 +3073,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         boolean isEnabled = false;
         String objectType = getObjectType(objectRepo, objectName);
@@ -3234,7 +3090,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             .isEnabled();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is Enabled" + " And Object Xpath ["
@@ -3259,23 +3115,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is Enabled"
-                                    + "  And Object Xpath ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is Enabled"
+                            + "  And Object Xpath ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                     return isEnabled;
                 }
                 catch (NoSuchElementException e)
@@ -3298,7 +3152,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             .isEnabled();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is Enabled" + " And Object id ["
@@ -3323,23 +3177,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is Enabled"
-                                    + " And Object id ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is Enabled"
+                            + " And Object id ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                     return isEnabled;
                 }
                 catch (NoSuchElementException e)
@@ -3373,9 +3225,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
@@ -3390,8 +3241,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     if (getSeleniumHandle().isVisible(
                             getObjectValue(objectRepo, objectName)))
                     {
-                        logTraceMessage(log, "[" + methodName + "],"
-                                + "Page -["
+                        logTraceMessage("[" + methodName + "]," + "Page -["
                                 + objectRepo.get("fileDetails").get("fileName")
                                 + "]," + "Object Name -[" + objectName
                                 + "] is visible" + " And Object Xpath ["
@@ -3420,22 +3270,20 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     valuesToBeReplaced)))
                     {
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] is visible"
-                                        + " And Object Xpath ["
-                                        + getModifiedObjectValue(objectRepo,
-                                                objectName,
-                                                noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "]");
+
+                        "["
+                                + methodName
+                                + "],"
+                                + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "],"
+                                + "Object Name -["
+                                + objectName
+                                + "] is visible"
+                                + " And Object Xpath ["
+                                + getModifiedObjectValue(objectRepo,
+                                        objectName, noOfOccurancesToBeReplaced,
+                                        valuesToBeReplaced) + "]");
                         return true;
                     }
                     else
@@ -3464,8 +3312,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     if (getSeleniumHandle().isVisible(
                             getObjectValue(objectRepo, objectName)))
                     {
-                        logTraceMessage(log, "[" + methodName + "],"
-                                + "Page -["
+                        logTraceMessage("[" + methodName + "]," + "Page -["
                                 + objectRepo.get("fileDetails").get("fileName")
                                 + "]," + "Object Name -[" + objectName
                                 + "] is visible" + " And Object ID ["
@@ -3496,22 +3343,20 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     valuesToBeReplaced)))
                     {
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] is visible"
-                                        + " And Object ID ["
-                                        + getModifiedObjectValue(objectRepo,
-                                                objectName,
-                                                noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "]");
+
+                        "["
+                                + methodName
+                                + "],"
+                                + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "],"
+                                + "Object Name -["
+                                + objectName
+                                + "] is visible"
+                                + " And Object ID ["
+                                + getModifiedObjectValue(objectRepo,
+                                        objectName, noOfOccurancesToBeReplaced,
+                                        valuesToBeReplaced) + "]");
                         return true;
                     }
                     else
@@ -3540,8 +3385,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     if (getSeleniumHandle().isVisible(
                             getObjectValue(objectRepo, objectName)))
                     {
-                        logTraceMessage(log, "[" + methodName + "],"
-                                + "Page -["
+                        logTraceMessage("[" + methodName + "]," + "Page -["
                                 + objectRepo.get("fileDetails").get("fileName")
                                 + "]," + "Object Name -[" + objectName
                                 + "] is visible" + " And Object linktext["
@@ -3572,22 +3416,20 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     valuesToBeReplaced)))
                     {
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] is visible"
-                                        + " And Object linktext ["
-                                        + getModifiedObjectValue(objectRepo,
-                                                objectName,
-                                                noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "]");
+
+                        "["
+                                + methodName
+                                + "],"
+                                + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "],"
+                                + "Object Name -["
+                                + objectName
+                                + "] is visible"
+                                + " And Object linktext ["
+                                + getModifiedObjectValue(objectRepo,
+                                        objectName, noOfOccurancesToBeReplaced,
+                                        valuesToBeReplaced) + "]");
                         return true;
                     }
                     else
@@ -3634,9 +3476,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         waitForElementVisible(objectRepo, objectName,
                 modifyObjectValueInRuntime, noOfOccurancesToBeReplaced,
@@ -3658,27 +3499,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime;
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] with Option - VALUE =["
-                                        + valueOrVisibleByText
-                                        + "] and is successfully Selected"
-                                        + " And Object ID ["
-                                        + getObjectValue(objectRepo, objectName)
-                                        + "]," + timeDiff + "msecs");
+
+                        "[" + methodName + "]," + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "]," + "Object Name -[" + objectName
+                                + "] with Option - VALUE =["
+                                + valueOrVisibleByText
+                                + "] and is successfully Selected"
+                                + " And Object ID ["
+                                + getObjectValue(objectRepo, objectName) + "],"
+                                + timeDiff + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "["
                                         + methodName
                                         + "],"
@@ -3712,30 +3547,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime;
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] with Option - VALUE = ["
-                                        + valueOrVisibleByText
-                                        + "] is successfully Selected"
-                                        + " and Object ID ["
-                                        + getModifiedObjectValue(objectRepo,
-                                                objectName,
-                                                noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "],"
-                                        + timeDiff + "msecs");
+
+                        "["
+                                + methodName
+                                + "],"
+                                + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "],"
+                                + "Object Name -["
+                                + objectName
+                                + "] with Option - VALUE = ["
+                                + valueOrVisibleByText
+                                + "] is successfully Selected"
+                                + " and Object ID ["
+                                + getModifiedObjectValue(objectRepo,
+                                        objectName, noOfOccurancesToBeReplaced,
+                                        valuesToBeReplaced) + "]," + timeDiff
+                                + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "["
                                         + methodName
                                         + "],"
@@ -3774,27 +3607,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime2;
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] with Option - Index = ["
-                                        + index
-                                        + "] is successfully Selected"
-                                        + "  and Object ID ["
-                                        + getObjectValue(objectRepo, objectName)
-                                        + "]," + timeDiff + "msecs");
+
+                        "[" + methodName + "]," + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "]," + "Object Name -[" + objectName
+                                + "] with Option - Index = [" + index
+                                + "] is successfully Selected"
+                                + "  and Object ID ["
+                                + getObjectValue(objectRepo, objectName) + "],"
+                                + timeDiff + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
-                        logErrorMessage(log, "[" + methodName + "],"
-                                + "Page -["
+                        logErrorMessage("[" + methodName + "]," + "Page -["
                                 + objectRepo.get("fileDetails").get("fileName")
                                 + "]," + "Object Name -[" + objectName
                                 + " ]with Option - Index = [" + index
@@ -3817,30 +3642,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime2;
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] with Option - Index = ["
-                                        + index
-                                        + "]  is successfully Selected"
-                                        + " and Object ID ["
-                                        + getModifiedObjectValue(objectRepo,
-                                                objectName,
-                                                noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "],"
-                                        + timeDiff + "msecs");
+
+                        "["
+                                + methodName
+                                + "],"
+                                + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "],"
+                                + "Object Name -["
+                                + objectName
+                                + "] with Option - Index = ["
+                                + index
+                                + "]  is successfully Selected"
+                                + " and Object ID ["
+                                + getModifiedObjectValue(objectRepo,
+                                        objectName, noOfOccurancesToBeReplaced,
+                                        valuesToBeReplaced) + "]," + timeDiff
+                                + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "["
                                         + methodName
                                         + "],"
@@ -3878,27 +3701,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime3;
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] with Option - VisibleByText = ["
-                                        + valueOrVisibleByText
-                                        + "] is successfully Selected"
-                                        + " and Object ID ["
-                                        + getObjectValue(objectRepo, objectName)
-                                        + "]," + timeDiff + "msecs");
+
+                        "[" + methodName + "]," + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "]," + "Object Name -[" + objectName
+                                + "] with Option - VisibleByText = ["
+                                + valueOrVisibleByText
+                                + "] is successfully Selected"
+                                + " and Object ID ["
+                                + getObjectValue(objectRepo, objectName) + "],"
+                                + timeDiff + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "["
                                         + methodName
                                         + "],"
@@ -3932,30 +3749,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime3;
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] with Option - VisibleByText = ["
-                                        + valueOrVisibleByText
-                                        + "] is successfully Selected"
-                                        + " and Object ID[ "
-                                        + getModifiedObjectValue(objectRepo,
-                                                objectName,
-                                                noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "],"
-                                        + timeDiff + "msecs");
+
+                        "["
+                                + methodName
+                                + "],"
+                                + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "],"
+                                + "Object Name -["
+                                + objectName
+                                + "] with Option - VisibleByText = ["
+                                + valueOrVisibleByText
+                                + "] is successfully Selected"
+                                + " and Object ID[ "
+                                + getModifiedObjectValue(objectRepo,
+                                        objectName, noOfOccurancesToBeReplaced,
+                                        valuesToBeReplaced) + "]," + timeDiff
+                                + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "["
                                         + methodName
                                         + "],"
@@ -4002,27 +3817,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime;
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] with Option - VALUE = ["
-                                        + valueOrVisibleByText
-                                        + "] is successfully Selected"
-                                        + "  and Object Xpath ["
-                                        + getObjectValue(objectRepo, objectName)
-                                        + "]," + timeDiff + "msecs");
+
+                        "[" + methodName + "]," + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "]," + "Object Name -[" + objectName
+                                + "] with Option - VALUE = ["
+                                + valueOrVisibleByText
+                                + "] is successfully Selected"
+                                + "  and Object Xpath ["
+                                + getObjectValue(objectRepo, objectName) + "],"
+                                + timeDiff + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "["
                                         + methodName
                                         + "],"
@@ -4056,30 +3865,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime;
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] with Option - VALUE = ["
-                                        + valueOrVisibleByText
-                                        + "]  is successfully Selected"
-                                        + " and Object Xpath ["
-                                        + getModifiedObjectValue(objectRepo,
-                                                objectName,
-                                                noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "],"
-                                        + timeDiff + "msecs");
+
+                        "["
+                                + methodName
+                                + "],"
+                                + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "],"
+                                + "Object Name -["
+                                + objectName
+                                + "] with Option - VALUE = ["
+                                + valueOrVisibleByText
+                                + "]  is successfully Selected"
+                                + " and Object Xpath ["
+                                + getModifiedObjectValue(objectRepo,
+                                        objectName, noOfOccurancesToBeReplaced,
+                                        valuesToBeReplaced) + "]," + timeDiff
+                                + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "["
                                         + methodName
                                         + "],"
@@ -4118,27 +3925,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime2;
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] with Option - Index = ["
-                                        + index
-                                        + "] is successfully Selected"
-                                        + " and Object Xpath ["
-                                        + getObjectValue(objectRepo, objectName)
-                                        + "]," + timeDiff + "msecs");
+
+                        "[" + methodName + "]," + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "]," + "Object Name -[" + objectName
+                                + "] with Option - Index = [" + index
+                                + "] is successfully Selected"
+                                + " and Object Xpath ["
+                                + getObjectValue(objectRepo, objectName) + "],"
+                                + timeDiff + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
-                        logErrorMessage(log, "[" + methodName + "],"
-                                + "Page -["
+                        logErrorMessage("[" + methodName + "]," + "Page -["
                                 + objectRepo.get("fileDetails").get("fileName")
                                 + "]," + "Object Name -[" + objectName
                                 + "] with Option - Index = [" + index
@@ -4161,30 +3960,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime2;
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] with Option - Index = ["
-                                        + index
-                                        + "] is successfully Selected"
-                                        + " and Object Xpath ["
-                                        + getModifiedObjectValue(objectRepo,
-                                                objectName,
-                                                noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "],"
-                                        + timeDiff + "msecs");
+
+                        "["
+                                + methodName
+                                + "],"
+                                + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "],"
+                                + "Object Name -["
+                                + objectName
+                                + "] with Option - Index = ["
+                                + index
+                                + "] is successfully Selected"
+                                + " and Object Xpath ["
+                                + getModifiedObjectValue(objectRepo,
+                                        objectName, noOfOccurancesToBeReplaced,
+                                        valuesToBeReplaced) + "]," + timeDiff
+                                + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "["
                                         + methodName
                                         + "],"
@@ -4223,27 +4020,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime3;
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] with Option - VisibleByText = ["
-                                        + valueOrVisibleByText
-                                        + "] is successfully Selected"
-                                        + " and Object Xpath ["
-                                        + getObjectValue(objectRepo, objectName)
-                                        + "]," + timeDiff + "msecs");
+
+                        "[" + methodName + "]," + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "]," + "Object Name -[" + objectName
+                                + "] with Option - VisibleByText = ["
+                                + valueOrVisibleByText
+                                + "] is successfully Selected"
+                                + " and Object Xpath ["
+                                + getObjectValue(objectRepo, objectName) + "],"
+                                + timeDiff + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "["
                                         + methodName
                                         + "],"
@@ -4277,30 +4068,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime3;
                         logTraceMessage(
-                                log,
-                                "["
-                                        + methodName
-                                        + "],"
-                                        + "Page -["
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + "],"
-                                        + "Object Name -["
-                                        + objectName
-                                        + "] with Option - VisibleByText = ["
-                                        + valueOrVisibleByText
-                                        + "] is successfully Selected"
-                                        + " and Object Xpath ["
-                                        + getModifiedObjectValue(objectRepo,
-                                                objectName,
-                                                noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced) + "]"
-                                        + timeDiff + "msecs");
+
+                        "["
+                                + methodName
+                                + "],"
+                                + "Page -["
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + "],"
+                                + "Object Name -["
+                                + objectName
+                                + "] with Option - VisibleByText = ["
+                                + valueOrVisibleByText
+                                + "] is successfully Selected"
+                                + " and Object Xpath ["
+                                + getModifiedObjectValue(objectRepo,
+                                        objectName, noOfOccurancesToBeReplaced,
+                                        valuesToBeReplaced) + "]" + timeDiff
+                                + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "["
                                         + methodName
                                         + "],"
@@ -4354,9 +4143,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         waitForElementVisible(objectRepo, objectName,
                 modifyObjectValueInRuntime, noOfOccurancesToBeReplaced,
@@ -4375,23 +4163,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object Name -[" + objectName
-                                    + "] has got count = " + count
-                                    + " And Object Xpath ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]," + timeDiff + "msecs");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] has got count = " + count
+                            + " And Object Xpath ["
+                            + getObjectValue(objectRepo, objectName) + "],"
+                            + timeDiff + "msecs");
                     return count;
                 }
                 catch (NoSuchElementException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] has NOT  got count = " + " and [MESSAGE]=["
@@ -4412,30 +4196,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] has got count = "
-                                    + count
-                                    + " And Object Xpath ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] has got count = "
+                            + count
+                            + " And Object Xpath ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                     return count;
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -4472,23 +4254,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object Name -[" + objectName
-                                    + "] has got count = " + count
-                                    + " And Object Xpath ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]," + timeDiff + "msecs");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] has got count = " + count
+                            + " And Object Xpath ["
+                            + getObjectValue(objectRepo, objectName) + "],"
+                            + timeDiff + "msecs");
                     return count;
                 }
                 catch (NoSuchElementException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] has NOT  got count = " + " and [MESSAGE]=["
@@ -4509,30 +4287,28 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] has got count = "
-                                    + count
-                                    + " And Object Xpath ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] has got count = "
+                            + count
+                            + " And Object Xpath ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                     return count;
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -4572,9 +4348,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         waitForElementVisible(objectRepo, objectName,
                 modifyObjectValueInRuntime, noOfOccurancesToBeReplaced,
@@ -4593,23 +4368,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object Name -[" + objectName
-                                    + "] is successfully uploaded"
-                                    + " AND Object Xpath ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]," + timeDiff + "msecs");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully uploaded"
+                            + " AND Object Xpath ["
+                            + getObjectValue(objectRepo, objectName) + "],"
+                            + timeDiff + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -4636,28 +4407,26 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully uploaded"
-                                    + " And Object Xpath ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully uploaded"
+                            + " And Object Xpath ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -4692,7 +4461,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             .sendKeys(value);
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "[" + methodName + "]," + "Page -["
+                    logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is successfully uploaded" + " And Object Id ["
@@ -4702,7 +4471,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -4728,28 +4497,26 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "]  is successfully uploaded"
-                                    + " And Object Id ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "],"
-                                    + timeDiff + "msecs");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "]  is successfully uploaded"
+                            + " And Object Id ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]," + timeDiff
+                            + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -4788,9 +4555,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         waitForElementVisible(objectRepo, objectName,
                 modifyObjectValueInRuntime, noOfOccurancesToBeReplaced,
@@ -4809,23 +4575,18 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Actions builder = new Actions(driver);
                     builder.moveToElement(webelement).perform();
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object Name -[" + objectName
-                                    + "] is successfully mouse overed,"
-                                    + " And Object Xpath ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully mouse overed,"
+                            + " And Object Xpath ["
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (SeleniumException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -4854,27 +4615,25 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Actions builder = new Actions(driver);
                     builder.moveToElement(webelement).perform();
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully mouse overed,"
-                                    + " And Object Xpath ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully mouse overed,"
+                            + " And Object Xpath ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (SeleniumException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -4910,23 +4669,18 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Actions builder = new Actions(driver);
                     builder.moveToElement(webelement).perform();
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + "],"
-                                    + "Object Name -[" + objectName
-                                    + "] is successfully mouse overed,"
-                                    + " And Object Id ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully mouse overed,"
+                            + " And Object Id ["
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (SeleniumException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -4954,27 +4708,25 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Actions builder = new Actions(driver);
                     builder.moveToElement(webelement).perform();
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully mouse overed,"
-                                    + " And Object Id ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully mouse overed,"
+                            + " And Object Id ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                 }
                 catch (SeleniumException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -5012,9 +4764,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         waitForElementVisible(objectRepo, objectName,
                 modifyObjectValueInRuntime, noOfOccurancesToBeReplaced,
@@ -5031,28 +4782,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .getAttribute(attributeName);
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully present and attribute "
-                                    + attributeName + " is retrieved"
-                                    + " with value -[" + actualText + "]"
-                                    + " Object xpath ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully present and attribute "
+                            + attributeName + " is retrieved"
+                            + " with value -[" + actualText + "]"
+                            + " Object xpath ["
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return actualText;
 
                 }
                 catch (NoSuchElementException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is NOT present and attribute " + attributeName
@@ -5073,34 +4817,32 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     valuesToBeReplaced))).getAttribute(
                             attributeName);
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully present and attribute "
-                                    + attributeName
-                                    + " is retrieved"
-                                    + " with value -["
-                                    + actualText
-                                    + "]"
-                                    + " And Object xpath ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and attribute "
+                            + attributeName
+                            + " is retrieved"
+                            + " with value -["
+                            + actualText
+                            + "]"
+                            + " And Object xpath ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                     return actualText;
 
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -5135,28 +4877,21 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getObjectValue(objectRepo, objectName)))
                             .getAttribute(attributeName);
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully present and attribute "
-                                    + attributeName + " is retrieved"
-                                    + " with value -[" + actualText + "]"
-                                    + " And Object id ["
-                                    + getObjectValue(objectRepo, objectName)
-                                    + "]");
+
+                    "[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully present and attribute "
+                            + attributeName + " is retrieved"
+                            + " with value -[" + actualText + "]"
+                            + " And Object id ["
+                            + getObjectValue(objectRepo, objectName) + "]");
                     return actualText;
 
                 }
                 catch (NoSuchElementException e)
                 {
-                    logErrorMessage(log, "[" + methodName + "]," + "Page -["
+                    logErrorMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
                             + "] is NOT present and attribute " + attributeName
@@ -5176,34 +4911,32 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     valuesToBeReplaced))).getAttribute(
                             attributeName);
                     logTraceMessage(
-                            log,
-                            "["
-                                    + methodName
-                                    + "],"
-                                    + "Page -["
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + "],"
-                                    + "Object Name -["
-                                    + objectName
-                                    + "] is successfully present and attribute "
-                                    + attributeName
-                                    + " is retrieved"
-                                    + " with value -["
-                                    + actualText
-                                    + "]"
-                                    + " And Object id ["
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced) + "]");
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and attribute "
+                            + attributeName
+                            + " is retrieved"
+                            + " with value -["
+                            + actualText
+                            + "]"
+                            + " And Object id ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
                     return actualText;
 
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "["
                                     + methodName
                                     + "],"
@@ -5244,9 +4977,8 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement s = stacktrace[2];// maybe this number needs to be
                                             // corrected
-        String className = s.getClassName();
+
         String methodName = s.getMethodName();
-        Logger log = Logger.getLogger(className);
 
         if (!switchToDefaultContent)
         {
@@ -5268,36 +5000,26 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime;
                         logTraceMessage(
-                                log,
-                                "Page -"
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + " "
-                                        + "["
-                                        + methodName
-                                        + "],"
-                                        + "Object Name -"
-                                        + objectName
-                                        + " whose Xpath "
-                                        + getObjectValue(objectRepo, objectName)
-                                        + " is successfully switched,"
-                                        + timeDiff + "msecs");
+
+                        "Page -"
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + " " + "[" + methodName + "],"
+                                + "Object Name -" + objectName
+                                + " whose Xpath "
+                                + getObjectValue(objectRepo, objectName)
+                                + " is successfully switched," + timeDiff
+                                + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
-                                "Page -"
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + " "
-                                        + "["
-                                        + methodName
-                                        + "],"
-                                        + "Object Name -"
-                                        + objectName
-                                        + " is not found with Xpath -"
-                                        + getObjectValue(objectRepo, objectName),
+
+                        "Page -"
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + " " + "[" + methodName + "],"
+                                + "Object Name -" + objectName
+                                + " is not found with Xpath -"
+                                + getObjectValue(objectRepo, objectName),
                                 driver);
                         // throw new
                         // NoSuchElementException("Page
@@ -5322,28 +5044,26 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime;
                         logTraceMessage(
-                                log,
-                                "Page -"
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + " "
-                                        + "["
-                                        + methodName
-                                        + "],"
-                                        + "Object Name -"
-                                        + objectName
-                                        + " whose Xpath "
-                                        + getModifiedObjectValue(objectRepo,
-                                                objectName,
-                                                noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced)
-                                        + " is successfully switched,"
-                                        + timeDiff + "msecs");
+
+                        "Page -"
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + " "
+                                + "["
+                                + methodName
+                                + "],"
+                                + "Object Name -"
+                                + objectName
+                                + " whose Xpath "
+                                + getModifiedObjectValue(objectRepo,
+                                        objectName, noOfOccurancesToBeReplaced,
+                                        valuesToBeReplaced)
+                                + " is successfully switched," + timeDiff
+                                + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "Page -"
                                         + objectRepo.get("fileDetails").get(
                                                 "fileName")
@@ -5383,25 +5103,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime;
                         logTraceMessage(
-                                log,
-                                "Page -"
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + " "
-                                        + "["
-                                        + methodName
-                                        + "],"
-                                        + "Object Name -"
-                                        + objectName
-                                        + " whose Id "
-                                        + getObjectValue(objectRepo, objectName)
-                                        + " is successfully switched,"
-                                        + timeDiff + "msecs");
+
+                        "Page -"
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + " " + "[" + methodName + "],"
+                                + "Object Name -" + objectName + " whose Id "
+                                + getObjectValue(objectRepo, objectName)
+                                + " is successfully switched," + timeDiff
+                                + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "Page -"
                                         + objectRepo.get("fileDetails").get(
                                                 "fileName")
@@ -5436,28 +5150,26 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime;
                         logTraceMessage(
-                                log,
-                                "Page -"
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + " "
-                                        + "["
-                                        + methodName
-                                        + "],"
-                                        + "Object Name -"
-                                        + objectName
-                                        + " whose Id "
-                                        + getModifiedObjectValue(objectRepo,
-                                                objectName,
-                                                noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced)
-                                        + " is successfully clicked,"
-                                        + timeDiff + "msecs");
+
+                        "Page -"
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + " "
+                                + "["
+                                + methodName
+                                + "],"
+                                + "Object Name -"
+                                + objectName
+                                + " whose Id "
+                                + getModifiedObjectValue(objectRepo,
+                                        objectName, noOfOccurancesToBeReplaced,
+                                        valuesToBeReplaced)
+                                + " is successfully clicked," + timeDiff
+                                + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "Page -"
                                         + objectRepo.get("fileDetails").get(
                                                 "fileName")
@@ -5497,25 +5209,19 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime;
                         logTraceMessage(
-                                log,
-                                "Page -"
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + " "
-                                        + "["
-                                        + methodName
-                                        + "],"
-                                        + "Object Name -"
-                                        + objectName
-                                        + " whose Name "
-                                        + getObjectValue(objectRepo, objectName)
-                                        + " is successfully switched,"
-                                        + timeDiff + "msecs");
+
+                        "Page -"
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + " " + "[" + methodName + "],"
+                                + "Object Name -" + objectName + " whose Name "
+                                + getObjectValue(objectRepo, objectName)
+                                + " is successfully switched," + timeDiff
+                                + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "Page -"
                                         + objectRepo.get("fileDetails").get(
                                                 "fileName")
@@ -5550,28 +5256,26 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         long endTime = getCurrentTime();
                         long timeDiff = endTime - startTime;
                         logTraceMessage(
-                                log,
-                                "Page -"
-                                        + objectRepo.get("fileDetails").get(
-                                                "fileName")
-                                        + " "
-                                        + "["
-                                        + methodName
-                                        + "],"
-                                        + "Object Name -"
-                                        + objectName
-                                        + " whose Name "
-                                        + getModifiedObjectValue(objectRepo,
-                                                objectName,
-                                                noOfOccurancesToBeReplaced,
-                                                valuesToBeReplaced)
-                                        + " is successfully clicked,"
-                                        + timeDiff + "msecs");
+
+                        "Page -"
+                                + objectRepo.get("fileDetails").get("fileName")
+                                + " "
+                                + "["
+                                + methodName
+                                + "],"
+                                + "Object Name -"
+                                + objectName
+                                + " whose Name "
+                                + getModifiedObjectValue(objectRepo,
+                                        objectName, noOfOccurancesToBeReplaced,
+                                        valuesToBeReplaced)
+                                + " is successfully clicked," + timeDiff
+                                + "msecs");
                     }
                     catch (NoSuchElementException e)
                     {
                         logErrorMessage(
-                                log,
+
                                 "Page -"
                                         + objectRepo.get("fileDetails").get(
                                                 "fileName")
@@ -5600,8 +5304,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             }
             else
             {
-                logErrorMessage(log, "Invalid Object Type -" + objectType,
-                        driver);
+                logErrorMessage("Invalid Object Type -" + objectType, driver);
 
             }
         }
@@ -5636,14 +5339,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     firstSelected = select.getFirstSelectedOption().getText();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "Select list Value " + firstSelected
+                    logTraceMessage("Select list Value " + firstSelected
                             + " is successfully retrieved," + timeDiff
                             + "msecs");
                     return firstSelected;
                 }
                 catch (NoSuchElementException e)
                 {
-                    logErrorMessage(log, "Select list Value " + firstSelected
+                    logErrorMessage("Select list Value " + firstSelected
                             + " is NOT retrieved,", driver);
                 }
             }
@@ -5658,14 +5361,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     firstSelected = select.getFirstSelectedOption().getText();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "Select list Value " + firstSelected
+                    logTraceMessage("Select list Value " + firstSelected
                             + " is successfully retrieved," + timeDiff
                             + "msecs");
                     return firstSelected;
                 }
                 catch (NoSuchElementException e)
                 {
-                    logErrorMessage(log, "Select list Value " + firstSelected
+                    logErrorMessage("Select list Value " + firstSelected
                             + " is NOT retrieved,", driver);
 
                 }
@@ -5684,14 +5387,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     firstSelected = select.getFirstSelectedOption().getText();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "Select list Value " + firstSelected
+                    logTraceMessage("Select list Value " + firstSelected
                             + " is successfully retrieved," + timeDiff
                             + "msecs");
                     return firstSelected;
                 }
                 catch (NoSuchElementException e)
                 {
-                    logErrorMessage(log, "Select list Value " + firstSelected
+                    logErrorMessage("Select list Value " + firstSelected
                             + " is NOT retrieved,", driver);
                 }
             }
@@ -5706,14 +5409,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     firstSelected = select.getFirstSelectedOption().getText();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "Select list Value " + firstSelected
+                    logTraceMessage("Select list Value " + firstSelected
                             + " is successfully retrieved," + timeDiff
                             + "msecs");
                     return firstSelected;
                 }
                 catch (NoSuchElementException e)
                 {
-                    logErrorMessage(log, "Select list Value " + firstSelected
+                    logErrorMessage("Select list Value " + firstSelected
                             + " is NOT retrieved,", driver);
 
                 }
@@ -5731,14 +5434,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     firstSelected = select.getFirstSelectedOption().getText();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "Select list Value " + firstSelected
+                    logTraceMessage("Select list Value " + firstSelected
                             + " is successfully retrieved," + timeDiff
                             + "msecs");
                     return firstSelected;
                 }
                 catch (NoSuchElementException e)
                 {
-                    logErrorMessage(log, "Select list Value " + firstSelected
+                    logErrorMessage("Select list Value " + firstSelected
                             + " is NOT retrieved,", driver);
                 }
             }
@@ -5753,14 +5456,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     firstSelected = select.getFirstSelectedOption().getText();
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
-                    logTraceMessage(log, "Select list Value " + firstSelected
+                    logTraceMessage("Select list Value " + firstSelected
                             + " is successfully retrieved," + timeDiff
                             + "msecs");
                     return firstSelected;
                 }
                 catch (NoSuchElementException e)
                 {
-                    logErrorMessage(log, "Select list Value " + firstSelected
+                    logErrorMessage("Select list Value " + firstSelected
                             + " is NOT retrieved,", driver);
 
                 }
@@ -5769,7 +5472,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else
         {
-            logErrorMessage(log, "Invalid Object Type -" + objectType, driver);
+            logErrorMessage("Invalid Object Type -" + objectType, driver);
 
         }
         return firstSelected;
@@ -5794,19 +5497,17 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "Page -"
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + " " + "Object Name -"
-                                    + objectName + " whose Xpath "
-                                    + getObjectValue(objectRepo, objectName)
-                                    + " is successfully uploaded," + timeDiff
-                                    + "msecs");
+
+                    "Page -" + objectRepo.get("fileDetails").get("fileName")
+                            + " " + "Object Name -" + objectName
+                            + " whose Xpath "
+                            + getObjectValue(objectRepo, objectName)
+                            + " is successfully uploaded," + timeDiff + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "Page -"
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + " " + "Object Name -"
@@ -5833,25 +5534,22 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "Page -"
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + " "
-                                    + "Object Name -"
-                                    + objectName
-                                    + " whose Xpath "
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced)
-                                    + " is successfully uploaded," + timeDiff
-                                    + "msecs");
+
+                    "Page -"
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + " "
+                            + "Object Name -"
+                            + objectName
+                            + " whose Xpath "
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced)
+                            + " is successfully uploaded," + timeDiff + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "Page -"
                                     + objectRepo.get("fileDetails").get(
                                             "fileName")
@@ -5888,19 +5586,16 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "Page -"
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + " " + "Object Name -"
-                                    + objectName + " whose Id "
-                                    + getObjectValue(objectRepo, objectName)
-                                    + " is successfully uploaded," + timeDiff
-                                    + "msecs");
+
+                    "Page -" + objectRepo.get("fileDetails").get("fileName")
+                            + " " + "Object Name -" + objectName + " whose Id "
+                            + getObjectValue(objectRepo, objectName)
+                            + " is successfully uploaded," + timeDiff + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "Page -"
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + " " + "Object Name -"
@@ -5927,25 +5622,22 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     long endTime = getCurrentTime();
                     long timeDiff = endTime - startTime;
                     logTraceMessage(
-                            log,
-                            "Page -"
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + " "
-                                    + "Object Name -"
-                                    + objectName
-                                    + " whose Id "
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced)
-                                    + " is successfully uploaded," + timeDiff
-                                    + "msecs");
+
+                    "Page -"
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + " "
+                            + "Object Name -"
+                            + objectName
+                            + " whose Id "
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced)
+                            + " is successfully uploaded," + timeDiff + "msecs");
                 }
                 catch (NoSuchElementException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "Page -"
                                     + objectRepo.get("fileDetails").get(
                                             "fileName")
@@ -5971,7 +5663,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else
         {
-            logErrorMessage(log, "Invalid Object Type -" + objectType, driver);
+            logErrorMessage("Invalid Object Type -" + objectType, driver);
 
         }
     }
@@ -5996,18 +5688,17 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Actions builder = new Actions(driver);
                     builder.moveToElement(webelement).perform();
                     logTraceMessage(
-                            log,
-                            "Page -"
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + " " + "Object Name -"
-                                    + objectName + " whose Xpath "
-                                    + getObjectValue(objectRepo, objectName)
-                                    + " is successfully mouse overed,");
+
+                    "Page -" + objectRepo.get("fileDetails").get("fileName")
+                            + " " + "Object Name -" + objectName
+                            + " whose Xpath "
+                            + getObjectValue(objectRepo, objectName)
+                            + " is successfully mouse overed,");
                 }
                 catch (RuntimeException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "Page -"
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + " " + "Object Name -"
@@ -6031,24 +5722,22 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Actions builder = new Actions(driver);
                     builder.moveToElement(webelement).perform();
                     logTraceMessage(
-                            log,
-                            "Page -"
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + " "
-                                    + "Object Name -"
-                                    + objectName
-                                    + " whose Xpath "
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced)
-                                    + " is successfully mouse overed,");
+
+                    "Page -"
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + " "
+                            + "Object Name -"
+                            + objectName
+                            + " whose Xpath "
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced)
+                            + " is successfully mouse overed,");
                 }
                 catch (RuntimeException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "Page -"
                                     + objectRepo.get("fileDetails").get(
                                             "fileName")
@@ -6079,18 +5768,16 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Actions builder = new Actions(driver);
                     builder.moveToElement(webelement).perform();
                     logTraceMessage(
-                            log,
-                            "Page -"
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + " " + "Object Name -"
-                                    + objectName + " whose Id "
-                                    + getObjectValue(objectRepo, objectName)
-                                    + " is successfully mouse overed,");
+
+                    "Page -" + objectRepo.get("fileDetails").get("fileName")
+                            + " " + "Object Name -" + objectName + " whose Id "
+                            + getObjectValue(objectRepo, objectName)
+                            + " is successfully mouse overed,");
                 }
                 catch (RuntimeException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "Page -"
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + " " + "Object Name -"
@@ -6114,24 +5801,22 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Actions builder = new Actions(driver);
                     builder.moveToElement(webelement).perform();
                     logTraceMessage(
-                            log,
-                            "Page -"
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + " "
-                                    + "Object Name -"
-                                    + objectName
-                                    + " whose Id "
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced)
-                                    + " is successfully mouse overed,");
+
+                    "Page -"
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + " "
+                            + "Object Name -"
+                            + objectName
+                            + " whose Id "
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced)
+                            + " is successfully mouse overed,");
                 }
                 catch (RuntimeException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "Page -"
                                     + objectRepo.get("fileDetails").get(
                                             "fileName")
@@ -6151,7 +5836,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else
         {
-            logErrorMessage(log, "Invalid Object Type -" + objectType, driver);
+            logErrorMessage("Invalid Object Type -" + objectType, driver);
 
         }
     }
@@ -6179,18 +5864,17 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Actions builder = new Actions(driver);
                     builder.contextClick(webelement).perform();
                     logTraceMessage(
-                            log,
-                            "Page -"
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + " " + "Object Name -"
-                                    + objectName + " whose Xpath "
-                                    + getObjectValue(objectRepo, objectName)
-                                    + " is successfully right clicked,");
+
+                    "Page -" + objectRepo.get("fileDetails").get("fileName")
+                            + " " + "Object Name -" + objectName
+                            + " whose Xpath "
+                            + getObjectValue(objectRepo, objectName)
+                            + " is successfully right clicked,");
                 }
                 catch (RuntimeException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "Page -"
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + " " + "Object Name -"
@@ -6215,24 +5899,22 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Actions builder = new Actions(driver);
                     builder.contextClick(webelement).build().perform();
                     logTraceMessage(
-                            log,
-                            "Page -"
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + " "
-                                    + "Object Name -"
-                                    + objectName
-                                    + " whose Xpath "
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced)
-                                    + " is successfully rigth clicked,");
+
+                    "Page -"
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + " "
+                            + "Object Name -"
+                            + objectName
+                            + " whose Xpath "
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced)
+                            + " is successfully rigth clicked,");
                 }
                 catch (RuntimeException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "Page -"
                                     + objectRepo.get("fileDetails").get(
                                             "fileName")
@@ -6263,18 +5945,16 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Actions builder = new Actions(driver);
                     builder.contextClick(webelement).perform();
                     logTraceMessage(
-                            log,
-                            "Page -"
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName") + " " + "Object Name -"
-                                    + objectName + " whose Id "
-                                    + getObjectValue(objectRepo, objectName)
-                                    + " is successfully right clicked,");
+
+                    "Page -" + objectRepo.get("fileDetails").get("fileName")
+                            + " " + "Object Name -" + objectName + " whose Id "
+                            + getObjectValue(objectRepo, objectName)
+                            + " is successfully right clicked,");
                 }
                 catch (RuntimeException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "Page -"
                                     + objectRepo.get("fileDetails").get(
                                             "fileName") + " " + "Object Name -"
@@ -6298,24 +5978,22 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Actions builder = new Actions(driver);
                     builder.contextClick(webelement).perform();
                     logTraceMessage(
-                            log,
-                            "Page -"
-                                    + objectRepo.get("fileDetails").get(
-                                            "fileName")
-                                    + " "
-                                    + "Object Name -"
-                                    + objectName
-                                    + " whose Id "
-                                    + getModifiedObjectValue(objectRepo,
-                                            objectName,
-                                            noOfOccurancesToBeReplaced,
-                                            valuesToBeReplaced)
-                                    + " is successfully right clicked,");
+
+                    "Page -"
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + " "
+                            + "Object Name -"
+                            + objectName
+                            + " whose Id "
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced)
+                            + " is successfully right clicked,");
                 }
                 catch (RuntimeException e)
                 {
                     logErrorMessage(
-                            log,
+
                             "Page -"
                                     + objectRepo.get("fileDetails").get(
                                             "fileName")
@@ -6335,7 +6013,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else
         {
-            logErrorMessage(log, "Invalid Object Type -" + objectType, driver);
+            logErrorMessage("Invalid Object Type -" + objectType, driver);
 
         }
     }

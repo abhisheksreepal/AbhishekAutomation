@@ -2,7 +2,6 @@ package com.home.utilities.listeners;
 
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestNG;
@@ -12,8 +11,6 @@ import com.home.utilities.LoggerUtility;
 public class SuccessFailureLogTestListener extends TestNG.ExitCodeListener
 {
 
-    private static Logger log = Logger
-            .getLogger(SuccessFailureLogTestListener.class);
 
     @Override
     public void onTestStart(ITestResult result)

@@ -13,17 +13,27 @@ import au.com.bytecode.opencsv.CSVReader;
 public class ObjectRepoUtility extends LoggerUtility
 {
 
-    private static Logger log = Logger.getLogger(ObjectRepoUtility.class);
+    public ObjectRepoUtility(Logger log)
+    {
+        super(log);
+
+    }
+    
+    public ObjectRepoUtility()
+    {
+        super();
+
+    }
 
     public static HashMap<String, HashMap<String, String>> loginObjRepo;
     public static HashMap<String, HashMap<String, String>> homePageObjRepo;
     public static HashMap<String, HashMap<String, String>> logoutPageObjRepo;
 
-    public static void loadObjectRepoForAllPages()
+    public void loadObjectRepoForAllPages()
     {
-        loginObjRepo = ObjectRepoUtility.fetchObjectFromFile("loginPage");
-        homePageObjRepo = ObjectRepoUtility.fetchObjectFromFile("homePage");
-        logoutPageObjRepo = ObjectRepoUtility.fetchObjectFromFile("logoutPage");
+        loginObjRepo = fetchObjectFromFile("loginPage");
+        homePageObjRepo = fetchObjectFromFile("homePage");
+        logoutPageObjRepo = fetchObjectFromFile("logoutPage");
     }
 
     public enum ObjectType
@@ -61,7 +71,7 @@ public class ObjectRepoUtility extends LoggerUtility
      * 
      * @return
      */
-    private static HashMap<String, HashMap<String, String>> fetchObjectFromFile(
+    private HashMap<String, HashMap<String, String>> fetchObjectFromFile(
             String fileName)
     {
 
@@ -83,7 +93,7 @@ public class ObjectRepoUtility extends LoggerUtility
                     {
                         if (nextLine.length != 3)
                         {
-                            log.error("Invalid Object row,Few fields are Missing in this row = ObjectName ="
+                            new LoggerUtility().log.error("Invalid Object row,Few fields are Missing in this row = ObjectName ="
                                     + nextLine[0]
                                     + ", Object type = "
                                     + nextLine[1]
@@ -101,7 +111,7 @@ public class ObjectRepoUtility extends LoggerUtility
                                     HashMap<String, String> objMeta = new HashMap<String, String>();
                                     objMeta.put(nextLine[1], nextLine[2]);
                                     objRepo.put(nextLine[0], objMeta);
-                                    log.debug("Successfully added Objects - ObjectName ="
+                                    new LoggerUtility().log.debug("Successfully added Objects - ObjectName ="
                                             + nextLine[0]
                                             + ", Object type = "
                                             + nextLine[1]
@@ -115,7 +125,7 @@ public class ObjectRepoUtility extends LoggerUtility
                                         && nextLine[2]
                                                 .equalsIgnoreCase("ObjectValue"))
                                 {
-                                    log.debug("IGNORING following row since It is a COLUMN HEADER - ObjectName ="
+                                    new LoggerUtility().log.debug("IGNORING following row since It is a COLUMN HEADER - ObjectName ="
                                             + nextLine[0]
                                             + ", Object type = "
                                             + nextLine[1]
@@ -124,7 +134,7 @@ public class ObjectRepoUtility extends LoggerUtility
                                 }
                                 else
                                 {
-                                    log.error("Invalid Object Type = "
+                                    new LoggerUtility().log.error("Invalid Object Type = "
                                             + nextLine[1]
                                             + " ,Hence Rejecting this object row with Object Name ="
                                             + nextLine[0]
@@ -134,35 +144,37 @@ public class ObjectRepoUtility extends LoggerUtility
                             }
                         }
                     }
+                    
+                    reader.close();
                 }
                 catch (IOException e)
                 {
-                    log.error("IO exception - Object File in the followig path = "
+                    new LoggerUtility().log.error("IO exception - Object File in the followig path = "
                             + objRepoLocation + "/" + applicationName + "/"
 
                             + fileName + ".csv");
-                    log.error(e.toString());
+                    new LoggerUtility().log.error(e.toString());
                 }
             }
             catch (FileNotFoundException e)
             {
-                log.error("Object File Not found in the followig path = "
+                new LoggerUtility().log.error("Object File Not found in the followig path = "
                         + objRepoLocation + "/" + applicationName + "/"
                         + fileName + ".csv");
-                log.error(e.toString());
+                new LoggerUtility().log.error(e.toString());
             }
 
             // Add last key value pair -> FileDetails: (FileName:FilePath)
             HashMap<String, String> objMeta = new HashMap<String, String>();
-            objMeta.put("fileName", objRepoLocation + "/" + applicationName + "/"
-                    + fileName + ".csv");
+            objMeta.put("fileName", objRepoLocation + "/" + applicationName
+                    + "/" + fileName + ".csv");
             objRepo.put("fileDetails", objMeta);
 
             return objRepo;
         }
         else
         {
-            log.error("INVALID File Name passed as argument " + objRepoLocation
+            new LoggerUtility().log.error("INVALID File Name passed as argument " + objRepoLocation
                     + "/" + applicationName + "/" + fileName + ".csv");
             return objRepo;
         }
@@ -176,7 +188,7 @@ public class ObjectRepoUtility extends LoggerUtility
      * @param objectName
      * @return
      */
-    public static String getObjectValue(
+    public String getObjectValue(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName)
     {
@@ -198,7 +210,7 @@ public class ObjectRepoUtility extends LoggerUtility
                 }
                 catch (NullPointerException e)
                 {
-                    log.error("Object Name "
+                    new LoggerUtility().log.error("Object Name "
                             + objectName
                             + " NOT found OR Configuration failure happened in the repo = "
                             + fileNameNull);
@@ -218,7 +230,7 @@ public class ObjectRepoUtility extends LoggerUtility
                         fileName = key;
                         filePath = objectRepo.get("fileDetails").get(fileName);
                     }
-                    log.error("Object Name "
+                    new LoggerUtility().log.error("Object Name "
                             + objectName
                             + " NOT found OR Configuration failure happened in the repo = "
                             + fileName + " present in following path - "
@@ -238,21 +250,21 @@ public class ObjectRepoUtility extends LoggerUtility
                     {
                         objType = key;
                         objValue = objectRepo.get(objectName).get(objType);
-                        log.debug("Returning Object Value = " + objValue);
+                        new LoggerUtility().log.debug("Returning Object Value = " + objValue);
                     }
                     return objValue;
                 }
             }
             else
             {
-                log.error("Object Name =" + objectName + " is null");
+                new LoggerUtility().log.error("Object Name =" + objectName + " is null");
                 throw new RuntimeException("[ERROR] Object Name =" + objectName
                         + " is null");
             }
         }
         else
         {
-            log.error("Object Repo =" + objectRepo + " is NULL");
+            new LoggerUtility().log.error("Object Repo =" + objectRepo + " is NULL");
             throw new RuntimeException("[ERROR] Object Repo =" + objectRepo
                     + " is NULL");
         }
@@ -273,7 +285,7 @@ public class ObjectRepoUtility extends LoggerUtility
      * @param objectName
      * @return
      */
-    public static String getModifiedObjectValue(
+    public String getModifiedObjectValue(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName, int noOfOccurancesToBeReplaced,
             String valuesToBeReplaced)
@@ -300,13 +312,13 @@ public class ObjectRepoUtility extends LoggerUtility
                             modifiedObjectValue = modifiedObjectValue
                                     .replaceFirst("\\$", values[i]);
                         }
-                        log.debug("Successfuly returning modified Object Value = "
+                        new LoggerUtility().log.debug("Successfuly returning modified Object Value = "
                                 + modifiedObjectValue);
                         return modifiedObjectValue;
                     }
                     else
                     {
-                        log.error("getModifiedObjectValue lenght of valuesToBeReplaced ["
+                        new LoggerUtility().log.error("getModifiedObjectValue lenght of valuesToBeReplaced ["
                                 + values.length
                                 + "] is NOT equal to noOfOccurancesToBeReplaced ["
                                 + noOfOccurancesToBeReplaced + "]");
@@ -321,7 +333,7 @@ public class ObjectRepoUtility extends LoggerUtility
             }
             else
             {
-                log.error("ValuesToBeReplaced Argument =" + ObjectValue
+                new LoggerUtility().log.error("ValuesToBeReplaced Argument =" + ObjectValue
                         + " is null");
                 throw new RuntimeException(
                         "[ERROR] ValuesToBeReplaced Argument =" + ObjectValue
@@ -330,7 +342,7 @@ public class ObjectRepoUtility extends LoggerUtility
         }
         else
         {
-            log.error("Object value =" + ObjectValue + " is null");
+            new LoggerUtility().log.error("Object value =" + ObjectValue + " is null");
             throw new RuntimeException("[ERROR] Object value =" + ObjectValue
                     + " is null");
         }
@@ -344,7 +356,7 @@ public class ObjectRepoUtility extends LoggerUtility
      * @param objectName
      * @return
      */
-    public static String getObjectType(
+    public String getObjectType(
             HashMap<String, HashMap<String, String>> objectRepo,
             String objectName)
     {
@@ -365,7 +377,7 @@ public class ObjectRepoUtility extends LoggerUtility
                 }
                 catch (NullPointerException e)
                 {
-                    log.error("Object Name "
+                    new LoggerUtility().log.error("Object Name "
                             + objectName
                             + " NOT found OR Configuration failure happened in the repo = "
                             + fileNameNull);
@@ -385,7 +397,7 @@ public class ObjectRepoUtility extends LoggerUtility
                         fileName = key;
                         filePath = objectRepo.get("fileDetails").get(fileName);
                     }
-                    log.error("Object Name "
+                    new LoggerUtility().log.error("Object Name "
                             + objectName
                             + " NOT found OR Configuration failure happened in the repo = "
                             + fileName + " present in following path - "
@@ -404,21 +416,21 @@ public class ObjectRepoUtility extends LoggerUtility
                     for (String key : keys)
                     {
                         objType = key;
-                        log.debug("Returning Object Type = " + objType);
+                        new LoggerUtility().log.debug("Returning Object Type = " + objType);
                     }
                     return objType;
                 }
             }
             else
             {
-                log.error("Object Name =" + objectName + " is null");
+                new LoggerUtility().log.error("Object Name =" + objectName + " is null");
                 throw new RuntimeException("[ERROR] Object Name =" + objectName
                         + " is null");
             }
         }
         else
         {
-            log.error("Object Repo =" + objectRepo + " is NULL");
+            new LoggerUtility().log.error("Object Repo =" + objectRepo + " is NULL");
             throw new RuntimeException("[ERROR] Object Repo =" + objectRepo
                     + " is NULL");
         }

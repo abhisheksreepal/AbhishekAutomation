@@ -33,14 +33,24 @@ import org.apache.log4j.Logger;
 
 import com.home.application.pages.BaseWebPage;
 
-public class ReportAndMail
+public class ReportAndMail extends LoggerUtility
 {
+
+    public ReportAndMail(Logger log)
+    {
+        super(log);
+
+    }
+    
+    public ReportAndMail()
+    {
+        super();
+
+    }
 
     public static StringBuilder emalableHtmleReport;
 
     static String hostName = "";
-
-    private static Logger log = Logger.getLogger(ReportAndMail.class);
 
     static
     {
@@ -54,13 +64,13 @@ public class ReportAndMail
         }
         catch (UnknownHostException e)
         {
-            LoggerUtility
-                    .logTraceMessage(log, "Not able to capture IP address");
+            e.printStackTrace();
+
         }
     }
 
     @SuppressWarnings("unused")
-    public static StringBuilder updateHTML(long timeTaken)
+    public StringBuilder updateHTML(long timeTaken)
     {
 
         StringBuilder sb = new StringBuilder();
@@ -189,7 +199,7 @@ public class ReportAndMail
     // huson emaiol facility
     // BUT if you are able to have hudson email plugin do the job of attaching
     // email -> remove this method
-    public static void sendMail(long timeTaken, final String username,
+    public void sendMail(long timeTaken, final String username,
             final String password, String reportmailServer,
             String reportRecipients, String reportAddressFrom,
             String defaultEnv, String browser)
@@ -203,7 +213,7 @@ public class ReportAndMail
         props.put("mail.smtp.host", reportmailServer);
         props.put("mail.smtp.port", "587");
 
-        String[] recipients = BaseWebPage.getStringTokenized(reportRecipients,
+        String[] recipients = new BaseWebPage().getStringTokenized(reportRecipients,
                 ";");
 
         Session session = Session.getInstance(props,
@@ -267,17 +277,18 @@ public class ReportAndMail
         }
         catch (AddressException e)
         {
-            log.error("Mail not sent due to following reason - "
+            
+            new LoggerUtility().log.error("Mail not sent due to following reason - "
                     + e.getMessage());
         }
         catch (MessagingException e)
         {
-            log.error("Mail not sent due to following reason - "
+            new LoggerUtility().log.error("Mail not sent due to following reason - "
                     + e.getMessage());
         }
     }
 
-    public static void createSummaryResultLog(String browser) throws Exception
+    public void createSummaryResultLog(String browser) throws Exception
     {
 
         String filePath = "log/testSummaryResults/testSummaryResult.csv";

@@ -11,17 +11,20 @@ import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class LocalDriverFactory
+public class LocalDriverFactory extends LoggerUtility
 {
 
-    private static Logger log = Logger.getLogger(LocalDriverFactory.class);
-    
-    public LocalDriverFactory()
+    public LocalDriverFactory(Logger log)
     {
-        // TODO Auto-generated constructor stub
+        super(log);
     }
 
-    public static WebDriver createInstance(String browserName, String hub)
+    public LocalDriverFactory()
+    {
+        super();
+    }
+
+    public WebDriver createInstance(String browserName, String hub)
     {
         WebDriver driver = null;
         DesiredCapabilities capabilities = null;
@@ -49,13 +52,18 @@ public class LocalDriverFactory
             }
             catch (MalformedURLException e)
             {
-                LoggerUtility.logErrorMessage(log,
-                        "browser not able to open due to malform URL",driver);
+                logErrorMessage("browser not able to open due to malform URL",
+                        driver);
             }
 
         }
         else if (browserName.equalsIgnoreCase("iexplorer"))
         {
+            System.setProperty(
+                    "webdriver.ie.driver",
+                    envProperties.getString("IEFilePath") + "/"
+                            + envProperties.getString("whichBit") + "/"
+                            + envProperties.getString("IEEXEFileName"));
             capabilities = DesiredCapabilities.internetExplorer();
             capabilities.setBrowserName(browserName);
 
@@ -65,12 +73,17 @@ public class LocalDriverFactory
             }
             catch (MalformedURLException e)
             {
-                LoggerUtility.logErrorMessage(log,
-                        "browser not able to open due to malform URL",driver);
+                logErrorMessage("browser not able to open due to malform URL",
+                        driver);
             }
         }
         else if (browserName.equalsIgnoreCase("chrome"))
         {
+            System.setProperty(
+                    "webdriver.chrome.driver",
+                    envProperties.getString("ChromeFilePath") + "/"
+                            + envProperties.getString("whichBit") + "/"
+                            + envProperties.getString("ChromeEXEFileName"));
             capabilities = DesiredCapabilities.chrome();
             capabilities.setBrowserName(browserName);
 
@@ -80,8 +93,8 @@ public class LocalDriverFactory
             }
             catch (MalformedURLException e)
             {
-                LoggerUtility.logErrorMessage(log,
-                        "browser not able to open due to malform URL",driver);
+                logErrorMessage("browser not able to open due to malform URL",
+                        driver);
             }
         }
         else if (browserName.equalsIgnoreCase("htmlunitenabled"))
@@ -95,8 +108,8 @@ public class LocalDriverFactory
             }
             catch (MalformedURLException e)
             {
-                LoggerUtility.logErrorMessage(log,
-                        "browser not able to open due to malform URL",driver);
+                logErrorMessage("browser not able to open due to malform URL",
+                        driver);
             }
         }
         return driver;

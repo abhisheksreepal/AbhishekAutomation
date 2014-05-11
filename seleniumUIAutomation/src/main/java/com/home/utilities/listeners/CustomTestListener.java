@@ -2,7 +2,6 @@ package com.home.utilities.listeners;
 
 import java.util.List;
 
-
 import org.testng.IInvokedMethod;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -19,7 +18,7 @@ public class CustomTestListener extends TestListenerAdapter {
 		
 		if (method.isTestMethod()) {
 
-			List<Throwable> verificationFailures = TestBase.getVerificationFailures();
+			List<Throwable> verificationFailures = new TestBase().getVerificationFailures();
 
 			//if there are verification failures...
 			if (verificationFailures.size() > 0) {
