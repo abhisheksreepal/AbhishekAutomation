@@ -2,7 +2,7 @@
 <log4j:configuration debug="true" xmlns:log4j="http://jakarta.apache.org/log4j/">    
 	
 	<appender class="org.apache.log4j.RollingFileAppender" name="infoFileLog">
-        <param name="File" value="log/logs/Fri_May_16_14_26_59_IST_2014/infoLogs/LogFile_Adactin Test Suite_Fri_May_16_14_27_00_IST_2014.csv"/>
+        <param name="File" value="log/logs/Fri_May_16_22_41_18_IST_2014/infoLogs/LogFile_Adactin Test Suite_Fri_May_16_22_41_20_IST_2014.csv"/>
 		<param name="Threshold" value="info"/>  
            <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{dd MMM yyyy HH:mm:ss},%-5p,[%c{1}],%m%n"/>
@@ -11,7 +11,7 @@
 
 	
 	<appender class="org.apache.log4j.RollingFileAppender" name="detailedFileLog">
-        <param name="File" value="log/logs/Fri_May_16_14_26_59_IST_2014/detailedLogs/LogFile_Adactin Test Suite_Fri_May_16_14_27_00_IST_2014.csv"/>
+        <param name="File" value="log/logs/Fri_May_16_22_41_18_IST_2014/detailedLogs/LogFile_Adactin Test Suite_Fri_May_16_22_41_20_IST_2014.csv"/>
 		<param name="Threshold" value="debug"/>
            <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{dd MMM yyyy HH:mm:ss},%-5p,[%c{1}],%m%n"/>

@@ -41,14 +41,14 @@ public class LoggerUtility
     public static HashMap<String, HashMap<String, String>> tcMethodDetails = new HashMap<String, HashMap<String, String>>();
     public static HashMap<String, HashMap<String, HashMap<String, String>>> classDetails = new HashMap<String, HashMap<String, HashMap<String, String>>>();
 
-    public  Logger log;
+    public Logger log;
 
     public LoggerUtility(Logger log)
     {
-        
+
         this.log = log;
     }
-    
+
     // Disable selenium logs, Making level as "warn"
     static
     {
@@ -58,19 +58,19 @@ public class LoggerUtility
                 "org.apache.commons.logging.simplelog.log.org.apache.http",
                 "warn");
     }
-    
+
     public LoggerUtility()
     {
-        //TODO ad logger object to threadLocal
+        // TODO ad logger object to threadLocal
         this.log = LocalDriverManager.getLog();
-        
-        if(this.log==null){
+
+        if (this.log == null)
+        {
             this.log = Logger.getLogger("Base Log");
         }
     }
 
-
-    private static final String DATEFOLDER = (new Date()).toString()
+    public static final String DATEFOLDER = (new Date()).toString()
             .replace(":", "_").replace(" ", "_");
 
     public static PropertiesConfiguration envProperties;
@@ -95,6 +95,7 @@ public class LoggerUtility
         File file = new File("log/logs/" + DATEFOLDER);
         boolean s = file.mkdir();
 
+      
         if (s)
         {
             File file2 = new File("log/logs/" + DATEFOLDER + "/"
@@ -108,6 +109,16 @@ public class LoggerUtility
             File detailedFilePath = new File("log/logs/" + DATEFOLDER + "/"
                     + "detailedLogs");
             detailedFilePath.mkdir();
+            
+            
+            File file3 = new File("log/logs/" + DATEFOLDER + "/"
+                    + "testSummaryResults");
+            file3.mkdir();
+
+            File file4 = new File("log/logs/" + DATEFOLDER + "/"
+                    + "testSummaryResults/results");
+            file4.mkdir();
+
         }
         else
         {
@@ -127,7 +138,8 @@ public class LoggerUtility
         }
         catch (IOException e)
         {
-            new LoggerUtility().log.error("Error writing screencapture to a file -" + fileName);
+            new LoggerUtility().log
+                    .error("Error writing screencapture to a file -" + fileName);
             new LoggerUtility().log.error(e.getStackTrace());
         }
     }
@@ -163,7 +175,8 @@ public class LoggerUtility
         if (element.getLocalName().equalsIgnoreCase("suite"))
         {
             suiteName = element.getAttributeValue("name");
-            new LoggerUtility().log.debug("Returning Test Suite name -" + suiteName);
+            new LoggerUtility().log.debug("Returning Test Suite name -"
+                    + suiteName);
             return suiteName;
         }
         else
@@ -174,17 +187,20 @@ public class LoggerUtility
                 if (elements.get(i).getLocalName().equalsIgnoreCase("suite"))
                 {
                     suiteName = element.getAttributeValue("name");
-                    new LoggerUtility().log.debug("Returning Test Suite name -" + suiteName);
+                    new LoggerUtility().log.debug("Returning Test Suite name -"
+                            + suiteName);
                     return suiteName;
                 }
                 else
                 {
-                    new LoggerUtility().log.error("Suite tag not found in testng xml file");
+                    new LoggerUtility().log
+                            .error("Suite tag not found in testng xml file");
                     throw new RuntimeException(
                             "Suite tag not found in testng xml file");
                 }
             }
-            new LoggerUtility().log.error("Suite tag not found in testng xml file");
+            new LoggerUtility().log
+                    .error("Suite tag not found in testng xml file");
             throw new RuntimeException("Suite tag not found in testng xml file");
         }
     }
@@ -243,11 +259,17 @@ public class LoggerUtility
                                         + className + "_" + testngXMLSuiteName
                                         + "_" + logDate + ".csv");
                                 grandChild.get(j).addAttribute(attr);
-                                new LoggerUtility().log.debug("Updated infoLogPath to value - "
-                                        + logPath + "/" + DATEFOLDER + "/"
-                                        + "infoLogs/" + className + "_"
-                                        + testngXMLSuiteName + "_" + logDate
-                                        + ".csv");
+                                new LoggerUtility().log
+                                        .debug("Updated infoLogPath to value - "
+                                                + logPath
+                                                + "/"
+                                                + DATEFOLDER
+                                                + "/"
+                                                + "infoLogs/"
+                                                + className
+                                                + "_"
+                                                + testngXMLSuiteName
+                                                + "_" + logDate + ".csv");
                             }
                         }
                     }
@@ -269,11 +291,18 @@ public class LoggerUtility
                                         + testngXMLSuiteName + "_" + logDate
                                         + ".csv");
                                 grandChild.get(j).addAttribute(attr);
-                                new LoggerUtility().log.debug("Updated infoLogPath to value - "
-                                        + logPath + "/" + DATEFOLDER + "/"
-                                        + "detailedLogs/" + className + "_"
-                                        + testngXMLSuiteName + "_" + logDate
-                                        + ".csv");
+                                new LoggerUtility().log
+                                        .debug("Updated infoLogPath to value - "
+                                                + logPath
+                                                + "/"
+                                                + DATEFOLDER
+                                                + "/"
+                                                + "detailedLogs/"
+                                                + className
+                                                + "_"
+                                                + testngXMLSuiteName
+                                                + "_"
+                                                + logDate + ".csv");
                             }
                         }
                     }
@@ -299,7 +328,8 @@ public class LoggerUtility
         }
         catch (IOException e)
         {
-            new LoggerUtility().log.error("IO exception - unable to write " + logXMLPath);
+            new LoggerUtility().log.error("IO exception - unable to write "
+                    + logXMLPath);
             throw new RuntimeException("IO exception - unable to write"
                     + logXMLPath);
         }
@@ -308,20 +338,19 @@ public class LoggerUtility
         DOMConfigurator.configureAndWatch(logXMLPath, 6000);
     }
 
-    public  void logTraceMessage(String cTraceMessage)
+    public void logTraceMessage(String cTraceMessage)
     {
         new LoggerUtility().log.info(cTraceMessage);
 
     }
 
-    public  void logVerifyPass( String cTraceMessage)
+    public void logVerifyPass(String cTraceMessage)
     {
         new LoggerUtility().log.info("[VERIFICATION PASS]" + cTraceMessage);
 
     }
 
-    public void logErrorMessage(String cErrorMessage,
-            WebDriver driver)
+    public void logErrorMessage(String cErrorMessage, WebDriver driver)
     {
 
         String cScreenShotPath = envProperties.getString("logPath") + "/"
@@ -336,17 +365,14 @@ public class LoggerUtility
     }
 
     // Verifies , capture screenshot and does not throw runtime exception
-    public void logVerifyFailure( String cErrorMessage,
-            WebDriver driver)
+    public void logVerifyFailure(String cErrorMessage, WebDriver driver)
     {
         String cScreenShotPath = envProperties.getString("logPath") + "/"
                 + DATEFOLDER + "/screenShots/";
         String cErrorScreenShotFileName = cScreenShotPath + "/"
                 + "ERROR_FAILURE_" + testCaseName + logDate + ".png";
-        new TestBase(new LoggerUtility().log).failTestNgOnVerificationFailures( cErrorMessage,
-                cErrorScreenShotFileName, driver);
+        new TestBase(new LoggerUtility().log).failTestNgOnVerificationFailures(
+                cErrorMessage, cErrorScreenShotFileName, driver);
     }
-    
-        
 
 }

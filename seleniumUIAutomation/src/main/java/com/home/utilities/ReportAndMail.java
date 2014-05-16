@@ -249,7 +249,8 @@ public class ReportAndMail extends LoggerUtility
 
             MimeBodyPart attachment = new MimeBodyPart();
             FileDataSource file = new FileDataSource(new File(
-                    "log/testSummaryResults/testSummaryResult.csv"))
+                    "log/logs/" + LoggerUtility.DATEFOLDER + "/"
+                    + "testSummaryResults/testSummaryResult.csv"))
             {
                 @Override
                 public String getContentType()
@@ -291,15 +292,18 @@ public class ReportAndMail extends LoggerUtility
     public void createSummaryResultLog(String browser) throws Exception
     {
 
-        String filePath = "log/testSummaryResults/testSummaryResult.csv";
-        File file2 = new File(filePath);
+        String filePath = "log/logs/" + LoggerUtility.DATEFOLDER + "/"
+                    + "testSummaryResults/testSummaryResult.csv";
+        File file2 = new File(filePath);        
         BufferedWriter buffWriter2 = new BufferedWriter(new FileWriter(file2));
         buffWriter2
                 .write("Module,Test Case Name,Test Case Id in Test Link,Execution result (P/F),Comment in case of ERROR failure,Comment in case of VERIFICATION failure,Comment in case of CONFIGURATION Failure");
         buffWriter2.newLine();
 
-        String moduleTestSummaryResult = "log/testSummaryResults/results/moduleSummaryResult.csv";
+        String moduleTestSummaryResult = "log/logs/" + LoggerUtility.DATEFOLDER + "/"
+                    + "testSummaryResults/results/moduleSummaryResult.csv";
         File file3 = new File(moduleTestSummaryResult);
+        
         BufferedWriter buffWriter3 = new BufferedWriter(new FileWriter(file3));
         buffWriter3
                 .write("Test Case Name,PassCount,FailCount,Browser Used for Testing");
