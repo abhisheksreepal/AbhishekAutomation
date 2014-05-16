@@ -6,9 +6,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<scm>
-		<connection>scm:git:git@bitbucket.org:abhisheksreepal/abhishek_private_git_repo.git</connection>
-		<url>scm:git:git@bitbucket.org:abhisheksreepal/abhishek_private_git_repo.git</url>
-		<developerConnection>scm:git:git@bitbucket.org:abhisheksreepal/abhishek_private_git_repo.git</developerConnection>
+		<connection>scm:git:git@bitbucket.org:abhisheksreepal/webuiautomation.git</connection>
+		<url>scm:git:git@bitbucket.org:abhisheksreepal/webuiautomation.git</url>
+		<developerConnection>scm:git:git@bitbucket.org:abhisheksreepal/webuiautomation.git</developerConnection>
 	</scm>
 
 	<!-- Dependencies configuration -->
@@ -118,6 +118,25 @@
 			<artifactId>sikuli-api</artifactId>
 			<version>1.1.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.uncommons</groupId>
+			<artifactId>reportng</artifactId>
+			<version>1.1.4</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.testng</groupId>
+					<artifactId>testng</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>3.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -134,7 +153,7 @@
 						<!-- testNg listeners -->
 						<property>
 							<name>listener</name>
-							<value>com.home.utilities.listeners.CustomTestListener,com.home.utilities.listeners.SuccessFailureLogTestListener,com.home.utilities.listeners.EmailableReporterCustom</value>
+							<value>com.home.utilities.listeners.CustomTestListener,org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter</value>
 						</property>
 					</properties>
 				</configuration>

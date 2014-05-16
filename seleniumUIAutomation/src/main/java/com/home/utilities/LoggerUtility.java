@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
 
 import nu.xom.Attribute;
 import nu.xom.Builder;
@@ -27,19 +26,6 @@ import org.openqa.selenium.remote.Augmenter;
 
 public class LoggerUtility
 {
-
-    private static String logDate;
-
-    public static String cClassName;
-    public static String testCaseName;
-
-    public static String errorScreenShotFileNamePath = null;
-    public static String verificationErrorScreenShotFileNamePath = null;
-    public static String configurationFailure = null;
-
-    public static HashMap<String, String> tcDetails = new HashMap<String, String>();
-    public static HashMap<String, HashMap<String, String>> tcMethodDetails = new HashMap<String, HashMap<String, String>>();
-    public static HashMap<String, HashMap<String, HashMap<String, String>>> classDetails = new HashMap<String, HashMap<String, HashMap<String, String>>>();
 
     public Logger log;
 
@@ -95,7 +81,6 @@ public class LoggerUtility
         File file = new File("log/logs/" + DATEFOLDER);
         boolean s = file.mkdir();
 
-      
         if (s)
         {
             File file2 = new File("log/logs/" + DATEFOLDER + "/"
@@ -109,15 +94,6 @@ public class LoggerUtility
             File detailedFilePath = new File("log/logs/" + DATEFOLDER + "/"
                     + "detailedLogs");
             detailedFilePath.mkdir();
-            
-            
-            File file3 = new File("log/logs/" + DATEFOLDER + "/"
-                    + "testSummaryResults");
-            file3.mkdir();
-
-            File file4 = new File("log/logs/" + DATEFOLDER + "/"
-                    + "testSummaryResults/results");
-            file4.mkdir();
 
         }
         else
@@ -211,7 +187,8 @@ public class LoggerUtility
         String testngXMLSuiteName = getTestSuiteName();
         String logPath = envProperties.getString("logPath");
 
-        logDate = (new Date()).toString().replace(":", "_").replace(" ", "_");
+        String logDate = (new Date()).toString().replace(":", "_")
+                .replace(" ", "_");
 
         Builder builder = new Builder();
         nu.xom.Document doc = null;
@@ -352,12 +329,12 @@ public class LoggerUtility
 
     public void logErrorMessage(String cErrorMessage, WebDriver driver)
     {
-
+        String logDate = (new Date()).toString().replace(":", "_")
+                .replace(" ", "_");
         String cScreenShotPath = envProperties.getString("logPath") + "/"
                 + DATEFOLDER + "/screenShots/";
         String cErrorScreenShotFileName = cScreenShotPath + "/"
-                + "ERROR_FAILURE_" + testCaseName + logDate + ".png";
-        errorScreenShotFileNamePath = cErrorScreenShotFileName;
+                + "ERROR_FAILURE_" + logDate + ".png";
         captureScreenShot(cErrorScreenShotFileName, driver);
         new LoggerUtility().log.error(cErrorMessage);
 
@@ -367,10 +344,12 @@ public class LoggerUtility
     // Verifies , capture screenshot and does not throw runtime exception
     public void logVerifyFailure(String cErrorMessage, WebDriver driver)
     {
+        String logDate = (new Date()).toString().replace(":", "_")
+                .replace(" ", "_");
         String cScreenShotPath = envProperties.getString("logPath") + "/"
                 + DATEFOLDER + "/screenShots/";
         String cErrorScreenShotFileName = cScreenShotPath + "/"
-                + "ERROR_FAILURE_" + testCaseName + logDate + ".png";
+                + "ERROR_FAILURE_" + logDate + ".png";
         new TestBase(new LoggerUtility().log).failTestNgOnVerificationFailures(
                 cErrorMessage, cErrorScreenShotFileName, driver);
     }

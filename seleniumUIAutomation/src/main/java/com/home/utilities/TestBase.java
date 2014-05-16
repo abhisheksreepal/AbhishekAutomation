@@ -35,7 +35,8 @@ public class TestBase extends LoggerUtility
         }
         catch (Throwable e)
         {
-            new LoggerUtility().log.error("Condition [" + condition + "] is NOT True");
+            new LoggerUtility().log.error("Condition [" + condition
+                    + "] is NOT True");
             throw new AssertionError("Condition [" + condition
                     + "] is NOT True");
         }
@@ -65,7 +66,8 @@ public class TestBase extends LoggerUtility
         }
         catch (Throwable e)
         {
-            new LoggerUtility().log.error("Condition [" + condition + "] is NOT False");
+            new LoggerUtility().log.error("Condition [" + condition
+                    + "] is NOT False");
             throw new AssertionError("Condition [" + condition
                     + "] is NOT False");
         }
@@ -94,8 +96,8 @@ public class TestBase extends LoggerUtility
         }
         catch (Throwable e)
         {
-            new LoggerUtility().log.error("Actual [" + actual + "] is NOT Equal to Expected ["
-                    + expected + "]");
+            new LoggerUtility().log.error("Actual [" + actual
+                    + "] is NOT Equal to Expected [" + expected + "]");
             throw new AssertionError("Actual [" + actual
                     + "] is NOT Equal to Expected [" + expected + "]");
         }
@@ -109,8 +111,8 @@ public class TestBase extends LoggerUtility
         }
         catch (Throwable e)
         {
-            new LoggerUtility().log.error("Actual [" + actual + "] is NOT Equal to Expected ["
-                    + expected + "]");
+            new LoggerUtility().log.error("Actual [" + actual
+                    + "] is NOT Equal to Expected [" + expected + "]");
             throw new AssertionError("Actual [" + actual
                     + "] is NOT Equal to Expected [" + expected + "]");
         }
@@ -124,8 +126,8 @@ public class TestBase extends LoggerUtility
         }
         catch (Throwable e)
         {
-            new LoggerUtility().log.error("Actual [" + actual + "] is NOT Equal to Expected ["
-                    + expected + "]");
+            new LoggerUtility().log.error("Actual [" + actual
+                    + "] is NOT Equal to Expected [" + expected + "]");
             throw new AssertionError("Actual [" + actual
                     + "] is NOT Equal to Expected [" + expected + "]");
         }
@@ -139,8 +141,9 @@ public class TestBase extends LoggerUtility
         }
         catch (Throwable e)
         {
-            new LoggerUtility().log.error("Actual [" + actual + "] is NOT Equal to Expected ["
-                    + expected + "] and message = " + message);
+            new LoggerUtility().log.error("Actual [" + actual
+                    + "] is NOT Equal to Expected [" + expected
+                    + "] and message = " + message);
             throw new AssertionError("Actual [" + actual
                     + "] is NOT Equal to Expected [" + expected
                     + "] and message =" + message);
@@ -167,8 +170,8 @@ public class TestBase extends LoggerUtility
         }
         catch (Throwable e)
         {
-            new LoggerUtility().log.error("[VERIFICATION FAILURE] Condition [" + condition
-                    + "] is NOT True");
+            new LoggerUtility().log.error("[VERIFICATION FAILURE] Condition ["
+                    + condition + "] is NOT True");
             addVerificationFailure(e);
         }
     }
@@ -181,8 +184,8 @@ public class TestBase extends LoggerUtility
         }
         catch (Throwable e)
         {
-            new LoggerUtility().log.error("[VERIFICATION FAILURE] Condition [" + condition
-                    + "] is NOT False");
+            new LoggerUtility().log.error("[VERIFICATION FAILURE] Condition ["
+                    + condition + "] is NOT False");
             addVerificationFailure(e);
         }
     }
@@ -195,8 +198,9 @@ public class TestBase extends LoggerUtility
         }
         catch (Throwable e)
         {
-            new LoggerUtility().log.error("[VERIFICATION FAILURE] Condition [" + condition
-                    + "] is NOT False and failure message = " + message);
+            new LoggerUtility().log.error("[VERIFICATION FAILURE] Condition ["
+                    + condition + "] is NOT False and failure message = "
+                    + message);
             addVerificationFailure(e);
         }
     }
@@ -209,8 +213,8 @@ public class TestBase extends LoggerUtility
         }
         catch (Throwable e)
         {
-            new LoggerUtility().log.error("[VERIFICATION FAILURE] Actual [" + actual
-                    + "] is NOT Equal to Expected [" + expected + "]");
+            new LoggerUtility().log.error("[VERIFICATION FAILURE] Actual ["
+                    + actual + "] is NOT Equal to Expected [" + expected + "]");
             addVerificationFailure(e);
         }
     }
@@ -223,8 +227,8 @@ public class TestBase extends LoggerUtility
         }
         catch (Throwable e)
         {
-            new LoggerUtility().log.error("[VERIFICATION FAILURE] Actual [" + actual
-                    + "] is NOT Equal to Expected [" + expected + "]");
+            new LoggerUtility().log.error("[VERIFICATION FAILURE] Actual ["
+                    + actual + "] is NOT Equal to Expected [" + expected + "]");
             addVerificationFailure(e);
         }
     }
@@ -237,15 +241,16 @@ public class TestBase extends LoggerUtility
         }
         catch (Throwable e)
         {
-            new LoggerUtility().log.error("[VERIFICATION FAILURE] Actual [" + actual
-                    + "] is NOT Equal to Expected [" + expected + "]");
+            new LoggerUtility().log.error("[VERIFICATION FAILURE] Actual ["
+                    + actual + "] is NOT Equal to Expected [" + expected + "]");
             addVerificationFailure(e);
         }
     }
 
     public void fail(String message)
     {
-        new LoggerUtility().log.error("Failing with following message " + message);
+        new LoggerUtility().log.error("Failing with following message "
+                + message);
         Assert.fail(message);
     }
 
@@ -265,30 +270,15 @@ public class TestBase extends LoggerUtility
         verificationFailures.add(e);
     }
 
-    public void failTestNgOnVerificationFailures(
-            String cErrorMessage, String cErrorScreenShotFileName,
-            WebDriver driver)
+    public void failTestNgOnVerificationFailures(String cErrorMessage,
+            String cErrorScreenShotFileName, WebDriver driver)
     {
-        /*
-         * String cScreenShotPath = "log/screenShots/"; String
-         * cErrorScreenShotFileName = cScreenShotPath +
-         * "VERIFICATION_FAILURE_"+LoggerUtility.testCaseName +
-         * LoggerUtility.logDate + ".png";
-         */
-        if (LoggerUtility.verificationErrorScreenShotFileNamePath != null)
-        {
-            LoggerUtility.verificationErrorScreenShotFileNamePath = LoggerUtility.verificationErrorScreenShotFileNamePath
-                    + "|" + cErrorScreenShotFileName;
-        }
-        else
-        {
-            LoggerUtility.verificationErrorScreenShotFileNamePath = cErrorScreenShotFileName;
-        }
 
-        new LoggerUtility(log).captureScreenShot(
-                cErrorScreenShotFileName, driver);
+        new LoggerUtility(log).captureScreenShot(cErrorScreenShotFileName,
+                driver);
 
-        new LoggerUtility().log.error("[VERIFICATION FAILURE]," + cErrorMessage);
+        new LoggerUtility().log
+                .error("[VERIFICATION FAILURE]," + cErrorMessage);
         addVerificationFailure(new SeleniumException("[VERIFICATION FAILURE],"
                 + cErrorMessage));
     }

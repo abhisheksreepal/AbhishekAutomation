@@ -2,20 +2,14 @@ package com.home.application.tests;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import com.home.utilities.ObjectRepoUtility;
-import com.home.utilities.ReportAndMail;
 import com.home.utilities.TestBase;
 import com.home.utilities.TestDataUtilty;
 
 public class BaseWebPageTest extends TestBase
 {
-
-    private long startTime = 0L;
-    private long endTime = 0L;
-    public static long timeTaken = 0L;
 
     public BaseWebPageTest()
     {
@@ -36,7 +30,7 @@ public class BaseWebPageTest extends TestBase
 
         createFolders();
         updateLog4JXmlFile("LogFile");
-        startTime = System.currentTimeMillis();
+
         try
         {
             envProperties = new PropertiesConfiguration(
@@ -60,30 +54,6 @@ public class BaseWebPageTest extends TestBase
         // This is required for class SuccessFailureLogTestListener
         TestDataUtilty.loadTestDataToMemory(defaultEnvironment, application);
 
-    }
-
-    /**
-     * 
-     * @throws Exception
-     */
-    @AfterSuite(alwaysRun = true)
-    public void close() throws Exception
-    {
-
-        endTime = System.currentTimeMillis();
-        timeTaken = endTime - startTime;
-        new ReportAndMail().createSummaryResultLog(envProperties
-                .getString("BROWSER_NAME"));
-
-        new ReportAndMail().updateHTML(timeTaken);
-        new ReportAndMail().sendMail(timeTaken,
-                envProperties.getString("emailUserName"),
-                envProperties.getString("emailPassword"),
-                envProperties.getString("ReportmailServer"),
-                envProperties.getString("Reportrecipients"),
-                envProperties.getString("ReportaddressFrom"),
-                envProperties.getString("default"),
-                envProperties.getString("BROWSER_NAME"));
     }
 
 }

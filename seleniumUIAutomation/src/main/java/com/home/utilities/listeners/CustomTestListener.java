@@ -145,7 +145,7 @@ public class CustomTestListener extends TestListenerAdapter
             WebDriver driver = new LocalDriverFactory().createInstance(platform,browser,
                     hub);
             LocalDriverManager.setWebDriver(driver);
-            LocalDriverManager.setLog(Logger.getLogger(className + " - "
+            LocalDriverManager.setLog(Logger.getLogger(className + "_"
                     + methodName));
 
             Logger log = LocalDriverManager.getLog();
