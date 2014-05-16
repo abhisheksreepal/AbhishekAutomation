@@ -30,7 +30,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
     public WebDriver driver;
 
-    private long getCurrentTime()
+    public long getCurrentTime()
     {
         Date now = new Date();
         long nowTime = now.getTime();
