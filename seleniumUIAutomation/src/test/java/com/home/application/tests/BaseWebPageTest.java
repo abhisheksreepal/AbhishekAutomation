@@ -1,21 +1,10 @@
 package com.home.application.tests;
 
-import java.lang.reflect.Method;
-
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.Logger;
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import com.home.application.pages.BaseWebPage;
-import com.home.utilities.LocalDriverFactory;
-import com.home.utilities.LocalDriverManager;
-import com.home.utilities.LoggerUtility;
 import com.home.utilities.ObjectRepoUtility;
 import com.home.utilities.ReportAndMail;
 import com.home.utilities.TestBase;
@@ -95,47 +84,6 @@ public class BaseWebPageTest extends TestBase
                 envProperties.getString("ReportaddressFrom"),
                 envProperties.getString("default"),
                 envProperties.getString("BROWSER_NAME"));
-    }
-    
-    
-    @BeforeClass(alwaysRun=true)
-    public String getClassName(){
-        return this.getClass().getName();
-    }
-
-    @BeforeMethod(alwaysRun = true)
-    public void setUpForTestCase(Method method)
-    {
-
-        String defaultEnvironment = envProperties.getString("default");
-        String url = envProperties.getString(defaultEnvironment + ".url");
-        String browser = envProperties.getString("BROWSER_NAME");
-        String hub = envProperties.getString("hub");
-
-        WebDriver driver = new LocalDriverFactory()
-                .createInstance(browser, hub);
-        LocalDriverManager.setWebDriver(driver);
-        LocalDriverManager.setLog(Logger.getLogger(getClassName()+" - "+method.getName()));
-
-        Logger log = LocalDriverManager.getLog();
-        new LoggerUtility(log);
-        new BaseWebPage(driver).navigateTo(url);
-
-        logTraceMessage("[Launching TestCase - ]"+getClassName()+" - "+method.getName());
-    }
-
-    @AfterMethod(alwaysRun = true)
-    public void cleanUpForTestCase(Method method)
-    {
-        WebDriver driver = LocalDriverManager.getDriver();
-        
-        if (driver != null)
-        {
-            driver.quit();
-            logTraceMessage("[CLOSING Driver]");
-        }
-
-        logTraceMessage("[Terminating TestCase - ]"+getClassName()+" - "+method.getName());
     }
 
 }

@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
@@ -24,10 +25,12 @@ public class LocalDriverFactory extends LoggerUtility
         super();
     }
 
-    public WebDriver createInstance(String browserName, String hub)
+    public WebDriver createInstance(String platform, String browserName,
+            String hub)
     {
         WebDriver driver = null;
         DesiredCapabilities capabilities = null;
+
         if (browserName.equalsIgnoreCase("firefox"))
         {
             ProfilesIni ffProfiles = new ProfilesIni();
@@ -79,8 +82,7 @@ public class LocalDriverFactory extends LoggerUtility
         }
         else if (browserName.equalsIgnoreCase("chrome"))
         {
-            System.setProperty(
-                    "webdriver.chrome.driver",
+            System.setProperty("webdriver.chrome.driver",
                     envProperties.getString("ChromeFilePath") + "/"
                             + envProperties.getString("whichBit") + "/"
                             + envProperties.getString("ChromeEXEFileName"));
@@ -111,6 +113,19 @@ public class LocalDriverFactory extends LoggerUtility
                 logErrorMessage("browser not able to open due to malform URL",
                         driver);
             }
+        }
+
+        if (platform.equalsIgnoreCase("windows"))
+        {
+            capabilities.setPlatform(Platform.WIN8);
+        }
+        else if (platform.equalsIgnoreCase("linux"))
+        {
+            capabilities.setPlatform(Platform.LINUX);
+        }
+        else
+        {
+            capabilities.setPlatform(Platform.WIN8);
         }
         return driver;
     }

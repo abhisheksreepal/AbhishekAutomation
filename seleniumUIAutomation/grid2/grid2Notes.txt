@@ -1,0 +1,8 @@
+#Start Hub 
+java -jar selenium-server-standalone-2.41.0.jar -role hub
+
+#Get IP address of system where hub is started
+
+#Launch Nodes in multiple system
+java -jar selenium-server-standalone-2.41.0.jar -role node  -hub http://ipaddress:4444/grid/register -browser browserName=firefox,platform=LINUX
+java -jar selenium-server-standalone-2.41.0.jar -role node  -hub http://ipaddress:4444/grid/register -browser browserName=iexplorer,platform=WINDOWS
