@@ -1,5 +1,6 @@
 package com.home.utilities;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -62,11 +63,7 @@ public class LocalDriverFactory extends LoggerUtility
         }
         else if (browserName.equalsIgnoreCase("iexplorer"))
         {
-            System.setProperty(
-                    "webdriver.ie.driver",
-                    envProperties.getString("IEFilePath") + "/"
-                            + envProperties.getString("whichBit") + "/"
-                            + envProperties.getString("IEEXEFileName"));
+
             capabilities = DesiredCapabilities.internetExplorer();
             capabilities.setBrowserName(browserName);
 
@@ -82,10 +79,7 @@ public class LocalDriverFactory extends LoggerUtility
         }
         else if (browserName.equalsIgnoreCase("chrome"))
         {
-            System.setProperty("webdriver.chrome.driver",
-                    envProperties.getString("ChromeFilePath") + "/"
-                            + envProperties.getString("whichBit") + "/"
-                            + envProperties.getString("ChromeEXEFileName"));
+
             capabilities = DesiredCapabilities.chrome();
             capabilities.setBrowserName(browserName);
 

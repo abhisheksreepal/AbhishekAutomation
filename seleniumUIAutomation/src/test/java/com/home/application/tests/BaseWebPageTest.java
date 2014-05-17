@@ -4,6 +4,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.testng.annotations.BeforeSuite;
 
+import com.home.utilities.LoggerUtility;
 import com.home.utilities.ObjectRepoUtility;
 import com.home.utilities.TestBase;
 import com.home.utilities.TestDataUtilty;

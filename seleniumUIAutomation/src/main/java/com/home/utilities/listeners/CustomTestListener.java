@@ -138,12 +138,14 @@ public class CustomTestListener extends TestListenerAdapter
             }
 
             String defaultEnvironment = envProperties.getString("default");
-            String url = envProperties.getString(defaultEnvironment + ".url");
+            String application = envProperties.getString("application");
+            String url = envProperties.getString(application + "."
+                    + defaultEnvironment + ".url");
 
             String hub = envProperties.getString("hub");
 
-            WebDriver driver = new LocalDriverFactory().createInstance(platform,browser,
-                    hub);
+            WebDriver driver = new LocalDriverFactory().createInstance(
+                    platform, browser, hub);
             LocalDriverManager.setWebDriver(driver);
             LocalDriverManager.setLog(Logger.getLogger(className + "_"
                     + methodName));
