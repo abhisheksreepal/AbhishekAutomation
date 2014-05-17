@@ -77,6 +77,8 @@ public class ObjectRepoUtility extends LoggerUtility
 
         String applicationName = envProperties.getString("application");
         String objRepoLocation = envProperties.getString("objRepoLocation");
+        String objFilePath = objRepoLocation + "/"
+                + applicationName + "/" + "seleniumObjectRepo"+"/"+fileName + ".csv";
 
         HashMap<String, HashMap<String, String>> objRepo = new HashMap<String, HashMap<String, String>>();
         if (fileName != null)
@@ -84,8 +86,7 @@ public class ObjectRepoUtility extends LoggerUtility
             CSVReader reader;
             try
             {
-                reader = new CSVReader(new FileReader(objRepoLocation + "/"
-                        + applicationName + "/" + fileName + ".csv"));
+                reader = new CSVReader(new FileReader(objFilePath));
                 String[] nextLine;
                 try
                 {
@@ -150,32 +151,27 @@ public class ObjectRepoUtility extends LoggerUtility
                 catch (IOException e)
                 {
                     new LoggerUtility().log.error("IO exception - Object File in the followig path = "
-                            + objRepoLocation + "/" + applicationName + "/"
-
-                            + fileName + ".csv");
+                            + objFilePath);
                     new LoggerUtility().log.error(e.toString());
                 }
             }
             catch (FileNotFoundException e)
             {
                 new LoggerUtility().log.error("Object File Not found in the followig path = "
-                        + objRepoLocation + "/" + applicationName + "/"
-                        + fileName + ".csv");
+                        + objFilePath);
                 new LoggerUtility().log.error(e.toString());
             }
 
             // Add last key value pair -> FileDetails: (FileName:FilePath)
             HashMap<String, String> objMeta = new HashMap<String, String>();
-            objMeta.put("fileName", objRepoLocation + "/" + applicationName
-                    + "/" + fileName + ".csv");
+            objMeta.put("fileName", objFilePath);
             objRepo.put("fileDetails", objMeta);
 
             return objRepo;
         }
         else
         {
-            new LoggerUtility().log.error("INVALID File Name passed as argument " + objRepoLocation
-                    + "/" + applicationName + "/" + fileName + ".csv");
+            new LoggerUtility().log.error("INVALID File Name passed as argument " + objFilePath);
             return objRepo;
         }
     }
