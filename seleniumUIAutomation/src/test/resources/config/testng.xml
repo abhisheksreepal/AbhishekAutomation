@@ -2,24 +2,34 @@
 
 <suite name="Adactin Test Suite">
 
+	<test name="HomePageTestIE" parallel="methods" thread-count="3">
+
+		<parameter name="browserName" value="iexplorer" />
+		<parameter name="platform" value="windows" />
+		<classes>
+			<class name="com.home.application.adactin.tests.HomePageTest"></class>
+		</classes>
+	</test>
+
 	<test name="HomePageTestChrome" parallel="methods" thread-count="3">
 
-		<parameter name="browserName" value="chrome"/>
-		<parameter name="platform" value="windows"/>
+		<parameter name="browserName" value="chrome" />
+		<parameter name="platform" value="windows" />
 		<classes>
 			<class name="com.home.application.adactin.tests.HomePageTest"></class>
 		</classes>
 	</test>
-	
-	
+
+
 	<test name="HomePageTestFirefox" parallel="methods" thread-count="3">
 
-		<parameter name="browserName" value="firefox"/>
-		<parameter name="platform" value="windows"/>
+		<parameter name="browserName" value="firefox" />
+		<parameter name="platform" value="windows" />
 		<classes>
 			<class name="com.home.application.adactin.tests.HomePageTest"></class>
 		</classes>
 	</test>
+
 
 </suite>
  

@@ -1,10 +1,12 @@
+# COpy Grid jar,IE drivers,Chrome drivers to a shared drive
+use pushd and popd for acessing shared drives
+
 #Start Hub 
 java -jar selenium-server-standalone-2.41.0.jar -role hub
 
 #Get IP address of system where hub is started and pass it to environment file
-# COpy IE drivers,Chrome drivers to a shared drive
 
-#Launch Nodes in multiple system 
+#Launch Nodes in multiple system  [Change port number of each node if accessing in the same system]
 java -jar selenium-server-standalone-2.41.0.jar -role node  -hub http://ip:4444/grid/register -browser browserName=firefox,platform=LINUX
 java -jar selenium-server-standalone-2.41.0.jar -role node  -hub http://ip:4444/grid/register -browser browserName=firefox,platform=WINDOWS
 java -jar selenium-server-standalone-2.41.0.jar -role node  -hub http://ip:4444/grid/register -browser browserName=chrome,platform=WINDOWS -Dwebdriver.chrome.driver=\\SHAREDDRIVE\drivers\chrome\32\chromedriver.exe
