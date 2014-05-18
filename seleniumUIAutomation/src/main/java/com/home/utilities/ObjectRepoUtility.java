@@ -18,7 +18,7 @@ public class ObjectRepoUtility extends LoggerUtility
         super(log);
 
     }
-    
+
     public ObjectRepoUtility()
     {
         super();
@@ -31,15 +31,15 @@ public class ObjectRepoUtility extends LoggerUtility
 
     public void loadObjectRepoForAllPages()
     {
-        loginObjRepo = fetchObjectFromFile("loginPage");
-        homePageObjRepo = fetchObjectFromFile("homePage");
-        logoutPageObjRepo = fetchObjectFromFile("logoutPage");
+        loginObjRepo = fetchObjectFromNewFileFormat("loginPage");
+        homePageObjRepo = fetchObjectFromNewFileFormat("homePage");
+        logoutPageObjRepo = fetchObjectFromNewFileFormat("logoutPage");
     }
 
     public enum ObjectType
     {
 
-        XPATH, ID, NAME, CLASS, CSSPATH, LINKTEXT, PARTIALLINKTEXT, TAGNAME;
+        XPATH, ID, NAME, CLASS, CSS, LINK_TEXT, PARTIAL_LINK_TEXT, TAG_NAME;
 
         static public boolean isDefined(String objTypeElement)
         {
@@ -60,124 +60,8 @@ public class ObjectRepoUtility extends LoggerUtility
     }
 
     /**
-     * Method:fetchObjectFromFile Description:it fetch objects from external
-     * file to Hash Map
-     * 
-     * Object File: Description Object Name, Object Type, Object Value => will
-     * be converted to a Hashmap for intenal use
-     * 
-     * example: {ObjectName:(ObjectType:ObjectValue) and LAST keyValue
-     * :("fileDetails":(fileName:filePath))
-     * 
-     * @return
-     */
-    private HashMap<String, HashMap<String, String>> fetchObjectFromFile(
-            String fileName)
-    {
-
-        String applicationName = envProperties.getString("application");
-        String objRepoLocation = envProperties.getString("objRepoLocation");
-        String objFilePath = objRepoLocation + "/"
-                + applicationName + "/" + "seleniumObjectRepo"+"/"+fileName + ".csv";
-
-        HashMap<String, HashMap<String, String>> objRepo = new HashMap<String, HashMap<String, String>>();
-        if (fileName != null)
-        {
-            CSVReader reader;
-            try
-            {
-                reader = new CSVReader(new FileReader(objFilePath));
-                String[] nextLine;
-                try
-                {
-                    while ((nextLine = reader.readNext()) != null)
-                    {
-                        if (nextLine.length != 3)
-                        {
-                            new LoggerUtility().log.error("Invalid Object row,Few fields are Missing in this row = ObjectName ="
-                                    + nextLine[0]
-                                    + ", Object type = "
-                                    + nextLine[1]
-                                    + ", Object Value ="
-                                    + nextLine[2]);
-                            continue;
-                        }
-                        else
-                        {
-                            if (nextLine[1] != null && nextLine[0] != null
-                                    && nextLine[2] != null)
-                            {
-                                if (ObjectType.isDefined(nextLine[1]))
-                                {
-                                    HashMap<String, String> objMeta = new HashMap<String, String>();
-                                    objMeta.put(nextLine[1], nextLine[2]);
-                                    objRepo.put(nextLine[0], objMeta);
-                                    new LoggerUtility().log.debug("Successfully added Objects - ObjectName ="
-                                            + nextLine[0]
-                                            + ", Object type = "
-                                            + nextLine[1]
-                                            + ", Object Value ="
-                                            + nextLine[2]);
-                                }
-                                else if (nextLine[1]
-                                        .equalsIgnoreCase("ObjectType")
-                                        && nextLine[0]
-                                                .equalsIgnoreCase("ObjectName")
-                                        && nextLine[2]
-                                                .equalsIgnoreCase("ObjectValue"))
-                                {
-                                    new LoggerUtility().log.debug("IGNORING following row since It is a COLUMN HEADER - ObjectName ="
-                                            + nextLine[0]
-                                            + ", Object type = "
-                                            + nextLine[1]
-                                            + ", Object Value ="
-                                            + nextLine[2]);
-                                }
-                                else
-                                {
-                                    new LoggerUtility().log.error("Invalid Object Type = "
-                                            + nextLine[1]
-                                            + " ,Hence Rejecting this object row with Object Name ="
-                                            + nextLine[0]
-                                            + " and Object Value ="
-                                            + nextLine[2]);
-                                }
-                            }
-                        }
-                    }
-                    
-                    reader.close();
-                }
-                catch (IOException e)
-                {
-                    new LoggerUtility().log.error("IO exception - Object File in the followig path = "
-                            + objFilePath);
-                    new LoggerUtility().log.error(e.toString());
-                }
-            }
-            catch (FileNotFoundException e)
-            {
-                new LoggerUtility().log.error("Object File Not found in the followig path = "
-                        + objFilePath);
-                new LoggerUtility().log.error(e.toString());
-            }
-
-            // Add last key value pair -> FileDetails: (FileName:FilePath)
-            HashMap<String, String> objMeta = new HashMap<String, String>();
-            objMeta.put("fileName", objFilePath);
-            objRepo.put("fileDetails", objMeta);
-
-            return objRepo;
-        }
-        else
-        {
-            new LoggerUtility().log.error("INVALID File Name passed as argument " + objFilePath);
-            return objRepo;
-        }
-    }
-
-    /**
-     * Method:getObjectValue Description:get Object value from objRepo hashMap
+     * /** Method:getObjectValue Description:get Object value from objRepo
+     * hashMap
      * 
      * 
      * @param objRepo
@@ -206,10 +90,11 @@ public class ObjectRepoUtility extends LoggerUtility
                 }
                 catch (NullPointerException e)
                 {
-                    new LoggerUtility().log.error("Object Name "
-                            + objectName
-                            + " NOT found OR Configuration failure happened in the repo = "
-                            + fileNameNull);
+                    new LoggerUtility().log
+                            .error("Object Name "
+                                    + objectName
+                                    + " NOT found OR Configuration failure happened in the repo = "
+                                    + fileNameNull);
                     throw new RuntimeException(
                             "[ERROR] Object Name "
                                     + objectName
@@ -226,11 +111,13 @@ public class ObjectRepoUtility extends LoggerUtility
                         fileName = key;
                         filePath = objectRepo.get("fileDetails").get(fileName);
                     }
-                    new LoggerUtility().log.error("Object Name "
-                            + objectName
-                            + " NOT found OR Configuration failure happened in the repo = "
-                            + fileName + " present in following path - "
-                            + filePath);
+                    new LoggerUtility().log
+                            .error("Object Name "
+                                    + objectName
+                                    + " NOT found OR Configuration failure happened in the repo = "
+                                    + fileName
+                                    + " present in following path - "
+                                    + filePath);
                     throw new RuntimeException(
                             "[ERROR] Object Name "
                                     + objectName
@@ -246,21 +133,24 @@ public class ObjectRepoUtility extends LoggerUtility
                     {
                         objType = key;
                         objValue = objectRepo.get(objectName).get(objType);
-                        new LoggerUtility().log.debug("Returning Object Value = " + objValue);
+                        new LoggerUtility().log
+                                .debug("Returning Object Value = " + objValue);
                     }
                     return objValue;
                 }
             }
             else
             {
-                new LoggerUtility().log.error("Object Name =" + objectName + " is null");
+                new LoggerUtility().log.error("Object Name =" + objectName
+                        + " is null");
                 throw new RuntimeException("[ERROR] Object Name =" + objectName
                         + " is null");
             }
         }
         else
         {
-            new LoggerUtility().log.error("Object Repo =" + objectRepo + " is NULL");
+            new LoggerUtility().log.error("Object Repo =" + objectRepo
+                    + " is NULL");
             throw new RuntimeException("[ERROR] Object Repo =" + objectRepo
                     + " is NULL");
         }
@@ -308,16 +198,18 @@ public class ObjectRepoUtility extends LoggerUtility
                             modifiedObjectValue = modifiedObjectValue
                                     .replaceFirst("\\$", values[i]);
                         }
-                        new LoggerUtility().log.debug("Successfuly returning modified Object Value = "
-                                + modifiedObjectValue);
+                        new LoggerUtility().log
+                                .debug("Successfuly returning modified Object Value = "
+                                        + modifiedObjectValue);
                         return modifiedObjectValue;
                     }
                     else
                     {
-                        new LoggerUtility().log.error("getModifiedObjectValue lenght of valuesToBeReplaced ["
-                                + values.length
-                                + "] is NOT equal to noOfOccurancesToBeReplaced ["
-                                + noOfOccurancesToBeReplaced + "]");
+                        new LoggerUtility().log
+                                .error("getModifiedObjectValue lenght of valuesToBeReplaced ["
+                                        + values.length
+                                        + "] is NOT equal to noOfOccurancesToBeReplaced ["
+                                        + noOfOccurancesToBeReplaced + "]");
                         throw new RuntimeException(
                                 "[ERROR] getModifiedObjectValue lenght of valuesToBeReplaced ["
                                         + values.length
@@ -329,8 +221,8 @@ public class ObjectRepoUtility extends LoggerUtility
             }
             else
             {
-                new LoggerUtility().log.error("ValuesToBeReplaced Argument =" + ObjectValue
-                        + " is null");
+                new LoggerUtility().log.error("ValuesToBeReplaced Argument ="
+                        + ObjectValue + " is null");
                 throw new RuntimeException(
                         "[ERROR] ValuesToBeReplaced Argument =" + ObjectValue
                                 + " is null");
@@ -338,7 +230,8 @@ public class ObjectRepoUtility extends LoggerUtility
         }
         else
         {
-            new LoggerUtility().log.error("Object value =" + ObjectValue + " is null");
+            new LoggerUtility().log.error("Object value =" + ObjectValue
+                    + " is null");
             throw new RuntimeException("[ERROR] Object value =" + ObjectValue
                     + " is null");
         }
@@ -373,10 +266,11 @@ public class ObjectRepoUtility extends LoggerUtility
                 }
                 catch (NullPointerException e)
                 {
-                    new LoggerUtility().log.error("Object Name "
-                            + objectName
-                            + " NOT found OR Configuration failure happened in the repo = "
-                            + fileNameNull);
+                    new LoggerUtility().log
+                            .error("Object Name "
+                                    + objectName
+                                    + " NOT found OR Configuration failure happened in the repo = "
+                                    + fileNameNull);
                     throw new RuntimeException(
                             "[ERROR] Object Name "
                                     + objectName
@@ -393,11 +287,13 @@ public class ObjectRepoUtility extends LoggerUtility
                         fileName = key;
                         filePath = objectRepo.get("fileDetails").get(fileName);
                     }
-                    new LoggerUtility().log.error("Object Name "
-                            + objectName
-                            + " NOT found OR Configuration failure happened in the repo = "
-                            + fileName + " present in following path - "
-                            + filePath);
+                    new LoggerUtility().log
+                            .error("Object Name "
+                                    + objectName
+                                    + " NOT found OR Configuration failure happened in the repo = "
+                                    + fileName
+                                    + " present in following path - "
+                                    + filePath);
                     throw new RuntimeException(
                             "[ERROR] Object Name "
                                     + objectName
@@ -412,24 +308,168 @@ public class ObjectRepoUtility extends LoggerUtility
                     for (String key : keys)
                     {
                         objType = key;
-                        new LoggerUtility().log.debug("Returning Object Type = " + objType);
+                        new LoggerUtility().log
+                                .debug("Returning Object Type = " + objType);
                     }
                     return objType;
                 }
             }
             else
             {
-                new LoggerUtility().log.error("Object Name =" + objectName + " is null");
+                new LoggerUtility().log.error("Object Name =" + objectName
+                        + " is null");
                 throw new RuntimeException("[ERROR] Object Name =" + objectName
                         + " is null");
             }
         }
         else
         {
-            new LoggerUtility().log.error("Object Repo =" + objectRepo + " is NULL");
+            new LoggerUtility().log.error("Object Repo =" + objectRepo
+                    + " is NULL");
             throw new RuntimeException("[ERROR] Object Repo =" + objectRepo
                     + " is NULL");
         }
+    }
+
+    /**
+     * Method:fetchObjectFromFile Description:it fetch objects from external
+     * file to Hash Map
+     * 
+     * Object File: Description Object Name, Object Type, Object Value => will
+     * be converted to a Hashmap for intenal use
+     * 
+     * example: {ObjectName:(ObjectType:ObjectValue) and LAST keyValue
+     * :("fileDetails":(fileName:filePath))
+     * 
+     * @return
+     */
+    private HashMap<String, HashMap<String, String>> fetchObjectFromNewFileFormat(
+            String fileName)
+    {
+
+        String applicationName = envProperties.getString("application");
+        String objRepoLocation = envProperties.getString("objRepoLocation");
+        String objFilePath = objRepoLocation + "/" + applicationName + "/"
+                + "seleniumObjectRepo" + "/" + fileName + ".csv";
+
+        HashMap<String, HashMap<String, String>> objRepo = new HashMap<String, HashMap<String, String>>();
+        if (fileName != null)
+        {
+            CSVReader reader;
+            try
+            {
+                reader = new CSVReader(new FileReader(objFilePath));
+                String[] nextLine;
+                int row = 0;
+                String[] columns =
+                { "ObjectName", "ID", "NAME", "CLASS", "LINK_TEXT",
+                        "PARTIAL_LINK_TEXT", "TAG_NAME", "CSS", "XPATH" };
+                try
+                {
+                    while ((nextLine = reader.readNext()) != null)
+                    {
+                        if (row == 0)
+                        {
+
+                            for (int i = 1; i < nextLine.length; i++)
+                            {
+                                if (!ObjectType.isDefined(nextLine[i]))
+                                {
+                                    new LoggerUtility().log
+                                            .error("Invalid Object Type defined-["
+                                                    + nextLine[i] + "]");
+                                }
+
+                            }
+
+                            ++row;
+                        }
+                        else
+                        {
+                            int position = getObjectPosition(nextLine);
+                            if (position != 0)
+                            {
+                                HashMap<String, String> objMeta = new HashMap<String, String>();
+                                objMeta.put(columns[position],
+                                        getObjectValue(position, nextLine));
+                                objRepo.put(nextLine[0], objMeta);
+                                new LoggerUtility().log
+                                        .debug("Successfully added Objects - ObjectName ="
+                                                + nextLine[0]
+                                                + ", Object type = "
+                                                + columns[position]
+                                                + ", Object Value ="
+                                                + getObjectValue(position,
+                                                        nextLine));
+                            }
+                            else
+                            {
+                                new LoggerUtility().log
+                                        .debug("[Not Added to ObjRepo]No Value defined for Objects - ObjectName ="
+                                                + nextLine[0]
+                                                + ", Object type = "
+                                                + columns[position]
+                                                + ", Object Value ="
+                                                + getObjectValue(position,
+                                                        nextLine));
+                            }
+
+                        }
+                    }
+
+                    reader.close();
+                }
+                catch (IOException e)
+                {
+                    new LoggerUtility().log
+                            .error("IO exception - Object File in the followig path = "
+                                    + objFilePath);
+                    new LoggerUtility().log.error(e.toString());
+                }
+            }
+            catch (FileNotFoundException e)
+            {
+                new LoggerUtility().log
+                        .error("Object File Not found in the followig path = "
+                                + objFilePath);
+                new LoggerUtility().log.error(e.toString());
+            }
+
+            // Add last key value pair -> FileDetails: (FileName:FilePath)
+            HashMap<String, String> objMeta = new HashMap<String, String>();
+            objMeta.put("fileName", objFilePath);
+            objRepo.put("fileDetails", objMeta);
+
+            return objRepo;
+        }
+        else
+        {
+            new LoggerUtility().log
+                    .error("INVALID File Name passed as argument "
+                            + objFilePath);
+            return objRepo;
+        }
+    }
+
+    private int getObjectPosition(String[] nextLine)
+    {
+        int position = 0;
+
+        for (int i = 1; i < nextLine.length; i++)
+        {
+            if (!nextLine[i].trim().equalsIgnoreCase(""))
+            {
+                return i;
+            }
+        }
+
+        return position;
+    }
+
+    private String getObjectValue(int position, String[] nextLine)
+    {
+
+        return nextLine[position];
     }
 
 }

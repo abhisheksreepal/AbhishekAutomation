@@ -1,4 +1,4 @@
-ObjectName,ObjectType,ObjectValue
-Logout,XPATH,"//td[contains(@class,'welcome_menu')]/a[contains(@href,'Logout')]"
-welcomeMessageString,XPATH,"//*[@id='username_show']"
-hyperLinks,XPATH,"//a[contains(text(),'$')]"
+ObjectName,ID,NAME,CLASS,LINK_TEXT,PARTIAL_LINK_TEXT,TAG_NAME,CSS,XPATH
+Logout,,,,,,,,"//td[contains(@class,'welcome_menu')]/a[contains(@href,'Logout')]"
+welcomeMessageString,,,,,,,,//*[@id='username_show']
+hyperLinks,,,,,,,,"//a[contains(text(),'$')]"
