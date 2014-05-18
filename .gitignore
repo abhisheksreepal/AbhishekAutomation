@@ -9,4 +9,4 @@ log
 target
 test-output
 bin
-log4j.xml
+seleniumUIAutomation/src/test/resources/config/log4j.xml
