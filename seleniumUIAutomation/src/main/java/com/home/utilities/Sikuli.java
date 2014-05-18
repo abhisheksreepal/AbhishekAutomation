@@ -3,9 +3,6 @@ package com.home.utilities;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.Logger;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
@@ -16,22 +13,11 @@ public class Sikuli extends LoggerUtility
 
     public Screen screen;
 
-    private PropertiesConfiguration envProperties;
-
     public Sikuli()
     {
         super();
         this.screen = new Screen();
-        try
-        {
-            this.envProperties = new PropertiesConfiguration(
-                    "environment.properties");
-        }
-        catch (ConfigurationException e)
-        {
-            log.fatal("Environment Property Configuration Error");
-            e.printStackTrace();
-        }
+
     }
 
     /**
@@ -117,6 +103,7 @@ public class Sikuli extends LoggerUtility
         {
             try
             {
+
                 testRegion.inside().click(
                         childImagePattern.similar((float) 0.9));
                 log.info("Successfully Clicked child image = " + childImageName);
@@ -244,8 +231,9 @@ public class Sikuli extends LoggerUtility
         {
             try
             {
-                testRegion.nearby(pixelValueToLeft).left()
+                testRegion.grow(pixelValueToLeft).left()
                         .click(childImagePattern.similar((float) 0.8));
+
                 log.info("Successfully Clicked child image = " + childImageName);
                 break;
             }

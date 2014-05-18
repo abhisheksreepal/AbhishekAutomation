@@ -1,6 +1,5 @@
 package com.home.utilities;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
