@@ -8,7 +8,6 @@ import java.util.Random;
 import java.util.StringTokenizer;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.By.ByXPath;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -205,7 +204,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-           
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -213,7 +212,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .click();
-                   
+
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -249,7 +248,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).click();
-                  
+
                     logTraceMessage(
 
                     "["
@@ -294,7 +293,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-           
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -302,7 +301,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .click();
-                  
+
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
@@ -334,7 +333,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).click();
-                 
+
                     logTraceMessage(
 
                     "["
@@ -368,6 +367,522 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage
                                     + "]"
                                     + " with id -["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+                }
+            }
+
+        }
+        else if (objectType.equalsIgnoreCase("NAME"))
+        {
+
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    driver.findElement(
+                            By.name(getObjectValue(objectRepo, objectName)))
+                            .click();
+
+                    logTraceMessage("[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "]  is successfully clicked"
+                            + " And Object Name ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "ObjectName -[" + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage + "]" + " And Object Name ["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+                }
+            }
+            else
+            {
+                try
+                {
+                    driver.findElement(
+                            By.name(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).click();
+
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully clicked"
+                            + " And Object Name ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "ObjectName -["
+                                    + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage
+                                    + "]"
+                                    + " with name -["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+                }
+            }
+
+        }
+        else if (objectType.equalsIgnoreCase("CLASS"))
+        {
+
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    driver.findElement(
+                            By.className(getObjectValue(objectRepo, objectName)))
+                            .click();
+
+                    logTraceMessage("[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "]  is successfully clicked"
+                            + " And Object Class ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "ObjectName -[" + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage + "]"
+                                    + " And Object Class ["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+                }
+            }
+            else
+            {
+                try
+                {
+                    driver.findElement(
+                            By.className(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).click();
+
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully clicked"
+                            + " And Object Class ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "ObjectName -["
+                                    + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage
+                                    + "]"
+                                    + " with Class -["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+                }
+            }
+
+        }
+        else if (objectType.equalsIgnoreCase("LINK_TEXT"))
+        {
+
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    driver.findElement(
+                            By.linkText(getObjectValue(objectRepo, objectName)))
+                            .click();
+
+                    logTraceMessage("[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "]  is successfully clicked"
+                            + " And Object linkText ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "ObjectName -[" + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage + "]"
+                                    + " And Object linkText ["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+                }
+            }
+            else
+            {
+                try
+                {
+                    driver.findElement(
+                            By.linkText(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).click();
+
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully clicked"
+                            + " And Object linkText ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "ObjectName -["
+                                    + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage
+                                    + "]"
+                                    + " with linkText -["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+                }
+            }
+
+        }
+        else if (objectType.equalsIgnoreCase("PARTIAL_LINK_TEXT"))
+        {
+
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    driver.findElement(
+                            By.partialLinkText(getObjectValue(objectRepo,
+                                    objectName))).click();
+
+                    logTraceMessage("[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "]  is successfully clicked"
+                            + " And Object partialLinkText ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "ObjectName -[" + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage + "]"
+                                    + " And Object partialLinkText ["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+                }
+            }
+            else
+            {
+                try
+                {
+                    driver.findElement(
+                            By.partialLinkText(getModifiedObjectValue(
+                                    objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).click();
+
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully clicked"
+                            + " And Object partialLinkText ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "ObjectName -["
+                                    + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage
+                                    + "]"
+                                    + " with partialLinkText -["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+                }
+            }
+
+        }
+        else if (objectType.equalsIgnoreCase("TAG_NAME"))
+        {
+
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    driver.findElement(
+                            By.tagName(getObjectValue(objectRepo, objectName)))
+                            .click();
+
+                    logTraceMessage("[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "]  is successfully clicked"
+                            + " And Object tagName ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "ObjectName -[" + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage + "]"
+                                    + " And Object tagName ["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+                }
+            }
+            else
+            {
+                try
+                {
+                    driver.findElement(
+                            By.tagName(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).click();
+
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully clicked"
+                            + " And Object tagName ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "ObjectName -["
+                                    + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage
+                                    + "]"
+                                    + " with tagName -["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+                }
+            }
+
+        }
+        else if (objectType.equalsIgnoreCase("CSS"))
+        {
+
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    driver.findElement(
+                            By.cssSelector(getObjectValue(objectRepo,
+                                    objectName))).click();
+
+                    logTraceMessage("[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "]  is successfully clicked"
+                            + " And Object cssSelector ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "ObjectName -[" + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage + "]"
+                                    + " And Object cssSelector ["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+                }
+            }
+            else
+            {
+                try
+                {
+                    driver.findElement(
+                            By.cssSelector(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).click();
+
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully clicked"
+                            + " And Object cssSelector ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "ObjectName -["
+                                    + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage
+                                    + "]"
+                                    + " with cssSelector -["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
@@ -413,10 +928,9 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             {
                 try
                 {
-                    actualText = driver
-                            .findElement(
-                                    ByXPath.xpath(getObjectValue(objectRepo,
-                                            objectName))).getText();
+                    actualText = driver.findElement(
+                            By.xpath(getObjectValue(objectRepo, objectName)))
+                            .getText();
                     logTraceMessage(
 
                     "["
@@ -457,7 +971,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 try
                 {
                     actualText = driver.findElement(
-                            ByXPath.xpath(getModifiedObjectValue(objectRepo,
+                            By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).getText();
                     logTraceMessage(
@@ -513,7 +1027,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 try
                 {
                     actualText = driver.findElement(
-                            ByXPath.id(getObjectValue(objectRepo, objectName)))
+                            By.id(getObjectValue(objectRepo, objectName)))
                             .getText();
                     logTraceMessage(
 
@@ -556,7 +1070,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                 try
                 {
                     actualText = driver.findElement(
-                            ByXPath.id(getModifiedObjectValue(objectRepo,
+                            By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).getText();
                     logTraceMessage(
@@ -605,6 +1119,615 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             }
 
         }
+        else if (objectType.equalsIgnoreCase("NAME"))
+        {
+            String actualText = null;
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    actualText = driver.findElement(
+                            By.name(getObjectValue(objectRepo, objectName)))
+                            .getText();
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText + "]" + " And Object name ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                    return actualText;
+
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "Object Name -["
+                                    + objectName
+                                    + "] is NOT present and text is NOT retrieved and [MESSSAGE]=["
+                                    + errorMessage + "]" + " And Object name ["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+
+                }
+            }
+            else
+            {
+                try
+                {
+                    actualText = driver.findElement(
+                            By.name(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).getText();
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText
+                            + "]"
+                            + " Object name ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                    return actualText;
+
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "Object Name -["
+                                    + objectName
+                                    + "] is NOT present and text is NOT retrieved and [MESSAGE]= ["
+                                    + errorMessage
+                                    + "]"
+                                    + " And Object name ["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+
+                }
+            }
+
+        }
+        else if (objectType.equalsIgnoreCase("CLASS"))
+        {
+            String actualText = null;
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    actualText = driver
+                            .findElement(
+                                    By.className(getObjectValue(objectRepo,
+                                            objectName))).getText();
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText + "]" + " And Object className ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                    return actualText;
+
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "Object Name -["
+                                    + objectName
+                                    + "] is NOT present and text is NOT retrieved and [MESSSAGE]=["
+                                    + errorMessage + "]"
+                                    + " And Object className["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+
+                }
+            }
+            else
+            {
+                try
+                {
+                    actualText = driver.findElement(
+                            By.className(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).getText();
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText
+                            + "]"
+                            + " Object className ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                    return actualText;
+
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "Object Name -["
+                                    + objectName
+                                    + "] is NOT present and text is NOT retrieved and [MESSAGE]= ["
+                                    + errorMessage
+                                    + "]"
+                                    + " And Object className ["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+
+                }
+            }
+
+        }
+        else if (objectType.equalsIgnoreCase("LINK_TEXT"))
+        {
+            String actualText = null;
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    actualText = driver
+                            .findElement(
+                                    By.linkText(getObjectValue(objectRepo,
+                                            objectName))).getText();
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText + "]" + " And Object linkText ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                    return actualText;
+
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "Object Name -["
+                                    + objectName
+                                    + "] is NOT present and text is NOT retrieved and [MESSSAGE]=["
+                                    + errorMessage + "]"
+                                    + " And Object linkText ["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+
+                }
+            }
+            else
+            {
+                try
+                {
+                    actualText = driver.findElement(
+                            By.linkText(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).getText();
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText
+                            + "]"
+                            + " Object linkText ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                    return actualText;
+
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "Object Name -["
+                                    + objectName
+                                    + "] is NOT present and text is NOT retrieved and [MESSAGE]= ["
+                                    + errorMessage
+                                    + "]"
+                                    + " And Object linkText ["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+
+                }
+            }
+
+        }
+        else if (objectType.equalsIgnoreCase("PARTIAL_LINK_TEXT"))
+        {
+            String actualText = null;
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    actualText = driver.findElement(
+                            By.partialLinkText(getObjectValue(objectRepo,
+                                    objectName))).getText();
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText + "]"
+                            + " And Object partialLinkText ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                    return actualText;
+
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "Object Name -["
+                                    + objectName
+                                    + "] is NOT present and text is NOT retrieved and [MESSSAGE]=["
+                                    + errorMessage + "]"
+                                    + " And Object partialLinkText["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+
+                }
+            }
+            else
+            {
+                try
+                {
+                    actualText = driver.findElement(
+                            By.partialLinkText(getModifiedObjectValue(
+                                    objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).getText();
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText
+                            + "]"
+                            + " Object partialLinkText ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                    return actualText;
+
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "Object Name -["
+                                    + objectName
+                                    + "] is NOT present and text is NOT retrieved and [MESSAGE]= ["
+                                    + errorMessage
+                                    + "]"
+                                    + " And Object partialLinkText ["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+
+                }
+            }
+
+        }
+        else if (objectType.equalsIgnoreCase("TAG_NAME"))
+        {
+            String actualText = null;
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    actualText = driver.findElement(
+                            By.tagName(getObjectValue(objectRepo, objectName)))
+                            .getText();
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText + "]" + " And Object tagName ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                    return actualText;
+
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "Object Name -["
+                                    + objectName
+                                    + "] is NOT present and text is NOT retrieved and [MESSSAGE]=["
+                                    + errorMessage + "]"
+                                    + " And Object tagName ["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+
+                }
+            }
+            else
+            {
+                try
+                {
+                    actualText = driver.findElement(
+                            By.tagName(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).getText();
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText
+                            + "]"
+                            + " Object tagName ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                    return actualText;
+
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "Object Name -["
+                                    + objectName
+                                    + "] is NOT present and text is NOT retrieved and [MESSAGE]= ["
+                                    + errorMessage
+                                    + "]"
+                                    + " And Object tagName ["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+
+                }
+            }
+
+        }
+        else if (objectType.equalsIgnoreCase("CSS"))
+        {
+            String actualText = null;
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    actualText = driver.findElement(
+                            By.cssSelector(getObjectValue(objectRepo,
+                                    objectName))).getText();
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText + "]" + " And Object cssSelector ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                    return actualText;
+
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "Object Name -["
+                                    + objectName
+                                    + "] is NOT present and text is NOT retrieved and [MESSSAGE]=["
+                                    + errorMessage + "]"
+                                    + " And Object cssSelector["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+
+                }
+            }
+            else
+            {
+                try
+                {
+                    actualText = driver.findElement(
+                            By.cssSelector(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).getText();
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully present and text is retrieved - ["
+                            + actualText
+                            + "]"
+                            + " Object cssSelector ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                    return actualText;
+
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "Object Name -["
+                                    + objectName
+                                    + "] is NOT present and text is NOT retrieved and [MESSAGE]= ["
+                                    + errorMessage
+                                    + "]"
+                                    + " And Object cssSelector ["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+
+                }
+            }
+
+        }
         else
         {
             throw new RuntimeException("Invalid Object Type -[" + objectType
@@ -638,7 +1761,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-           
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -646,7 +1769,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .clear();
-                    
+
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -682,7 +1805,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).clear();
-                  
+
                     logTraceMessage(
 
                     "["
@@ -726,7 +1849,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-            
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -734,7 +1857,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .clear();
-                   
+
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
@@ -766,7 +1889,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).clear();
-                  
+
                     logTraceMessage(
 
                     "["
@@ -800,6 +1923,504 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + errorMessage
                                     + "]"
                                     + " And Object id -["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+                }
+            }
+
+        }else if (objectType.equalsIgnoreCase("NAME"))
+        {
+
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    driver.findElement(
+                            By.name(getObjectValue(objectRepo, objectName)))
+                            .clear();
+
+                    logTraceMessage("[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully cleared" + " And Object name ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "ObjectName -[" + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage + "]" + " And Object name -["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+                }
+            }
+            else
+            {
+                try
+                {
+                    driver.findElement(
+                            By.name(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).clear();
+
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully cleared"
+                            + " And Object name ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "ObjectName -["
+                                    + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage
+                                    + "]"
+                                    + " And Object name -["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+                }
+            }
+
+        }else if (objectType.equalsIgnoreCase("CLASS"))
+        {
+
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    driver.findElement(
+                            By.className(getObjectValue(objectRepo, objectName)))
+                            .clear();
+
+                    logTraceMessage("[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully cleared" + " And Object className ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "ObjectName -[" + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage + "]" + " And Object className -["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+                }
+            }
+            else
+            {
+                try
+                {
+                    driver.findElement(
+                            By.className(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).clear();
+
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully cleared"
+                            + " And Object className ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "ObjectName -["
+                                    + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage
+                                    + "]"
+                                    + " And Object className -["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+                }
+            }
+
+        }else if (objectType.equalsIgnoreCase("LINK_TEXT"))
+        {
+
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    driver.findElement(
+                            By.linkText(getObjectValue(objectRepo, objectName)))
+                            .clear();
+
+                    logTraceMessage("[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully cleared" + " And Object linkText ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "ObjectName -[" + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage + "]" + " And Object linkText -["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+                }
+            }
+            else
+            {
+                try
+                {
+                    driver.findElement(
+                            By.linkText(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).clear();
+
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully cleared"
+                            + " And Object linkText ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "ObjectName -["
+                                    + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage
+                                    + "]"
+                                    + " And Object linkText -["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+                }
+            }
+
+        }else if (objectType.equalsIgnoreCase("PARTIAL_LINK_TEXT"))
+        {
+
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    driver.findElement(
+                            By.partialLinkText(getObjectValue(objectRepo, objectName)))
+                            .clear();
+
+                    logTraceMessage("[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully cleared" + " And Object partialLinkText ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "ObjectName -[" + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage + "]" + " And Object partialLinkText -["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+                }
+            }
+            else
+            {
+                try
+                {
+                    driver.findElement(
+                            By.partialLinkText(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).clear();
+
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully cleared"
+                            + " And Object partialLinkText ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "ObjectName -["
+                                    + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage
+                                    + "]"
+                                    + " And Object partialLinkText -["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+                }
+            }
+
+        }else if (objectType.equalsIgnoreCase("TAG_NAME"))
+        {
+
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    driver.findElement(
+                            By.tagName(getObjectValue(objectRepo, objectName)))
+                            .clear();
+
+                    logTraceMessage("[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully cleared" + " And Object tagName ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "ObjectName -[" + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage + "]" + " And Object tagName -["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+                }
+            }
+            else
+            {
+                try
+                {
+                    driver.findElement(
+                            By.tagName(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).clear();
+
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully cleared"
+                            + " And Object tagName ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "ObjectName -["
+                                    + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage
+                                    + "]"
+                                    + " And Object tagName -["
+                                    + getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced) + "]", driver);
+                }
+            }
+
+        }else if (objectType.equalsIgnoreCase("CSS"))
+        {
+
+            if (!modifyObjectValueInRuntime)
+            {
+                try
+                {
+                    driver.findElement(
+                            By.cssSelector(getObjectValue(objectRepo, objectName)))
+                            .clear();
+
+                    logTraceMessage("[" + methodName + "]," + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "]," + "Object Name -[" + objectName
+                            + "] is successfully cleared" + " And Object cssSelector ["
+                            + getObjectValue(objectRepo, objectName) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName") + "],"
+                                    + "ObjectName -[" + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage + "]" + " And Object cssSelector -["
+                                    + getObjectValue(objectRepo, objectName)
+                                    + "]", driver);
+                }
+            }
+            else
+            {
+                try
+                {
+                    driver.findElement(
+                            By.cssSelector(getModifiedObjectValue(objectRepo,
+                                    objectName, noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced))).clear();
+
+                    logTraceMessage(
+
+                    "["
+                            + methodName
+                            + "],"
+                            + "Page -["
+                            + objectRepo.get("fileDetails").get("fileName")
+                            + "],"
+                            + "Object Name -["
+                            + objectName
+                            + "] is successfully cleared"
+                            + " And Object cssSelector ["
+                            + getModifiedObjectValue(objectRepo, objectName,
+                                    noOfOccurancesToBeReplaced,
+                                    valuesToBeReplaced) + "]");
+                }
+                catch (NoSuchElementException e)
+                {
+                    logErrorMessage(
+
+                            "["
+                                    + methodName
+                                    + "],"
+                                    + "Page -["
+                                    + objectRepo.get("fileDetails").get(
+                                            "fileName")
+                                    + "],"
+                                    + "ObjectName -["
+                                    + objectName
+                                    + "] is not found and [MESSAGE]=["
+                                    + errorMessage
+                                    + "]"
+                                    + " And Object cssSelector -["
                                     + getModifiedObjectValue(objectRepo,
                                             objectName,
                                             noOfOccurancesToBeReplaced,
@@ -844,7 +2465,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             clearElement(objectRepo, objectName, modifyObjectValueInRuntime,
                     noOfOccurancesToBeReplaced, valuesToBeReplaced,
                     errorMessage);
-           
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -852,7 +2473,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                 
+
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -888,7 +2509,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                   
+
                     logTraceMessage(
 
                     "["
@@ -937,7 +2558,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             clearElement(objectRepo, objectName, modifyObjectValueInRuntime,
                     noOfOccurancesToBeReplaced, valuesToBeReplaced,
                     errorMessage);
-           
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -945,7 +2566,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                  
+
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -980,7 +2601,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                   
+
                     logTraceMessage(
 
                     "["
@@ -1057,7 +2678,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-            
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -1065,8 +2686,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                    
-                    
+
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -1074,8 +2694,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             + "]," + "Object Name -[" + objectName
                             + "] is successfully Appeneded text[" + value + "]"
                             + " And Object Xpath ["
-                            + getObjectValue(objectRepo, objectName) + "]"
-                            );
+                            + getObjectValue(objectRepo, objectName) + "]");
                 }
                 catch (NoSuchElementException e)
                 {
@@ -1103,7 +2722,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                   
+
                     logTraceMessage(
 
                     "["
@@ -1149,7 +2768,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-            
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -1157,7 +2776,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                   
+
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -1192,7 +2811,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                    
+
                     logTraceMessage(
 
                     "["
@@ -2145,9 +3764,10 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             {
                 try
                 {
-                    wait.until(ExpectedConditions.textToBePresentInElementLocated(
-                            By.xpath(getObjectValue(objectRepo, objectName)),
-                            text));
+                    wait.until(ExpectedConditions
+                            .textToBePresentInElementLocated(By
+                                    .xpath(getObjectValue(objectRepo,
+                                            objectName)), text));
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object name -[" + objectName
@@ -2171,10 +3791,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             {
                 try
                 {
-                    wait.until(ExpectedConditions.textToBePresentInElementLocated(By
-                            .xpath(getModifiedObjectValue(objectRepo,
-                                    objectName, noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced)), text));
+                    wait.until(ExpectedConditions
+                            .textToBePresentInElementLocated(By
+                                    .xpath(getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced)), text));
                     logTraceMessage(
 
                     "["
@@ -2256,10 +3878,12 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             {
                 try
                 {
-                    wait.until(ExpectedConditions.textToBePresentInElementLocated(By
-                            .id(getModifiedObjectValue(objectRepo, objectName,
-                                    noOfOccurancesToBeReplaced,
-                                    valuesToBeReplaced)), text));
+                    wait.until(ExpectedConditions
+                            .textToBePresentInElementLocated(By
+                                    .id(getModifiedObjectValue(objectRepo,
+                                            objectName,
+                                            noOfOccurancesToBeReplaced,
+                                            valuesToBeReplaced)), text));
                     logTraceMessage(
 
                     "["
@@ -2685,7 +4309,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-           
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -2693,7 +4317,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .isDisplayed();
-                    
+
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
@@ -2714,7 +4338,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isDisplayed();
-                  
+
                     logTraceMessage(
 
                     "["
@@ -2742,7 +4366,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-           
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -2750,7 +4374,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .isDisplayed();
-                    
+
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
@@ -2772,7 +4396,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isDisplayed();
-                  
+
                     logTraceMessage(
 
                     "["
@@ -2800,7 +4424,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("LINKTEXT"))
         {
-         
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -2808,7 +4432,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.linkText(getObjectValue(objectRepo, objectName)))
                             .isDisplayed();
-                 
+
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
@@ -2829,7 +4453,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.linkText(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isDisplayed();
-                    
+
                     logTraceMessage(
 
                     "["
@@ -2887,7 +4511,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-          
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -2895,7 +4519,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     isSelected = driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .isSelected();
-                  
+
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
@@ -2917,7 +4541,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isSelected();
-                    
+
                     logTraceMessage(
 
                     "["
@@ -2945,7 +4569,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-           
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -2953,7 +4577,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     isSelected = driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .isSelected();
-                    
+
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
@@ -2975,7 +4599,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isSelected();
-                   
+
                     logTraceMessage(
 
                     "["
@@ -3030,7 +4654,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-            
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -3038,7 +4662,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     isEnabled = driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .isEnabled();
-                  
+
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
@@ -3060,7 +4684,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isEnabled();
-                   
+
                     logTraceMessage(
 
                     "["
@@ -3088,7 +4712,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-           
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -3096,7 +4720,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     isEnabled = driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .isEnabled();
-                   
+
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
@@ -3118,7 +4742,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).isEnabled();
-                   
+
                     logTraceMessage(
 
                     "["
@@ -3430,7 +5054,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             switch (option)
             {
             case VALUE:
-               
+
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -3438,7 +5062,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         Select select = new Select(driver.findElement(By
                                 .id(getObjectValue(objectRepo, objectName))));
                         select.selectByValue(valueOrVisibleByText);
-                       
+
                         logTraceMessage(
 
                         "[" + methodName + "]," + "Page -["
@@ -3484,7 +5108,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced))));
                         select.selectByValue(valueOrVisibleByText);
-                        
+
                         logTraceMessage(
 
                         "["
@@ -3534,7 +5158,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
                 break;
             case INDEX:
-                
+
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -3542,7 +5166,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         Select select = new Select(driver.findElement(By
                                 .id(getObjectValue(objectRepo, objectName))));
                         select.selectByIndex(index);
-                       
+
                         logTraceMessage(
 
                         "[" + methodName + "]," + "Page -["
@@ -3575,7 +5199,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced))));
                         select.selectByIndex(index);
-                       
+
                         logTraceMessage(
 
                         "["
@@ -3624,7 +5248,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
                 break;
             case VISIBLEBYTEXT:
-             
+
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -3632,7 +5256,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         Select select = new Select(driver.findElement(By
                                 .id(getObjectValue(objectRepo, objectName))));
                         select.selectByVisibleText(valueOrVisibleByText);
-                      
+
                         logTraceMessage(
 
                         "[" + methodName + "]," + "Page -["
@@ -3678,7 +5302,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced))));
                         select.selectByVisibleText(valueOrVisibleByText);
-                       
+
                         logTraceMessage(
 
                         "["
@@ -3736,7 +5360,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
             switch (option)
             {
             case VALUE:
-               
+
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -3744,7 +5368,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         Select select = new Select(driver.findElement(By
                                 .xpath(getObjectValue(objectRepo, objectName))));
                         select.selectByValue(valueOrVisibleByText);
-                       
+
                         logTraceMessage(
 
                         "[" + methodName + "]," + "Page -["
@@ -3790,7 +5414,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced))));
                         select.selectByValue(valueOrVisibleByText);
-                      
+
                         logTraceMessage(
 
                         "["
@@ -3840,7 +5464,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
                 break;
             case INDEX:
-                
+
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -3848,7 +5472,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         Select select = new Select(driver.findElement(By
                                 .xpath(getObjectValue(objectRepo, objectName))));
                         select.selectByIndex(index);
-                       
+
                         logTraceMessage(
 
                         "[" + methodName + "]," + "Page -["
@@ -3881,7 +5505,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced))));
                         select.selectByIndex(index);
-                        
+
                         logTraceMessage(
 
                         "["
@@ -3931,7 +5555,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
                 break;
             case VISIBLEBYTEXT:
-               
+
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -3939,7 +5563,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         Select select = new Select(driver.findElement(By
                                 .xpath(getObjectValue(objectRepo, objectName))));
                         select.selectByVisibleText(valueOrVisibleByText);
-                     
+
                         logTraceMessage(
 
                         "[" + methodName + "]," + "Page -["
@@ -3985,7 +5609,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         objectName, noOfOccurancesToBeReplaced,
                                         valuesToBeReplaced))));
                         select.selectByVisibleText(valueOrVisibleByText);
-                      
+
                         logTraceMessage(
 
                         "["
@@ -4070,7 +5694,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-           
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -4078,7 +5702,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     int count = driver.findElements(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .size();
-                 
+
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -4109,7 +5733,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).size();
-                  
+
                     logTraceMessage(
 
                     "["
@@ -4157,7 +5781,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-          
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -4165,7 +5789,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     int count = driver.findElements(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .size();
-                  
+
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -4196,7 +5820,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).size();
-                 
+
                     logTraceMessage(
 
                     "["
@@ -4267,7 +5891,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-           
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -4275,7 +5899,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                  
+
                     logTraceMessage(
 
                     "[" + methodName + "]," + "Page -["
@@ -4312,7 +5936,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                 
+
                     logTraceMessage(
 
                     "["
@@ -4357,7 +5981,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-           
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -4365,7 +5989,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                   
+
                     logTraceMessage("[" + methodName + "]," + "Page -["
                             + objectRepo.get("fileDetails").get("fileName")
                             + "]," + "Object Name -[" + objectName
@@ -4398,7 +6022,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                  
+
                     logTraceMessage(
 
                     "["
@@ -4891,7 +6515,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
             if (objectType.equalsIgnoreCase("XPATH"))
             {
-                
+
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -4899,7 +6523,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         driver.switchTo().frame(
                                 driver.findElement(By.xpath(getObjectValue(
                                         objectRepo, objectName))));
-                        
+
                         logTraceMessage(
 
                         "Page -"
@@ -4921,7 +6545,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                 + " is not found with Xpath -"
                                 + getObjectValue(objectRepo, objectName),
                                 driver);
-                     
+
                     }
                 }
                 else
@@ -4935,7 +6559,6 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                                 noOfOccurancesToBeReplaced,
                                                 valuesToBeReplaced))));
 
-                       
                         logTraceMessage(
 
                         "Page -"
@@ -4970,14 +6593,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
                                                 valuesToBeReplaced), driver);
-                      
+
                     }
                 }
 
             }
             else if (objectType.equalsIgnoreCase("ID"))
             {
-               
+
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -4985,7 +6608,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         driver.switchTo().frame(
                                 driver.findElement(By.id(getObjectValue(
                                         objectRepo, objectName))));
-                       
+
                         logTraceMessage(
 
                         "Page -"
@@ -5011,7 +6634,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + " is not found with id -"
                                         + getObjectValue(objectRepo, objectName),
                                 driver);
-                      
+
                     }
                 }
                 else
@@ -5024,7 +6647,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
                                                 valuesToBeReplaced))));
-                      
+
                         logTraceMessage(
 
                         "Page -"
@@ -5059,14 +6682,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
                                                 valuesToBeReplaced), driver);
-                 
+
                     }
                 }
 
             }
             else if (objectType.equalsIgnoreCase("NAME"))
             {
-               
+
                 if (!modifyObjectValueInRuntime)
                 {
                     try
@@ -5074,7 +6697,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                         driver.switchTo().frame(
                                 driver.findElement(By.name(getObjectValue(
                                         objectRepo, objectName))));
-                        
+
                         logTraceMessage(
 
                         "Page -"
@@ -5100,7 +6723,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                         + " is not found with Name -"
                                         + getObjectValue(objectRepo, objectName),
                                 driver);
-                     
+
                     }
                 }
                 else
@@ -5113,7 +6736,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                                 objectRepo, objectName,
                                                 noOfOccurancesToBeReplaced,
                                                 valuesToBeReplaced))));
-                      
+
                         logTraceMessage(
 
                         "Page -"
@@ -5148,7 +6771,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                                 objectName,
                                                 noOfOccurancesToBeReplaced,
                                                 valuesToBeReplaced), driver);
-                      
+
                     }
                 }
 
@@ -5180,7 +6803,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
 
         if (objectType.equalsIgnoreCase("ID"))
         {
-            
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -5188,7 +6811,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Select select = new Select(driver.findElement(By
                             .id(getObjectValue(objectRepo, objectName))));
                     firstSelected = select.getFirstSelectedOption().getText();
-                   
+
                     logTraceMessage("Select list Value " + firstSelected
                             + " is successfully retrieved");
                     return firstSelected;
@@ -5208,7 +6831,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))));
                     firstSelected = select.getFirstSelectedOption().getText();
-                    
+
                     logTraceMessage("Select list Value " + firstSelected
                             + " is successfully retrieved");
                     return firstSelected;
@@ -5224,7 +6847,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("XPATH"))
         {
-            
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -5232,7 +6855,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Select select = new Select(driver.findElement(By
                             .xpath(getObjectValue(objectRepo, objectName))));
                     firstSelected = select.getFirstSelectedOption().getText();
-                   
+
                     logTraceMessage("Select list Value " + firstSelected
                             + " is successfully retrieved");
                     return firstSelected;
@@ -5252,7 +6875,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))));
                     firstSelected = select.getFirstSelectedOption().getText();
-                   
+
                     logTraceMessage("Select list Value " + firstSelected
                             + " is successfully retrieved");
                     return firstSelected;
@@ -5267,7 +6890,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         }
         else if (objectType.equalsIgnoreCase("NAME"))
         {
-          
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -5275,7 +6898,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     Select select = new Select(driver.findElement(By
                             .name(getObjectValue(objectRepo, objectName))));
                     firstSelected = select.getFirstSelectedOption().getText();
-                   
+
                     logTraceMessage("Select list Value " + firstSelected
                             + " is successfully retrieved");
                     return firstSelected;
@@ -5295,7 +6918,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))));
                     firstSelected = select.getFirstSelectedOption().getText();
-                  
+
                     logTraceMessage("Select list Value " + firstSelected
                             + " is successfully retrieved");
                     return firstSelected;
@@ -5325,7 +6948,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
         String objectType = getObjectType(objectRepo, objectName);
         if (objectType.equalsIgnoreCase("XPATH"))
         {
-          
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -5333,7 +6956,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.xpath(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                  
+
                     logTraceMessage(
 
                     "Page -" + objectRepo.get("fileDetails").get("fileName")
@@ -5352,7 +6975,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectName + " is not found with Xpath -"
                                     + getObjectValue(objectRepo, objectName),
                             driver);
-                   
+
                 }
             }
             else
@@ -5363,7 +6986,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.xpath(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                  
+
                     logTraceMessage(
 
                     "Page -"
@@ -5392,14 +7015,14 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                             objectName,
                                             noOfOccurancesToBeReplaced,
                                             valuesToBeReplaced), driver);
-                 
+
                 }
             }
 
         }
         else if (objectType.equalsIgnoreCase("ID"))
         {
-            
+
             if (!modifyObjectValueInRuntime)
             {
                 try
@@ -5407,7 +7030,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                     driver.findElement(
                             By.id(getObjectValue(objectRepo, objectName)))
                             .sendKeys(value);
-                   
+
                     logTraceMessage(
 
                     "Page -" + objectRepo.get("fileDetails").get("fileName")
@@ -5425,7 +7048,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                     + objectName + " is not found with id -"
                                     + getObjectValue(objectRepo, objectName),
                             driver);
-                  
+
                 }
             }
             else
@@ -5436,7 +7059,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                             By.id(getModifiedObjectValue(objectRepo,
                                     objectName, noOfOccurancesToBeReplaced,
                                     valuesToBeReplaced))).sendKeys(value);
-                
+
                     logTraceMessage(
 
                     "Page -"
@@ -5465,7 +7088,7 @@ public class BaseWebPage extends com.home.utilities.ObjectRepoUtility
                                             objectName,
                                             noOfOccurancesToBeReplaced,
                                             valuesToBeReplaced), driver);
-                 
+
                 }
             }
 
