@@ -1,4 +1,4 @@
 ObjectName,ID,NAME,CLASS,LINK_TEXT,PARTIAL_LINK_TEXT,TAG_NAME,CSS,XPATH
 Logout,,,,,,,a[href*='Logout'],
 welcomeMessageString,username_show,,,,,,,
-hyperLinks,,,,,,,,"//a[contains(text(),'$')]"
+hyperLinks,,,,$,,,,
