@@ -1,2 +1,2 @@
 ObjectName,ID,NAME,CLASS,LINK_TEXT,PARTIAL_LINK_TEXT,TAG_NAME,CSS,XPATH
-loginLink,,,,,,,,"//a[contains(text(),'Click here to login again')]"
+loginLink,,,,,,,td.reg_success a[href*='index'],
