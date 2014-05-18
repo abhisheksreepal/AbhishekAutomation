@@ -2,14 +2,6 @@
 
 <suite name="Adactin Test Suite">
 
-	<test name="HomePageTestIE" parallel="methods" thread-count="3">
-
-		<parameter name="browserName" value="iexplorer" />
-		<parameter name="platform" value="windows" />
-		<classes>
-			<class name="com.home.application.adactin.tests.HomePageTest"></class>
-		</classes>
-	</test>
 
 	<test name="HomePageTestChrome" parallel="methods" thread-count="3">
 
